@@ -22,8 +22,8 @@ export default defineEventHandler(async (req) => {
 	if (email == "test@gmail.com" && pass == "123456") {
 		try {
 			const jwtToken = jwt.sign(jwtData, jwtSecret + userAgent, { expiresIn: cookieMaxAge });
-			setCookie(req, cookieName, jwtToken, { maxAge: cookieMaxAge, httpOnly: true, secure: true, sameSite: true });
-			setCookie(req, "org_log", md5(userAgent), { maxAge: cookieMaxAge, httpOnly: true, secure: true, sameSite: true });
+			setCookie(req, cookieName, jwtToken, { httpOnly: true, secure: true, sameSite: true });
+			setCookie(req, "org_log", md5(userAgent), { httpOnly: true, secure: true, sameSite: true });
 			return { login: true };
 		} catch (err) {
 			return { login: false, err: err };
