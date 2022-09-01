@@ -1,0 +1,59 @@
+@import "material-dashboard.css";
+@import "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700|Material+Icons+Round";
+body{
+	background-color: #f0f2f5;
+}
+.dark-version #darkSwitch {
+	color: rgb(226 234 241) !important;
+	text-shadow: rgb(255 255 255 / 66%) 0px 0px 15px;
+}
+
+.sidenav {
+	z-index: 10 !important;
+}
+
+
+.input-group.input-group-outline.is-focused .form-label,
+.input-group.input-group-outline.is-filled .form-label,
+.input-group.input-group-outline .form-label {
+	top: -11px !important;
+	left: 5px;
+	background: #fff;
+	z-index: 5;
+	padding: 2px 5px !important;
+	line-height: 1 !important;
+	font-weight: 600;
+	transition: 0s all;
+	border-radius: 3px !important;
+}
+
+.input-group.input-group-outline .form-label:before,
+.input-group.input-group-outline .form-label:after {
+	width: 0 !important;
+	margin: 0 !important;
+	
+}
+.is-invalid .form-control {
+	border-color: red !important;
+}
+
+.dark-version .form-label,
+.dark-version .modal-content {
+	background: #202940 !important;
+	transition: 0s all;
+}
+
+/* Page Transition */
+.page-enter-active {
+  transition: all 0.1s ease-out;
+}
+.page-leave-active {
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.page-enter-from,
+.page-leave-to {
+  /* transform: rotateY(180deg); */
+	transform: scale(0.8);
+  opacity: 0;
+}
+
