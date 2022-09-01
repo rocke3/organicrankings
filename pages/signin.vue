@@ -22,7 +22,7 @@ async function requstSignin() {
 		});
 		if (response.login) {
 			loginStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Login Sucess.</span>";
-			//router.push("/app");
+			router.push("/app");
 		} else {
 			loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
 		}
