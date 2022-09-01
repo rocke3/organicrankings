@@ -5,8 +5,8 @@ definePageMeta({ layout: "public-layout" });
 
 const checking = ref(false)
 const loginStatus = ref('')
-const email = ref('test@gmail.co')
-const password = ref('')
+const email = ref('test@gmail.com')
+const password = ref('123456')
 const emailCls = ref('')
 const passCls = ref('')
 
