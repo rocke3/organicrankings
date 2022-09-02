@@ -17,7 +17,7 @@ export default defineEventHandler(async (req) => {
 				if (dbUser && dbUser.password == body.password) {
 					const jwtData = { user: body.email };
 					const jwtToken = jwt.sign(jwtData, env.JWT_SECRET + userAgent, { expiresIn: cookieMaxAge });
-					setCookie(req, "org_user", jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
+					setCookie(req, env.COOKIE_NAME, jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
 					setCookie(req, "org_log", md5(userAgent), { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
 					return { login: true };
 				} else {
@@ -26,7 +26,6 @@ export default defineEventHandler(async (req) => {
 			})
 			.catch((error) => {
 				console.log(error);
-
 				return { login: false, message: "Something went wrong please try again later" };
 			});
 
