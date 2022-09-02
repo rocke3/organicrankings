@@ -4425,7 +4425,7 @@ __vite_ssr_exports__.default = "\ni.material-icons[data-v-1e5a26b3] {\r\n    ver
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_NFSFWxNMEM = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_YYkkeVIgQ0 = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/InputEmail.vue");
@@ -4470,7 +4470,6 @@ async function requstSignin() {
 		body: { email: email.value, password: password.value },
 	});
 	if (response.login) {
-		loginStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Login Sucess.</span>";
 		router.push("/app");
 	} else {
 		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
@@ -4708,7 +4707,7 @@ __vite_ssr_exports__.default = /* @__PURE__ */ __vite_ssr_import_3__.default(_sf
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_CRE4gpKJY8 = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_7tQ19PqleI = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/InputEmail.vue");
@@ -4753,8 +4752,7 @@ const _sfc_main = /* @__PURE__ */ __vite_ssr_import_9__.defineComponent({
           method: "POST",
           body: { email: email.value, password: password.value, confpass: confpass.value }
         });
-        if (response.login) {
-          signupStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Sign up Sucess.</span>";
+        if (response.signup) {
           router.push("/app");
         } else {
           signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
@@ -5656,7 +5654,7 @@ __vite_ssr_exports__.default = "\n.captcha button {\r\n\tposition: absolute;\r\n
 // - /pages/signin.vue?vue&type=style&index=0&lang.css ($id_la2hRRNKmq)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_4D36LyFaTk = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_bniNNZaMk2 = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/InputEmail.vue");
@@ -5701,7 +5699,6 @@ async function requstSignin() {
 		body: { email: email.value, password: password.value },
 	});
 	if (response.login) {
-		loginStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Login Sucess.</span>";
 		router.push("/app");
 	} else {
 		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
@@ -5896,7 +5893,7 @@ __vite_ssr_exports__.default = "\ni.material-icons.statusIcon {\r\n\tvertical-al
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_OMem6kRajl = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_HWpUfAjG0Q = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/InputEmail.vue");
@@ -5941,8 +5938,7 @@ const _sfc_main = /* @__PURE__ */ __vite_ssr_import_9__.defineComponent({
           method: "POST",
           body: { email: email.value, password: password.value, confpass: confpass.value }
         });
-        if (response.login) {
-          signupStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Sign up Sucess.</span>";
+        if (response.signup) {
           router.push("/app");
         } else {
           signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
@@ -6128,10 +6124,10 @@ Object.defineProperty(__vite_ssr_exports__, "namedMiddleware", { enumerable: tru
 // Dependencies: 
 // - /node_modules/nuxt/dist/app/index.mjs ($id_NpJ0d20vMd)
 // --------------------
-const $id_GU94po5UbH = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_ZPDdTyNGLw = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/node_modules/nuxt/dist/app/index.mjs");
 
-__vite_ssr_exports__.default = __vite_ssr_import_0__.defineNuxtRouteMiddleware((to) => {
+__vite_ssr_exports__.default = __vite_ssr_import_0__.defineNuxtRouteMiddleware(async (to) => {
 });
 ;
 }
@@ -6892,7 +6888,7 @@ __vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_7__.default(_sfc_m
 // - /components/app/AppSidebar.vue?vue&type=style&index=0&scoped=d5cfa2d8&lang.css ($id_Ml7cVFwNH5)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_19aMH9asoZ = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_qh9LE8g2Ek = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/node_modules/nuxt/dist/app/components/nuxt-link.mjs");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/node_modules/nuxt/dist/app/index.mjs");
@@ -6903,16 +6899,13 @@ const _sfc_main = {
   expose();
 
 const router = __vite_ssr_import_1__.useRouter();
-function signout(){
-	const cookie = __vite_ssr_import_1__.useCookie('organicrankings.com')
-	cookie.value = null
-	
+function signout() {
 	router.push("/signin");
 }
 
 const menuItems = [
-	{name: 'Dashboard', path: '/app', icon: 'dashboard'},
-	{name: 'CSS Tools', path: '/app/csstools', icon: 'css'},
+	{ name: 'Dashboard', path: '/app', icon: 'dashboard' },
+	{ name: 'CSS Tools', path: '/app/csstools', icon: 'css' },
 ]
 
 const __returned__ = { router, signout, menuItems }
@@ -6986,8 +6979,8 @@ __vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_6__.default(_sfc_m
 // Dependencies: 
 
 // --------------------
-const $id_0OEWreYuWA = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
-__vite_ssr_exports__.default = "\n#sidenav-main[data-v-d5cfa2d8] {\r\n\tmargin: 0 !important;\r\n\tborder-radius: 0;\r\n\t/* background-image: url(\"../../assets/images/sidebarbg.jpg\");\r\n\tbackground-size: cover; */\n}\n.nav-item .material-icons[data-v-d5cfa2d8] {\r\n\twidth: 33px !important;\r\n\ttext-align: left !important;\n}\n.navbar-vertical.navbar-expand-xs .navbar-collapse[data-v-d5cfa2d8] {\r\n\theight: calc(100vh - 124px);\n}\n.sidenav-header[data-v-d5cfa2d8] {\r\n\theight: auto;\n}\n.sidenav .navbar-brand[data-v-d5cfa2d8] {\r\n\tpadding: 15px 20px;\n}\n.navbar-nav .nav-link[data-v-d5cfa2d8] {\r\n\tpadding: 9px 10px !important;\n}\n.router-link-active[data-v-d5cfa2d8]{\r\n\tbackground: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);\n}\r\n";
+const $id_4xTwkKQxdw = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+__vite_ssr_exports__.default = "\n#sidenav-main[data-v-d5cfa2d8] {\r\n\tmargin: 0 !important;\r\n\tborder-radius: 0;\r\n\t/* background-image: url(\"../../assets/images/sidebarbg.jpg\");\r\n\tbackground-size: cover; */\n}\n.nav-item .material-icons[data-v-d5cfa2d8] {\r\n\twidth: 33px !important;\r\n\ttext-align: left !important;\n}\n.navbar-vertical.navbar-expand-xs .navbar-collapse[data-v-d5cfa2d8] {\r\n\theight: calc(100vh - 124px);\n}\n.sidenav-header[data-v-d5cfa2d8] {\r\n\theight: auto;\n}\n.sidenav .navbar-brand[data-v-d5cfa2d8] {\r\n\tpadding: 15px 20px;\n}\n.navbar-nav .nav-link[data-v-d5cfa2d8] {\r\n\tpadding: 9px 10px !important;\n}\n.router-link-active[data-v-d5cfa2d8] {\r\n\tbackground: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);\n}\r\n";
 }
 
 
@@ -7466,21 +7459,21 @@ const __modules__ = {
   "/components/elements/InputCaptcha.vue": $id_xSvPgP2Eq2,
   "/components/SsrLinks.vue": $id_3J7FWybg9f,
   "/components/SsrLinks.vue?vue&type=style&index=0&scoped=1e5a26b3&lang.css": $id_4M9m8GrA2n,
-  "/pages/signin.vue?macro=true": $id_NFSFWxNMEM,
+  "/pages/signin.vue?macro=true": $id_YYkkeVIgQ0,
   "/components/elements/InputPassword.vue": $id_UQ6QpqQah9,
-  "/pages/signup.vue?macro=true": $id_CRE4gpKJY8,
+  "/pages/signup.vue?macro=true": $id_7tQ19PqleI,
   "/pages/app/csstools.vue": $id_DRKg6Ma69y,
   "/pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css": $id_8kmk8EqEpX,
   "/pages/app/index.vue": $id_9MPR7zjrF4,
   "/pages/index.vue": $id_vdTnpezFOX,
   "/pages/resetpassword.vue": $id_v45cDvxpq3,
   "/pages/resetpassword.vue?vue&type=style&index=0&lang.css": $id_Q5ZsrA1TeX,
-  "/pages/signin.vue": $id_4D36LyFaTk,
+  "/pages/signin.vue": $id_bniNNZaMk2,
   "/pages/signin.vue?vue&type=style&index=0&lang.css": $id_DOnpxdAfFg,
-  "/pages/signup.vue": $id_OMem6kRajl,
+  "/pages/signup.vue": $id_HWpUfAjG0Q,
   "/@id/virtual:nuxt:C:/www/organicrankings/.nuxt/router.options.mjs": $id_Ek3KS8NDCw,
   "/@id/virtual:nuxt:C:/www/organicrankings/.nuxt/middleware.mjs": $id_ZWo3nirO6g,
-  "/middleware/auth.global.ts": $id_GU94po5UbH,
+  "/middleware/auth.global.ts": $id_ZPDdTyNGLw,
   "/@id/virtual:nuxt:C:/www/organicrankings/.nuxt/root-component.mjs": $id_xGgNs6Swfh,
   "/node_modules/nuxt/dist/app/components/nuxt-root.vue": $id_Tc4bZ2N7lY,
   "/@id/virtual:nuxt:C:/www/organicrankings/.nuxt/error-component.mjs": $id_idIf6ZADlm,
@@ -7496,8 +7489,8 @@ const __modules__ = {
   "/node_modules/nuxt/dist/app/components/layout.mjs": $id_cvsgl4HIQr,
   "/@id/virtual:nuxt:C:/www/organicrankings/.nuxt/layouts.mjs": $id_Azuo6gD1PK,
   "/layouts/app-layout.vue": $id_R5ndVbL1Xi,
-  "/components/app/AppSidebar.vue": $id_19aMH9asoZ,
-  "/components/app/AppSidebar.vue?vue&type=style&index=0&scoped=d5cfa2d8&lang.css": $id_0OEWreYuWA,
+  "/components/app/AppSidebar.vue": $id_qh9LE8g2Ek,
+  "/components/app/AppSidebar.vue?vue&type=style&index=0&scoped=d5cfa2d8&lang.css": $id_4xTwkKQxdw,
   "/components/app/AppNavbar.vue": $id_EPayCLEpXz,
   "/components/elements/DarkToggle.vue": $id_uj7qpmRull,
   "/components/elements/DarkToggle.vue?vue&type=style&index=0&scoped=4aea9eb0&lang.css": $id_gASfTRkSeF,

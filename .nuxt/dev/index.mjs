@@ -5,7 +5,7 @@ import { join } from 'path';
 import { mkdirSync } from 'fs';
 import { parentPort, threadId } from 'worker_threads';
 import { provider, isWindows } from 'file://C:/www/organicrankings/node_modules/std-env/dist/index.mjs';
-import { eventHandler, defineEventHandler, handleCacheHeaders, createEvent, createApp, createRouter, lazyEventHandler, useBody, getRequestHeader, setCookie, getQuery } from 'file://C:/www/organicrankings/node_modules/h3/dist/index.mjs';
+import { eventHandler, defineEventHandler, handleCacheHeaders, createEvent, createApp, createRouter, lazyEventHandler, getRequestHeader, useBody, setCookie, getQuery } from 'file://C:/www/organicrankings/node_modules/h3/dist/index.mjs';
 import { env } from 'node:process';
 import jwt from 'file://C:/www/organicrankings/node_modules/jsonwebtoken/index.js';
 import md5 from 'file://C:/www/organicrankings/node_modules/md5/md5.js';
@@ -451,29 +451,6 @@ server.listen(listenAddress, () => {
   process.on("uncaughtException", (err) => console.error("[nitro] [dev] [uncaughtException]", err));
 }
 
-const requstSignup_post = defineEventHandler(async (req) => {
-  const body = await useBody(req);
-  const email = body.email;
-  const pass = body.password;
-  const confpass = body.confpass;
-  if (email == "" || !email.match(/^([\w-\.]{2,4})+@([\w-]{2,4})+\.+[\w-]{2,4}$/)) {
-    return { signup: false, message: "Invalid Email" };
-  } else if (pass == "" || pass.length < 6 || confpass == "" || confpass.length < 6) {
-    return { signup: false, message: "Invalid Password" };
-  } else {
-    try {
-      return { signup: true };
-    } catch (e) {
-      return { signup: false };
-    }
-  }
-});
-
-const requstSignup_post$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  'default': requstSignup_post
-});
-
 const db = mysql.createConnection({
   host: env.DB_HOST,
   user: env.DB_UESR,
@@ -481,6 +458,46 @@ const db = mysql.createConnection({
   database: env.DB_DB
 });
 const db$1 = db;
+
+const requstSignup_post = defineEventHandler(async (req) => {
+  const cookieMaxAge = 3600;
+  const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase();
+  const body = await useBody(req);
+  if (validateInputs$1(body)) {
+    const isSignup = await db$1.promise().query("INSERT INTO `users` (`email`, `password`) VALUES (?,?)", [body.email, body.password]).then((response) => {
+      const jwtData = { user: body.email };
+      const jwtToken = jwt.sign(jwtData, env.JWT_SECRET + userAgent, { expiresIn: cookieMaxAge });
+      setCookie(req, env.COOKIE_NAME, jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true });
+      setCookie(req, "org_log", md5(userAgent), { maxAge: cookieMaxAge, httpOnly: true, sameSite: true });
+      return { signup: true };
+    }).catch((error) => {
+      if (error.code == "ER_DUP_ENTRY") {
+        return { signup: false, message: "Email already used" };
+      } else {
+        return { signup: false, message: "Something went wrong please try again later" };
+      }
+    });
+    if (isSignup.signup) {
+      return { signup: true };
+    } else {
+      return { signup: false, message: isSignup.message };
+    }
+  }
+});
+function validateInputs$1(body) {
+  const email = body.email;
+  const pass = body.password;
+  const confpass = body.confpass;
+  if (email == "" || !email.match(/^([\w-\.]{2,4})+@([\w-]{2,4})+\.+[\w-]{2,4}$/) || pass == "" || pass.length < 6 || confpass == "" || confpass.length < 6) {
+    return false;
+  }
+  return true;
+}
+
+const requstSignup_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  'default': requstSignup_post
+});
 
 const requstSignin_post = defineEventHandler(async (req) => {
   const cookieMaxAge = 3600;
@@ -493,7 +510,7 @@ const requstSignin_post = defineEventHandler(async (req) => {
       if (dbUser && dbUser.password == body.password) {
         const jwtData = { user: body.email };
         const jwtToken = jwt.sign(jwtData, env.JWT_SECRET + userAgent, { expiresIn: cookieMaxAge });
-        setCookie(req, "org_user", jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true });
+        setCookie(req, env.COOKIE_NAME, jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true });
         setCookie(req, "org_log", md5(userAgent), { maxAge: cookieMaxAge, httpOnly: true, sameSite: true });
         return { login: true };
       } else {
