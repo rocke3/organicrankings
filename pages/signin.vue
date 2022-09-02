@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 useHead({ title: "Sign in - Organic Rankings" });
 definePageMeta({ layout: "public-layout" });
@@ -10,37 +10,23 @@ const password = ref('123456')
 const emailCls = ref('')
 const passCls = ref('')
 
-
-
 async function requstSignin() {
-	if ((email.value && email.value.length > 7) && (password.value && password.value.length > 5)) {
-		const router = useRouter();
-		checking.value = true;
-		const response = await $fetch("/signinrequst", {
-			method: "POST",
-			body: { email: email.value, password: password.value },
-		});
-		if (response.login) {
-			loginStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Login Sucess.</span>";
-			router.push("/app");
-		} else {
-			loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
-		}
-		checking.value = false;
-		window.setInterval(() => {
-			loginStatus.value = "";
-		}, 2500);
+	const router = useRouter();
+	checking.value = true;
+	const response = await $fetch("/requstSignin", {
+		method: "POST",
+		body: { email: email.value, password: password.value },
+	});
+	if (response.login) {
+		loginStatus.value = "<span class='text-success'><i class='material-icons statusIcon'>task_alt</i>Login Sucess.</span>";
+		router.push("/app");
 	} else {
-		if (!email.value || email.value.length < 6)
-			emailCls.value = "is-invalid";
-		if (!password.value || password.value.length < 6)
-			passCls.value = "is-invalid";
-
-		window.setInterval(() => {
-			emailCls.value = "";
-			passCls.value = "";
-		}, 2000);
+		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
 	}
+	checking.value = false;
+	window.setInterval(() => {
+		loginStatus.value = "";
+	}, 3500);
 }
 
 </script>
