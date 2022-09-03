@@ -16,7 +16,7 @@ useHead({ title: "Dashboard - Organic Rankings" });
                   <i class="material-icons opacity-10">weekend</i>
                 </div>
                 <div class="text-end pt-1">
-                  <p class="text-sm mb-0 text-capitalize">Bookings</p>
+                  <p class="text-sm mb-0 text-capitalize">a</p>
                   <h4 class="mb-0">281</h4>
                 </div>
               </div>

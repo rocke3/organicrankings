@@ -23,7 +23,7 @@ main {
 }
 
 .pageContent {
-	min-height: 84vh;
+	min-height: 81vh;
 }
 
 @media only screen and (min-width: 1200px) {

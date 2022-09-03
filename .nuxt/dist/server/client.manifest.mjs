@@ -9,6 +9,8 @@ export default {
       "components/elements/Processing.vue?vue&type=style&index=0&scoped=8000fe06&lang.css",
       "components/SsrLinks.vue?vue&type=style&index=0&scoped=1e5a26b3&lang.css",
       "pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css",
+      "pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css",
+      "pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css",
       "pages/resetpassword.vue?vue&type=style&index=0&lang.css",
       "pages/signin.vue?vue&type=style&index=0&lang.css",
       "node_modules/@nuxt/ui-templates/dist/templates/error-404.vue?vue&type=style&index=0&scoped=bc8852ab&lang.css",
@@ -47,6 +49,14 @@ export default {
   },
   "pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css": {
     "file": "pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css",
+    "resourceType": "style"
+  },
+  "pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css": {
+    "file": "pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css",
+    "resourceType": "style"
+  },
+  "pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css": {
+    "file": "pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css",
     "resourceType": "style"
   },
   "pages/resetpassword.vue?vue&type=style&index=0&lang.css": {

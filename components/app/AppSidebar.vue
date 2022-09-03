@@ -10,7 +10,9 @@ function signout() {
 
 const menuItems = [
 	{ name: 'Dashboard', path: '/app', icon: 'dashboard' },
+	{ name: 'HTML Tools', path: '/app/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/app/csstools', icon: 'css' },
+	{ name: 'JS Tools', path: '/app/jstools', icon: 'javascript' },
 ]
 
 async function requstLogout() {
