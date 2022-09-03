@@ -1,12 +1,14 @@
-<script setup lang="ts"></script>
+<script setup>
+definePageMeta({
+	middleware: 'UserMiddleware'
+})
+
+</script>
 <template>
 	<div>
-		<PublicNavbar  v-once/>
+		<PublicNavbar v-once />
 		<main class="main-content mt-0">
-			<div
-				class="page-header align-items-start min-vh-100"
-				style="background-image: url('/assets/images/bg.jpg')"
-			>
+			<div class="page-header align-items-start min-vh-100" style="background-image: url('/assets/images/bg.jpg')">
 				<span class="mask bg-gradient-dark opacity-6"></span>
 				<div class="container my-auto">
 					<div class="row">
@@ -17,7 +19,7 @@
 				</div>
 			</div>
 		</main>
-		<PublicFooter v-once/>
+		<PublicFooter v-once />
 	</div>
 </template>
 

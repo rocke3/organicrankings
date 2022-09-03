@@ -4,6 +4,7 @@ declare module 'nitropack' {
   interface InternalApi {
     '/requstSignup': Awaited<ReturnType<typeof import('../../server/routes/requstSignup.post').default>>
     '/requstSignin': Awaited<ReturnType<typeof import('../../server/routes/requstSignin.post').default>>
+    '/requstLogout': Awaited<ReturnType<typeof import('../../server/routes/requstLogout.post').default>>
     '/passwordresetrequst': Awaited<ReturnType<typeof import('../../server/routes/passwordresetrequst.post').default>>
     '/loadcaptcha': Awaited<ReturnType<typeof import('../../server/routes/loadcaptcha').default>>
     '/__nuxt_error': Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>

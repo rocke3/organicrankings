@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 useHead({ title: "Sign up - Organic Rankings" });
 definePageMeta({

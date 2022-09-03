@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-definePageMeta({layout: "app-layout" });
+definePageMeta({ layout: "app-layout" });
 useHead({ title: "CSS Tools - Organic Rankings" });
 
 const website = ref('https://www.organicrankings.com/')
@@ -29,21 +29,21 @@ function copyToClipboard() {
 }
 
 async function genarateCss() {
-	if(website.value ){
+	if (website.value) {
 		showOutputModal.value = true;
 		processing.value = true;
-		upload.value =false;
-		genarate.value =false;
+		upload.value = false;
+		genarate.value = false;
 		outputcss.value = "";
 		urlClass.value = "";
 		cssClass.value = "";
-		window.setTimeout(() => { if (processing.value) { upload.value =true; }}, 1500);
-		window.setTimeout(() => { if (processing.value) { genarate.value =true; }}, 3000);
-		
+		window.setTimeout(() => { if (processing.value) { upload.value = true; } }, 1500);
+		window.setTimeout(() => { if (processing.value) { genarate.value = true; } }, 3000);
+
 
 		await $fetch("https://www.organicrankings.com/criticalcss", {
 			method: "POST",
-			body:   css.value ,
+			body: css.value,
 			headers: {
 				website: website.value,
 				todo: todo.value,
@@ -60,18 +60,18 @@ async function genarateCss() {
 			processing.value = false;
 			outputcss.value = "Something went wrong please try again";
 		});
-	}else{
-		if(!website.value){
+	} else {
+		if (!website.value) {
 			urlClass.value = "is-invalid"
 		}
-		if(!css.value){
+		if (!css.value) {
 			cssClass.value = "is-invalid"
 		}
 	}
 }
 
 watch(css, async (val) => {
- 	cssLength.value = val.length;
+	cssLength.value = val.length;
 })
 
 
@@ -85,19 +85,23 @@ watch(css, async (val) => {
 					<form @submit.prevent="genarateCss">
 
 						<div class="todo">
-							<div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0" :class="todo == 'critical' ? 'active' : ''">
+							<div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"
+								:class="todo == 'critical' ? 'active' : ''">
 								<label class="form-check-label m-0 px-3 py-2">
-									<input class="form-check-input me-1" type="radio" name="option" value="critical" v-model="todo" checked>
+									<input class="form-check-input me-1" type="radio" name="option" value="critical" v-model="todo"
+										checked>
 									Genarate Critical CSS
 								</label>
 							</div>
-							<div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0" :class="todo == 'minify' ? 'active' : ''">
+							<div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"
+								:class="todo == 'minify' ? 'active' : ''">
 								<label class="form-check-label m-0 px-3 py-2">
 									<input class="form-check-input me-1" type="radio" name="option" value="minify" v-model="todo">
 									Minify CSS
 								</label>
 							</div>
-							<div class="form-check form-check-radio btn btn-outline-primary p-0  mb-3" :class="todo == 'beautify' ? 'active' : ''">
+							<div class="form-check form-check-radio btn btn-outline-primary p-0  mb-3"
+								:class="todo == 'beautify' ? 'active' : ''">
 								<label class="form-check-label m-0 px-3 py-2">
 									<input class="form-check-input me-1" type="radio" name="option" value="beautify" v-model="todo">
 									Beautify CSS
@@ -105,12 +109,12 @@ watch(css, async (val) => {
 							</div>
 						</div>
 
-						<div class="input-group input-group-outline mt-3" :class="urlClass"  v-if="todo == 'critical'">
+						<div class="input-group input-group-outline mt-3" :class="urlClass" v-if="todo == 'critical'">
 							<label class="form-label">Website URL</label>
 							<input type="url" class="form-control" v-model="website" />
 						</div>
 
-						
+
 						<div class="pb-2">
 							<div class="outputSettings me-3" v-if="todo == 'critical'">
 								<label class="settingLvl">Output Settings</label>
@@ -132,17 +136,21 @@ watch(css, async (val) => {
 									</label>
 									<label class="form-check-label m-0 pe-3">
 										<input class="form-check-input" type="radio" name="optimize" value="1" v-model="optimize" checked>
-										<ElementsTooltip tooltip="Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments">Level 1</ElementsTooltip>
+										<ElementsTooltip
+											tooltip="Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments">
+											Level 1</ElementsTooltip>
 									</label>
 									<label class="form-check-label m-0 pe-3">
 										<input class="form-check-input" type="radio" name="optimize" value="2" v-model="optimize">
-										<ElementsTooltip tooltip="Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around.">Level 2</ElementsTooltip>
+										<ElementsTooltip
+											tooltip="Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around.">
+											Level 2</ElementsTooltip>
 									</label>
 								</div>
 							</div>
 						</div>
-						
-						<div class="input-group input-group-outline mt-4" :class="cssClass" >
+
+						<div class="input-group input-group-outline mt-4" :class="cssClass">
 							<label class="form-label">All CSS </label>
 							<textarea class="form-control" rows="10" v-model="css"></textarea>
 						</div>
@@ -151,7 +159,10 @@ watch(css, async (val) => {
 						<div class="mb-1 text-end mt-4">
 							<button class="btn btn-primary">
 								<span v-if="!processing">Genarate</span>
-								<div v-if="processing"><ElementsSpinner /> Genarating <ElementsProcessing/></div>
+								<div v-if="processing">
+									<ElementsSpinner /> Genarating
+									<ElementsProcessing />
+								</div>
 							</button>
 						</div>
 					</form>
@@ -164,18 +175,20 @@ watch(css, async (val) => {
 			<div class="modal-dialog modal-dialog-scrollable modal-xl">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">CSS Output ({{outputcss.length}} character)</h5>
+						<h5 class="modal-title">CSS Output ({{ outputcss.length }} character)</h5>
 						<button type="button" class="btn-close" @click="showOutputModal = false">
 							<i class="material-icons">close</i>
 						</button>
 					</div>
 					<div class="modal-body">
-						<div v-if="processing"  class="text-success text-center">
+						<div v-if="processing" class="text-success text-center">
 							<p>
-								<ElementsSpinner color="green" v-if="!upload" /><i v-if="upload" class='material-icons'>task_alt</i> Uploading Your CSS.
+								<ElementsSpinner color="green" v-if="!upload" /><i v-if="upload" class='material-icons'>task_alt</i>
+								Uploading Your CSS.
 							</p>
 							<p v-if="upload">
-								<ElementsSpinner  color="green" v-if="!genarate && upload" /><i v-if="genarate" class='material-icons'>task_alt</i> Genarating Critical CSS.
+								<ElementsSpinner color="green" v-if="!genarate && upload" /><i v-if="genarate"
+									class='material-icons'>task_alt</i> Genarating Critical CSS.
 							</p>
 							<p v-if="genarate">
 								<ElementsSpinner color="green" /> Downloading Critical CSS.
@@ -202,48 +215,59 @@ watch(css, async (val) => {
 
 
 <style scoped>
-.todo input{
+.todo input {
 	display: none;
 }
-.form-check.active label{
+
+.form-check.active label {
 	color: #fff !important
 }
-.cssLength{
+
+.cssLength {
 	float: right;
 }
+
 .modal {
 	display: block;
 	background-color: rgba(0, 0, 0, 0.5);
 }
-.modal-body .material-icons{
+
+.modal-body .material-icons {
 	vertical-align: middle;
 }
 
 .btn-close {
 	padding: 0;
 }
+
 .btn-close .material-icons {
 	color: black;
 	vertical-align: top;
 }
-.form-switch{
+
+.form-switch {
 	padding-left: 0 !important;
 }
-.todo label{
+
+.todo label {
 	text-transform: capitalize;
 }
-.toggle{
+
+.toggle {
 	cursor: pointer;
 }
-.form-check-input{
+
+.form-check-input {
 	margin-right: 5px;
 	vertical-align: text-bottom;
 }
-.form-check:not(.form-switch) .form-check-input[type="radio"]:after{
+
+.form-check:not(.form-switch) .form-check-input[type="radio"]:after {
 	width: 0.8rem;
-  height: 0.8rem;
+	height: 0.8rem;
 }
-.outputSettings{
+
+.outputSettings {
 	display: inline-block;
 	position: relative;
 	border: 1px solid #d2d6da;
@@ -251,7 +275,8 @@ watch(css, async (val) => {
 	margin: 30px 0 0 0;
 	padding: 15px 10px 10px 10px;
 }
-.outputSettings .settingLvl{
+
+.outputSettings .settingLvl {
 	position: absolute;
 	top: -15px;
 	font-weight: bold;

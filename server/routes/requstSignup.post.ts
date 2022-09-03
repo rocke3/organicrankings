@@ -2,9 +2,9 @@ import { env } from "node:process";
 import jwt from "jsonwebtoken";
 import md5 from "md5";
 import db from "../connection";
+import cookie from "../cookie";
 
 export default defineEventHandler(async (req) => {
-	const cookieMaxAge = 3600;
 	const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase();
 	const body = await useBody(req);
 
@@ -14,10 +14,12 @@ export default defineEventHandler(async (req) => {
 			.query("INSERT INTO `users` (`email`, `password`) VALUES (?,?)", [body.email, body.password])
 			.then((response) => {
 				const jwtData = { user: body.email };
-				const jwtToken = jwt.sign(jwtData, env.JWT_SECRET + userAgent, { expiresIn: cookieMaxAge });
-				setCookie(req, env.COOKIE_NAME, jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
-				setCookie(req, "org_log", md5(userAgent), { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
-				return { signup: true };
+
+				jwt.sign(jwtData, env.jwt_secret, { algorithm: "RS256", expiresIn: "3h" }, function (err, token) {
+					cookie.set(req, "user", token);
+					cookie.set(req, "log", md5(userAgent));
+					return { signup: true };
+				});
 			})
 			.catch((error) => {
 				if (error.code == "ER_DUP_ENTRY") {

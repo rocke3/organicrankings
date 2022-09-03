@@ -2,10 +2,10 @@ import { env } from "node:process";
 import jwt from "jsonwebtoken";
 import md5 from "md5";
 import db from "../connection";
+import cookie from "../cookie";
 
 export default defineEventHandler(async (req) => {
-	const cookieMaxAge = 3600;
-	const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase();
+	const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase() + "org@agrnt";
 	const body = await useBody(req);
 
 	if (validateInputs(body)) {
@@ -16,9 +16,9 @@ export default defineEventHandler(async (req) => {
 				var dbUser = rows[0] ?? false;
 				if (dbUser && dbUser.password == body.password) {
 					const jwtData = { user: body.email };
-					const jwtToken = jwt.sign(jwtData, env.JWT_SECRET + userAgent, { expiresIn: cookieMaxAge });
-					setCookie(req, env.COOKIE_NAME, jwtToken, { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
-					setCookie(req, "org_log", md5(userAgent), { maxAge: cookieMaxAge, httpOnly: true, sameSite: true }); //secure: true,
+					const jwtToken = jwt.sign(jwtData, env.jwt_secret, { expiresIn: "3h" });
+					cookie.set(req, "user", jwtToken);
+					cookie.set(req, "log", md5(userAgent));
 					return { login: true };
 				} else {
 					return { login: false, message: "Invalid Email or Password" };
@@ -26,6 +26,7 @@ export default defineEventHandler(async (req) => {
 			})
 			.catch((error) => {
 				console.log(error);
+
 				return { login: false, message: "Something went wrong please try again later" };
 			});
 

@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-definePageMeta({layout: "app-layout" });
+definePageMeta({ layout: "app-layout" });
 useHead({ title: "Dashboard - Organic Rankings" });
-
-
-
 </script>
-
-<template>
+		
+	<template>
 	<div>
 		<div class="row">
 			<div class="col-lg-7 position-relative z-index-2">
@@ -15,7 +11,8 @@ useHead({ title: "Dashboard - Organic Rankings" });
 					<div class="col-lg-5 col-sm-5">
 						<div class="card  mb-2">
 							<div class="card-header p-3 pt-2">
-								<div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
+								<div
+									class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
 									<i class="material-icons opacity-10">weekend</i>
 								</div>
 								<div class="text-end pt-1">
@@ -34,7 +31,8 @@ useHead({ title: "Dashboard - Organic Rankings" });
 					<div class="col-lg-5 col-sm-5 mt-sm-0 mt-4">
 						<div class="card  mb-2">
 							<div class="card-header p-3 pt-2 bg-transparent">
-								<div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+								<div
+									class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
 									<i class="material-icons opacity-10">store</i>
 								</div>
 								<div class="text-end pt-1">
@@ -55,8 +53,8 @@ useHead({ title: "Dashboard - Organic Rankings" });
 		</div>
 	</div>
 </template>
-
-
-<style scoped>
-
-</style>
+		
+		
+		<style scoped>
+		</style>
+		

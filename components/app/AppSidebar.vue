@@ -1,6 +1,10 @@
 <script setup>
 const router = useRouter();
 function signout() {
+	const cookieJwt = useCookie("org_user");
+	const cookieAgent = useCookie("org_log");
+	cookieJwt.value = '';
+	cookieAgent.value = '';
 	router.push("/signin");
 }
 
@@ -8,6 +12,15 @@ const menuItems = [
 	{ name: 'Dashboard', path: '/app', icon: 'dashboard' },
 	{ name: 'CSS Tools', path: '/app/csstools', icon: 'css' },
 ]
+
+async function requstLogout() {
+	const response = await $fetch("/requstLogout", {
+		method: "POST"
+	});
+	if (response) {
+		router.push("/signin");
+	}
+}
 </script>
 
 <template>
@@ -33,7 +46,7 @@ const menuItems = [
 		</div>
 		<div class="sidenav-footer position-absolute w-100 bottom-1 navbar-nav">
 			<div class="nav-item">
-				<a @click="signout" class="nav-link" type="button"><i class="material-icons opacity-10">logout</i>
+				<a @click="requstLogout" class="nav-link" type="button"><i class="material-icons opacity-10">logout</i>
 					<span class="nav-link-text ms-1">Sign out</span></a>
 			</div>
 		</div>

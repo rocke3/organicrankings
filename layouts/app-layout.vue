@@ -1,16 +1,16 @@
-<script setup lang="ts">
+<script setup>
 
 </script>
 
 <template>
 	<div>
-		<AppSidebar/>
+		<AppSidebar />
 		<main class="main-content position-relative max-height-vh-100 h-100">
-			<AppNavbar/>
+			<AppNavbar />
 			<div class="container-fluid py-4 pageContent">
 				<slot />
 			</div>
-			<AppFooter/>
+			<AppFooter />
 		</main>
 	</div>
 </template>
@@ -21,11 +21,13 @@
 main {
 	min-height: 100vh;
 }
+
 .pageContent {
 	min-height: 84vh;
 }
+
 @media only screen and (min-width: 1200px) {
-	.sidenav.fixed-start + .main-content {
+	.sidenav.fixed-start+.main-content {
 		margin-left: 15.65rem;
 	}
 }
