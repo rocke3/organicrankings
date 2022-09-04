@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, watch } from 'vue'
 definePageMeta({ layout: "app-layout" });
 useHead({ title: "CSS Tools - Organic Rankings" });

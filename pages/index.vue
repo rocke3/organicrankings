@@ -3,4 +3,4 @@ const router = useRouter();
 router.push("/signin");
 </script>
 
-<template></template>
+<template  v-once></template>

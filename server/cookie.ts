@@ -1,13 +1,28 @@
+import { setCookie, deleteCookie, getHeader } from "h3";
 import { env } from "node:process";
 
-const set = (req: object, name: string, value: string) => {
-	const cookieName = name == "user" ? env.cookie_user : env.cookie_log;
-	setCookie(req, cookieName, value, { maxAge: 3600 * 4, httpOnly: true, sameSite: true });
+enum cookieName {
+	JWT = "org_user",
+	AGENT = "org_log",
+}
+
+const agent = (req) => {
+	return getHeader(req, "user-agent").replace(/\s/g, "").toLowerCase() + env.agentSecret;
 };
 
-const remove = (req: object, name: string) => {
-	const cookieName = name == "user" ? env.cookie_user : env.cookie_log;
-	deleteCookie(req, cookieName);
+const set = (req, name: cookieName, value: string) => {
+	setCookie(req, name, value, { maxAge: 3600 * 4, httpOnly: true, sameSite: true });
 };
 
-export default { set, remove };
+const remove = (req, name: cookieName) => {
+	deleteCookie(req, name);
+};
+
+const cookie = {
+	agent: agent,
+	set: set,
+	remove: remove,
+	name: cookieName,
+};
+
+export default cookie;

@@ -3,10 +3,11 @@ import jwt from "jsonwebtoken";
 import md5 from "md5";
 import db from "../connection";
 import cookie from "../cookie";
+import { defineEventHandler, readBody } from "h3";
 
 export default defineEventHandler(async (req) => {
-	const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase() + "org@agrnt";
-	const body = await useBody(req);
+	const userAgent = md5(cookie.agent(req));
+	const body = await readBody(req);
 
 	if (validateInputs(body)) {
 		const isLogin = await db
@@ -16,9 +17,11 @@ export default defineEventHandler(async (req) => {
 				var dbUser = rows[0] ?? false;
 				if (dbUser && dbUser.password == body.password) {
 					const jwtData = { user: body.email };
-					const jwtToken = jwt.sign(jwtData, env.jwt_secret, { expiresIn: "3h" });
-					cookie.set(req, "user", jwtToken);
-					cookie.set(req, "log", md5(userAgent));
+					const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
+
+					cookie.set(req, cookie.name.JWT, jwtToken);
+					cookie.set(req, cookie.name.AGENT, userAgent);
+
 					return { login: true };
 				} else {
 					return { login: false, message: "Invalid Email or Password" };

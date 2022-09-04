@@ -1,12 +1,13 @@
 import { env } from "node:process";
+import { defineEventHandler, getHeader, readBody } from "h3";
 import jwt from "jsonwebtoken";
 import md5 from "md5";
 import db from "../connection";
 import cookie from "../cookie";
 
 export default defineEventHandler(async (req) => {
-	const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase();
-	const body = await useBody(req);
+	const userAgent = processUserAgent(getHeader(req, "user-agent"));
+	const body = await readBody(req);
 
 	if (validateInputs(body)) {
 		const isSignup = await db
@@ -15,9 +16,9 @@ export default defineEventHandler(async (req) => {
 			.then((response) => {
 				const jwtData = { user: body.email };
 
-				jwt.sign(jwtData, env.jwt_secret, { algorithm: "RS256", expiresIn: "3h" }, function (err, token) {
-					cookie.set(req, "user", token);
-					cookie.set(req, "log", md5(userAgent));
+				jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" }, function (err, token) {
+					cookie.set(req, cookie.name.JWT, token);
+					cookie.set(req, cookie.name.AGENT, md5(userAgent));
 					return { signup: true };
 				});
 			})
@@ -45,4 +46,8 @@ function validateInputs(body) {
 		return false;
 	}
 	return true;
+}
+
+function processUserAgent(text: String) {
+	return md5(text.replace(/\s/g, "").toLowerCase() + env.agentSecret);
 }

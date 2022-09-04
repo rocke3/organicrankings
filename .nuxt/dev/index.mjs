@@ -5,11 +5,12 @@ import { join } from 'path';
 import { mkdirSync } from 'fs';
 import { parentPort, threadId } from 'worker_threads';
 import { provider, isWindows } from 'file://C:/www/organicrankings/node_modules/std-env/dist/index.mjs';
-import { eventHandler, defineEventHandler, handleCacheHeaders, createEvent, getRequestHeader, useCookie, createApp, createRouter, lazyEventHandler, setCookie, deleteCookie, useBody, getQuery } from 'file://C:/www/organicrankings/node_modules/h3/dist/index.mjs';
 import { env } from 'node:process';
+import { eventHandler, defineEventHandler, handleCacheHeaders, createEvent, getHeader, setCookie, deleteCookie, getCookie, createApp, createRouter, lazyEventHandler, readBody, getQuery } from 'file://C:/www/organicrankings/node_modules/h3/dist/index.mjs';
 import jwt from 'file://C:/www/organicrankings/node_modules/jsonwebtoken/index.js';
 import md5 from 'file://C:/www/organicrankings/node_modules/md5/md5.js';
 import * as mysql from 'file://C:/www/organicrankings/node_modules/mysql2/index.js';
+import * as HTMLMinifier from 'file://C:/www/organicrankings/node_modules/html-minifier/src/htmlminifier.js';
 import { createRenderer } from 'file://C:/www/organicrankings/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import devalue from 'file://C:/www/organicrankings/node_modules/@nuxt/devalue/dist/devalue.mjs';
 import { renderToString } from 'file://C:/www/organicrankings/node_modules/vue/server-renderer/index.mjs';
@@ -363,27 +364,52 @@ const errorHandler = (async function errorhandler(error, event) {
   event.res.end(html);
 });
 
+var cookieName = /* @__PURE__ */ ((cookieName2) => {
+  cookieName2["JWT"] = "org_user";
+  cookieName2["AGENT"] = "org_log";
+  return cookieName2;
+})(cookieName || {});
+const agent = (req) => {
+  return getHeader(req, "user-agent").replace(/\s/g, "").toLowerCase() + env.agentSecret;
+};
+const set = (req, name, value) => {
+  setCookie(req, name, value, { maxAge: 3600 * 4, httpOnly: true, sameSite: true });
+};
+const remove = (req, name) => {
+  deleteCookie(req, name);
+};
+const cookie = {
+  agent,
+  set,
+  remove,
+  name: cookieName
+};
+const cookie$1 = cookie;
+
+const ignoreAuth = ["/requstLogout"];
+const noLogin = ["/", "/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha"];
 const _8VcAlk = defineEventHandler((event) => {
-  const nologin = ["/", "/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha"];
-  const req = event.req, res = event.res; event.next;
-  const userAgent = md5(getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase() + "org@agrnt");
-  const cookieJwt = useCookie(req, "org_user");
-  const cookieAgent = useCookie(req, "org_log");
-  if (cookieJwt && cookieAgent && cookieAgent == userAgent) {
-    jwt.verify(cookieJwt, env.jwt_secret, function(err, decoded) {
-      if (!err) {
-        if (nologin.includes(req.url)) {
-          console.log("access Redirect");
-          redirect(res, "/app");
+  const req = event.req, res = event.res, toUrl = req.originalUrl, userAgent = md5(cookie$1.agent(req)), cookieJwt = getCookie(req, cookie$1.name.JWT), cookieAgent = getCookie(req, cookie$1.name.AGENT);
+  if (!ignoreAuth.includes(toUrl)) {
+    if (cookieJwt && cookieAgent && cookieAgent == userAgent) {
+      jwt.verify(cookieJwt, env.jwtSecret, function(err, decoded) {
+        if (!err) {
+          if (noLogin.includes(toUrl)) {
+            console.log("Access Redirect");
+            redirect(res, "/app");
+          }
+        } else {
+          console.log("Invalid sign Redirect");
+          cookie$1.remove(req, cookie$1.name.JWT);
+          cookie$1.remove(req, cookie$1.name.AGENT);
+          redirect(res, "/signin");
         }
-      } else {
+      });
+    } else {
+      if (!noLogin.includes(toUrl)) {
+        console.log("No cookie Redirect");
         redirect(res, "/signin");
       }
-    });
-  } else {
-    if (!nologin.includes(req.url)) {
-      console.log("No access Redirect");
-      redirect(res, "/signin");
     }
   }
 });
@@ -397,6 +423,7 @@ const _lazy_RGRKVB = () => Promise.resolve().then(function () { return requstSig
 const _lazy_aXY4Sf = () => Promise.resolve().then(function () { return requstLogout_post$1; });
 const _lazy_gOUoue = () => Promise.resolve().then(function () { return passwordresetrequst_post$1; });
 const _lazy_6MLPhB = () => Promise.resolve().then(function () { return loadcaptcha$1; });
+const _lazy_1hY6BS = () => Promise.resolve().then(function () { return htmlTools_post$1; });
 const _lazy_u3PQD0 = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
@@ -406,6 +433,7 @@ const handlers = [
   { route: '/requstLogout', handler: _lazy_aXY4Sf, lazy: true, middleware: false, method: "post" },
   { route: '/passwordresetrequst', handler: _lazy_gOUoue, lazy: true, middleware: false, method: "post" },
   { route: '/loadcaptcha', handler: _lazy_6MLPhB, lazy: true, middleware: false, method: undefined },
+  { route: '/htmlTools', handler: _lazy_1hY6BS, lazy: true, middleware: false, method: "post" },
   { route: '/__nuxt_error', handler: _lazy_u3PQD0, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_u3PQD0, lazy: true, middleware: false, method: undefined }
 ];
@@ -484,32 +512,22 @@ server.listen(listenAddress, () => {
 }
 
 const db = mysql.createConnection({
-  host: env.DB_HOST,
-  user: env.DB_UESR,
-  password: env.DB_PAS,
-  database: env.DB_DB
+  host: env.dbHost,
+  user: env.dbUser,
+  password: env.dbPass,
+  database: env.dbDb
 });
 const db$1 = db;
 
-const set = (req, name, value) => {
-  const cookieName = name == "user" ? env.cookie_user : env.cookie_log;
-  setCookie(req, cookieName, value, { maxAge: 3600 * 4, httpOnly: true, sameSite: true });
-};
-const remove = (req, name) => {
-  const cookieName = name == "user" ? env.cookie_user : env.cookie_log;
-  deleteCookie(req, cookieName);
-};
-const cookie = { set, remove };
-
 const requstSignup_post = defineEventHandler(async (req) => {
-  const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase();
-  const body = await useBody(req);
+  const userAgent = processUserAgent(getHeader(req, "user-agent"));
+  const body = await readBody(req);
   if (validateInputs$1(body)) {
     const isSignup = await db$1.promise().query("INSERT INTO `users` (`email`, `password`) VALUES (?,?)", [body.email, body.password]).then((response) => {
       const jwtData = { user: body.email };
-      jwt.sign(jwtData, env.jwt_secret, { algorithm: "RS256", expiresIn: "3h" }, function(err, token) {
-        cookie.set(req, "user", token);
-        cookie.set(req, "log", md5(userAgent));
+      jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" }, function(err, token) {
+        cookie$1.set(req, cookie$1.name.JWT, token);
+        cookie$1.set(req, cookie$1.name.AGENT, md5(userAgent));
         return { signup: true };
       });
     }).catch((error) => {
@@ -535,6 +553,9 @@ function validateInputs$1(body) {
   }
   return true;
 }
+function processUserAgent(text) {
+  return md5(text.replace(/\s/g, "").toLowerCase() + env.agentSecret);
+}
 
 const requstSignup_post$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
@@ -542,17 +563,17 @@ const requstSignup_post$1 = /*#__PURE__*/Object.freeze({
 });
 
 const requstSignin_post = defineEventHandler(async (req) => {
-  const userAgent = getRequestHeader(req, "user-agent").replace(/\s/g, "").toLowerCase() + "org@agrnt";
-  const body = await useBody(req);
+  const userAgent = md5(cookie$1.agent(req));
+  const body = await readBody(req);
   if (validateInputs(body)) {
     const isLogin = await db$1.promise().query("SELECT * FROM users WHERE email = ?", [body.email]).then(([rows, fields]) => {
       var _a;
       var dbUser = (_a = rows[0]) != null ? _a : false;
       if (dbUser && dbUser.password == body.password) {
         const jwtData = { user: body.email };
-        const jwtToken = jwt.sign(jwtData, env.jwt_secret, { expiresIn: "3h" });
-        cookie.set(req, "user", jwtToken);
-        cookie.set(req, "log", md5(userAgent));
+        const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
+        cookie$1.set(req, cookie$1.name.JWT, jwtToken);
+        cookie$1.set(req, cookie$1.name.AGENT, userAgent);
         return { login: true };
       } else {
         return { login: false, message: "Invalid Email or Password" };
@@ -581,8 +602,8 @@ const requstSignin_post$1 = /*#__PURE__*/Object.freeze({
 });
 
 const requstLogout_post = defineEventHandler(async (req) => {
-  cookie.remove(req, "user");
-  cookie.remove(req, "log");
+  cookie$1.remove(req, cookie$1.name.JWT);
+  cookie$1.remove(req, cookie$1.name.AGENT);
   return true;
 });
 
@@ -592,7 +613,7 @@ const requstLogout_post$1 = /*#__PURE__*/Object.freeze({
 });
 
 const passwordresetrequst_post = defineEventHandler(async (event) => {
-  const body = await useBody(event);
+  const body = await readBody(event);
   const email = body.email;
   const confemail = body.confemail;
   if (!email.match(/^([\w-\.]{2,4})+@([\w-]{2,4})+\.+[\w-]{2,4}$/) || !confemail.match(/^([\w-\.]{2,4})+@([\w-]{2,4})+\.+[\w-]{2,4}$/) || email != confemail) {
@@ -618,6 +639,19 @@ const loadcaptcha = defineEventHandler((event) => {
 const loadcaptcha$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   'default': loadcaptcha
+});
+
+const minify = HTMLMinifier.minify;
+const htmlTools_post = defineEventHandler(async (event) => {
+  var options = JSON.parse(getHeader(event.req, "options"));
+  const body = await readBody(event);
+  const result = await minify(body, options);
+  return result;
+});
+
+const htmlTools_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  'default': htmlTools_post
 });
 
 function buildAssetsURL(...path) {
