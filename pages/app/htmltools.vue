@@ -1,23 +1,32 @@
 <script setup>
 definePageMeta({ layout: "app-layout" });
-useHead({ title: "HTML Tools - Organic Rankings" });
+useHead({ title: "HTML Tools - Organic Rankings" ,link: [
+      { 
+        rel: 'stylesheet', 
+        href: '/assets/js/rainbow-custom.min.js'
+      },
+      { 
+        rel: 'stylesheet', 
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
+      }
+    ]});
 
-
-const htmlOptions = [
-	{name: 'collapseWhitespace', value: false, label: "Collapse Whitespace (Minify)", toltip: ""},
-	{name: 'removeComments', value: false, label: "Remove Comments", toltip: ""},
-	{name: 'removeOptionalTags', value: false, label: "Remove optional tags", toltip: ""},
-	{name: 'removeEmptyElements', value: false, label: "Remove Empty Elements", toltip: ""},
-	{name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: ""},
-	{name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: ""},
-	{name: 'keepClosingSlash', value: false, label: "Keep Closing Slash", toltip: ""},
-	{name: 'preventAttributesEscaping', value: false, label: "Prevent Attributes Escaping", toltip: ""},
-	{name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: ""},
-	{name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: ""},
-	{name: 'removeScriptTypeAttributes', value: false, label: "Remove Script Type Attributes", toltip: ""},
-	{name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link Type Attributes", toltip: ""},
-	{name: 'sortAttributes', value: false, label: "Sort Attributes", toltip: ""},
-	{name: 'sortClassName', value: false, label: "Sort Class Name", toltip: ""}
+  const htmlOptions = [
+	{name: 'collapseWhitespace', value: false, label: "Collapse Whitespace (Minify)", toltip: "Collapse Whitespace (Minify Output HTML)"},
+	{name: 'minifyJS', value: false, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
+	{name: 'minifyCSS', value: false, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
+	{name: 'removeComments', value: false, label: "Remove Comments", toltip: "Remove all Comments from code"},
+	{name: 'collapseBooleanAttributes', value: false, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
+	{name: 'removeEmptyElements', value: false, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
+	{name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: "Remove Empty Attributes. EX: class=''"},
+	{name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: "Remove any spaces between display:inline; elements"},
+	{name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: "Keep a space before and after each tag"},
+	{name: 'keepClosingSlash', value: false, label: "Keep Closing Slash", toltip: "Keep the trailing slash on singleton elements"},
+	{name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: "Remove Attribute Quotes for single value. EX: class=btn"},
+	{name: 'removeScriptTypeAttributes', value: false, label: "Remove Script `Type` Attributes", toltip: "Remove Script `Type` Attributes"},
+	{name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link `Type` Attributes", toltip: "Remove Link `Type` Attributes"},
+	{name: 'sortAttributes', value: false, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
+	{name: 'sortClassName', value: false, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
 ]
 
 
@@ -56,13 +65,10 @@ async function optimizeHtml() {
   });
 }
 
-function checkMinifyOrNot(name) {
-  minify.value = (name == "collapseWhitespace") ? true : false;
-}
 
 function copyToClipboard() {
 	var range = document.createRange();
-	range.selectNode(document.getElementById("criricalcss"));
+	range.selectNode(document.getElementById("outputHtml"));
 	window.getSelection().removeAllRanges();
 	window.getSelection().addRange(range);
 	document.execCommand("copy");
@@ -81,10 +87,12 @@ function copyToClipboard() {
               <div class="outputSettings me-3">
                 <label class="settingLvl">Output Settings</label>
                 <div class="form-check ps-0">
-                  <label class="form-check-label me-2" v-for="(item, index) in options">
-                    <input class="form-check-input" type="checkbox" v-model="item.value"
-                      @click="checkMinifyOrNot(item.name)">
-                    {{item.label}}
+                  <label class="form-check-label me-3" v-for="(item, index) in options">
+                    <input class="formaa-check-input me-1" type="checkbox" v-model="item.value"
+                      @click="minify = (item.name == 'collapseWhitespace') ? true : false;">
+                    <ElementsTooltip :tooltip="item.toltip">
+                      {{item.label}}
+                    </ElementsTooltip>
                   </label>
                 </div>
               </div>
@@ -134,9 +142,8 @@ function copyToClipboard() {
                 <ElementsSpinner color="green" /> Downloading Critical CSS.
               </p>
             </div>
-            <div id="criricalcss">
-              <pre v-if="!minify">{{ outputHtml }}</pre>
-              <div v-else>{{ outputHtml }}</div>
+            <div>
+              <pre id="outputHtml" data-language="html" class="language-html">{{ outputHtml }}</pre>
             </div>
           </div>
           <div class="modal-footer">
@@ -155,6 +162,10 @@ function copyToClipboard() {
   
   
   <style scoped>
+  #outputHtml {
+    white-space: break-spaces;
+  }
+  
   .todo input {
     display: none;
   }
