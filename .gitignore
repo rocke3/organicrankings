@@ -1,6 +1,9 @@
 .idea/
 .vscode/
+.nuxt/
+.output/
 node_modules/
 build/
 tmp/
 temp/
+.env
