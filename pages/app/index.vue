@@ -5,6 +5,7 @@ useHead({ title: "Dashboard - Organic Rankings" });
 		
 	<template>
 	<div>
+
 	</div>
 </template>
 		

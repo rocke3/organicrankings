@@ -3048,7 +3048,7 @@ __vite_ssr_exports__.default = [
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_uxu2BF1Njl = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_KauFICH9ra = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -3142,7 +3142,6 @@ async function genarateCss() {
 __vite_ssr_import_6__.watch(css, async (val) => {
 	cssLength.value = val.length;
 })
-
 
 
 const __returned__ = { website, css, urlClass, cssClass, processing, cssLength, showOutputModal, outputcss, upload, genarate, beautify, todo, optimize, copyToClipboard, genarateCss, ref: __vite_ssr_import_6__.ref, watch: __vite_ssr_import_6__.watch }
@@ -3889,8 +3888,8 @@ __vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_4__.default(_sfc_m
 // Dependencies: 
 
 // --------------------
-const $id_SpxjCTnbTY = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
-__vite_ssr_exports__.default = "\n.cus-tooltip[data-v-75e3e590] {\r\n  position: relative;\r\n  display: inline-block;\n}\n.cus-tooltip .cus-tooltiptext[data-v-75e3e590] {\r\n  visibility: hidden;\r\n  width: 220px;\r\n  background-color: #555;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 10;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  margin-left: -60px;\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  transform: translate(-25%);\n}\n.cus-tooltip .cus-tooltiptext[data-v-75e3e590]::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #555 transparent transparent transparent;\n}\n.cus-tooltip:hover .cus-tooltiptext[data-v-75e3e590] {\r\n  visibility: visible;\r\n  opacity: 1;\n}\r\n";
+const $id_IVUgL0SFyZ = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+__vite_ssr_exports__.default = "\n.cus-tooltip[data-v-75e3e590] {\r\n  position: relative;\r\n  display: inline-block;\n}\n.cus-tooltip .cus-tooltiptext[data-v-75e3e590] {\r\n  visibility: hidden;\r\n  width: 220px;\r\n  background-color: #555;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 10;\r\n  bottom: 150%;\r\n  left: 50%;\r\n  margin-left: -60px;\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  transform: translate(-25%);\n}\n.cus-tooltip .cus-tooltiptext[data-v-75e3e590]::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #555 transparent transparent transparent;\n}\n.cus-tooltip:hover .cus-tooltiptext[data-v-75e3e590] {\r\n  visibility: visible;\r\n  opacity: 1;\n}\r\n";
 }
 
 
@@ -4149,7 +4148,7 @@ Object.defineProperty(__vite_ssr_exports__, "meta", { enumerable: true, configur
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_AFVRLHnP6T = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_YduHssUoYm = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -4170,24 +4169,15 @@ const _sfc_main = {
   expose();
 
 /*#__PURE__*/ false && __vite_ssr_import_4__.definePageMeta({ layout: "app-layout" });
-__vite_ssr_import_5__.useHead({ title: "HTML Tools - Organic Rankings" ,link: [
-      { 
-        rel: 'stylesheet', 
-        href: '/assets/js/rainbow-custom.min.js'
-      },
-      { 
-        rel: 'stylesheet', 
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
-      }
-    ]});
+__vite_ssr_import_5__.useHead({ title: "HTML Tools - Organic Rankings"});
 
-  const htmlOptions = [
-	{name: 'collapseWhitespace', value: false, label: "Collapse Whitespace (Minify)", toltip: "Collapse Whitespace (Minify Output HTML)"},
-	{name: 'minifyJS', value: false, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
-	{name: 'minifyCSS', value: false, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
-	{name: 'removeComments', value: false, label: "Remove Comments", toltip: "Remove all Comments from code"},
-	{name: 'collapseBooleanAttributes', value: false, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
-	{name: 'removeEmptyElements', value: false, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
+
+const htmlOptionsArr = [
+	{name: 'minifyJS', value: true, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
+	{name: 'minifyCSS', value: true, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
+	{name: 'removeComments', value: true, label: "Remove Comments", toltip: "Remove all Comments from code"},
+	{name: 'collapseBooleanAttributes', value: true, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
+	{name: 'removeEmptyElements', value: true, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
 	{name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: "Remove Empty Attributes. EX: class=''"},
 	{name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: "Remove any spaces between display:inline; elements"},
 	{name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: "Keep a space before and after each tag"},
@@ -4195,34 +4185,35 @@ __vite_ssr_import_5__.useHead({ title: "HTML Tools - Organic Rankings" ,link: [
 	{name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: "Remove Attribute Quotes for single value. EX: class=btn"},
 	{name: 'removeScriptTypeAttributes', value: false, label: "Remove Script `Type` Attributes", toltip: "Remove Script `Type` Attributes"},
 	{name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link `Type` Attributes", toltip: "Remove Link `Type` Attributes"},
-	{name: 'sortAttributes', value: false, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
-	{name: 'sortClassName', value: false, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
+	{name: 'sortAttributes', value: true, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
+	{name: 'sortClassName', value: true, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
 ]
 
 
 const html = __vite_ssr_import_6__.ref('')
-const options = __vite_ssr_import_6__.ref(htmlOptions)
+const htmlOptions = __vite_ssr_import_6__.ref(htmlOptionsArr)
 const cssClass = __vite_ssr_import_6__.ref('')
 const processing = __vite_ssr_import_6__.ref(false)
-const cssLength = __vite_ssr_import_6__.ref(0)
+const htmlLength = __vite_ssr_import_6__.ref(0)
 const showOutputModal = __vite_ssr_import_6__.ref(false)
 const outputHtml = __vite_ssr_import_6__.ref('')
 const upload = __vite_ssr_import_6__.ref(false)
 const genarate = __vite_ssr_import_6__.ref(false)
-const minify = __vite_ssr_import_6__.ref(false)
+const beautify = __vite_ssr_import_6__.ref(false)
 
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
-  var option = {};
-  for (var val of options.value) {
-    option[val.name] = val.value;
+  var options = {collapseWhitespace: true}
+  for (var val of htmlOptions.value) {
+    options[val.name] = val.value;
   }
   await $fetch("/htmlTools", {
     method: "POST",
     body: html.value,
     headers: {
-      options: JSON.stringify(option),
+      options: JSON.stringify(options),
+      beautify: beautify.value,
       "content-type": "application/octet-stream",
       "cache-control": "no-cache"
     }
@@ -4245,8 +4236,12 @@ function copyToClipboard() {
 	window.getSelection().removeAllRanges();
 }
 
+__vite_ssr_import_6__.watch(html, async (val) => {
+	htmlLength.value = val.length;
+})
 
-const __returned__ = { htmlOptions, html, options, cssClass, processing, cssLength, showOutputModal, outputHtml, upload, genarate, minify, optimizeHtml, copyToClipboard }
+
+const __returned__ = { htmlOptionsArr, html, htmlOptions, cssClass, processing, htmlLength, showOutputModal, outputHtml, upload, genarate, beautify, optimizeHtml, copyToClipboard }
 Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
 return __returned__
 }
@@ -4278,13 +4273,31 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
           _scopeId
         }><label class="settingLvl" data-v-e2ebeaf7${
           _scopeId
-        }>Output Settings</label><div class="form-check ps-0" data-v-e2ebeaf7${
+        }>Output Settings</label><div class="form-check form-switch d-flex align-items-center ps-0 mt-1" data-v-e2ebeaf7${
+          _scopeId
+        }><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': !$setup.beautify }, "toggle me-1"])
+        }" data-v-e2ebeaf7${
+          _scopeId
+        }>Minify </div><div class="ms-5 me-2" data-v-e2ebeaf7${
+          _scopeId
+        }><input class="form-check-input" type="checkbox"${
+          (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray($setup.beautify))
+            ? __vite_ssr_import_8__.ssrLooseContain($setup.beautify, null)
+            : $setup.beautify)) ? " checked" : ""
+        } data-v-e2ebeaf7${
+          _scopeId
+        }></div><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': $setup.beautify }, "toggle"])
+        }" data-v-e2ebeaf7${
+          _scopeId
+        }>Beautify</div></div><div class="form-check ps-0 mt-2" data-v-e2ebeaf7${
           _scopeId
         }><!--[-->`)
-        __vite_ssr_import_8__.ssrRenderList($setup.options, (item, index) => {
-          _push(`<label class="form-check-label me-3" data-v-e2ebeaf7${
+        __vite_ssr_import_8__.ssrRenderList($setup.htmlOptions, (item, index) => {
+          _push(`<label class="form-check-label me-3 mt-2" data-v-e2ebeaf7${
             _scopeId
-          }><input class="formaa-check-input me-1" type="checkbox"${
+          }><input class="form-check-input me-1" type="checkbox"${
             (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray(item.value))
               ? __vite_ssr_import_8__.ssrLooseContain(item.value, null)
               : item.value)) ? " checked" : ""
@@ -4317,11 +4330,13 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
           _scopeId
         }>${
           __vite_ssr_import_8__.ssrInterpolate($setup.html)
-        }</textarea></div><small class="cssLength" data-v-e2ebeaf7${
+        }</textarea></div><div class="text-end" data-v-e2ebeaf7${
+          _scopeId
+        }><small data-v-e2ebeaf7${
           _scopeId
         }>${
-          __vite_ssr_import_8__.ssrInterpolate($setup.cssLength)
-        } character</small><div class="mb-1 text-end mt-4" data-v-e2ebeaf7${
+          __vite_ssr_import_8__.ssrInterpolate($setup.htmlLength)
+        } character</small></div><div class="mb-1 text-end mt-4" data-v-e2ebeaf7${
           _scopeId
         }><button class="btn btn-primary" data-v-e2ebeaf7${
           _scopeId
@@ -4349,14 +4364,33 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             __vite_ssr_import_7__.createVNode("div", { class: "pb-2" }, [
               __vite_ssr_import_7__.createVNode("div", { class: "outputSettings me-3" }, [
                 __vite_ssr_import_7__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
-                __vite_ssr_import_7__.createVNode("div", { class: "form-check ps-0" }, [
-                  (__vite_ssr_import_7__.openBlock(true), __vite_ssr_import_7__.createBlock(__vite_ssr_import_7__.Fragment, null, __vite_ssr_import_7__.renderList($setup.options, (item, index) => {
-                    return (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", { class: "form-check-label me-3" }, [
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check form-switch d-flex align-items-center ps-0 mt-1" }, [
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle me-1", { 'text-primary': !$setup.beautify }],
+                    onClick: $event => ($setup.beautify = false)
+                  }, "Minify ", 10 /* CLASS, PROPS */, ["onClick"]),
+                  __vite_ssr_import_7__.createVNode("div", { class: "ms-5 me-2" }, [
+                    __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
+                      class: "form-check-input",
+                      type: "checkbox",
+                      "onUpdate:modelValue": $event => (($setup.beautify) = $event)
+                    }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                      [__vite_ssr_import_7__.vModelCheckbox, $setup.beautify]
+                    ])
+                  ]),
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle", { 'text-primary': $setup.beautify }],
+                    onClick: $event => ($setup.beautify = true)
+                  }, "Beautify", 10 /* CLASS, PROPS */, ["onClick"])
+                ]),
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check ps-0 mt-2" }, [
+                  (__vite_ssr_import_7__.openBlock(true), __vite_ssr_import_7__.createBlock(__vite_ssr_import_7__.Fragment, null, __vite_ssr_import_7__.renderList($setup.htmlOptions, (item, index) => {
+                    return (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", { class: "form-check-label me-3 mt-2" }, [
                       __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
-                        class: "formaa-check-input me-1",
+                        class: "form-check-input me-1",
                         type: "checkbox",
                         "onUpdate:modelValue": $event => ((item.value) = $event),
-                        onClick: $event => {$setup.minify = (item.name == 'collapseWhitespace') ? true : false;}
+                        onClick: $event => {_ctx.minify = (item.name == 'collapseWhitespace') ? true : false;}
                       }, null, 8 /* PROPS */, ["onUpdate:modelValue", "onClick"]), [
                         [__vite_ssr_import_7__.vModelCheckbox, item.value]
                       ]),
@@ -4385,7 +4419,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                 [__vite_ssr_import_7__.vModelText, $setup.html]
               ])
             ], 2 /* CLASS */),
-            __vite_ssr_import_7__.createVNode("small", { class: "cssLength" }, __vite_ssr_import_7__.toDisplayString($setup.cssLength) + " character", 1 /* TEXT */),
+            __vite_ssr_import_7__.createVNode("div", { class: "text-end" }, [
+              __vite_ssr_import_7__.createVNode("small", null, __vite_ssr_import_7__.toDisplayString($setup.htmlLength) + " character", 1 /* TEXT */)
+            ]),
             __vite_ssr_import_7__.createVNode("div", { class: "mb-1 text-end mt-4" }, [
               __vite_ssr_import_7__.createVNode("button", { class: "btn btn-primary" }, [
                 (!$setup.processing)
@@ -4408,7 +4444,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   }, _parent))
   _push(`</div></div><!-- Modal -->`)
   if ($setup.showOutputModal) {
-    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-e2ebeaf7><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-e2ebeaf7><div class="modal-content" data-v-e2ebeaf7><div class="modal-header" data-v-e2ebeaf7><h5 class="modal-title" data-v-e2ebeaf7>CSS Output (${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml.length)} character)</h5><button type="button" class="btn-close" data-v-e2ebeaf7><i class="material-icons" data-v-e2ebeaf7>close</i></button></div><div class="modal-body" data-v-e2ebeaf7>`)
+    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-e2ebeaf7><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-e2ebeaf7><div class="modal-content" data-v-e2ebeaf7><div class="modal-header" data-v-e2ebeaf7><h5 class="modal-title" data-v-e2ebeaf7>Output (${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml.length)} character)</h5><button type="button" class="btn-close" data-v-e2ebeaf7><i class="material-icons" data-v-e2ebeaf7>close</i></button></div><div class="modal-body" data-v-e2ebeaf7>`)
     if ($setup.processing) {
       _push(`<div class="text-success text-center" data-v-e2ebeaf7><p data-v-e2ebeaf7>`)
       if (!$setup.upload) {
@@ -4421,7 +4457,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
       } else {
         _push(`<!---->`)
       }
-      _push(` Uploading Your CSS. </p>`)
+      _push(` Uploading Your CODE. </p>`)
       if ($setup.upload) {
         _push(`<p data-v-e2ebeaf7>`)
         if (!$setup.genarate && $setup.upload) {
@@ -4434,14 +4470,14 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
         } else {
           _push(`<!---->`)
         }
-        _push(` Genarating Critical CSS. </p>`)
+        _push(` Genarating CODE. </p>`)
       } else {
         _push(`<!---->`)
       }
       if ($setup.genarate) {
         _push(`<p data-v-e2ebeaf7>`)
         _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
-        _push(` Downloading Critical CSS. </p>`)
+        _push(` Downloading CODE. </p>`)
       } else {
         _push(`<!---->`)
       }
@@ -4449,9 +4485,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
     } else {
       _push(`<!---->`)
     }
-    _push(`<div data-v-e2ebeaf7><pre id="outputHtml" data-language="html" class="language-html" data-v-e2ebeaf7>${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml)}</pre></div></div><div class="modal-footer" data-v-e2ebeaf7><button class="btn btn-secondary" data-v-e2ebeaf7> Close </button>`)
+    _push(`<div data-v-e2ebeaf7><pre data-v-e2ebeaf7><code id="outputHtml" data-language="html" class="html" data-v-e2ebeaf7>${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml)}</code></pre></div></div><div class="modal-footer" data-v-e2ebeaf7><button class="btn btn-secondary" data-v-e2ebeaf7> Close </button>`)
     if ($setup.outputHtml) {
-      _push(`<button class="btn btn-primary" data-v-e2ebeaf7> Copy Css </button>`)
+      _push(`<button class="btn btn-primary" data-v-e2ebeaf7> Copy code </button>`)
     } else {
       _push(`<!---->`)
     }
@@ -5978,7 +6014,7 @@ Object.defineProperty(__vite_ssr_exports__, "meta", { enumerable: true, configur
 // - /pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css ($id_E646jJtWCY)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_9BfplwZf5b = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_YJrKjAy5sz = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -6072,7 +6108,6 @@ async function genarateCss() {
 __vite_ssr_import_6__.watch(css, async (val) => {
 	cssLength.value = val.length;
 })
-
 
 
 const __returned__ = { website, css, urlClass, cssClass, processing, cssLength, showOutputModal, outputcss, upload, genarate, beautify, todo, optimize, copyToClipboard, genarateCss, ref: __vite_ssr_import_6__.ref, watch: __vite_ssr_import_6__.watch }
@@ -6638,7 +6673,7 @@ __vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_5__.default(_sfc_m
 // - /pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css ($id_vbTj8JkooZ)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_lokpg74fII = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_Sa9pFDjvRu = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -6659,24 +6694,15 @@ const _sfc_main = {
   expose();
 
 /*#__PURE__*/ false && __vite_ssr_import_4__.definePageMeta({ layout: "app-layout" });
-__vite_ssr_import_5__.useHead({ title: "HTML Tools - Organic Rankings" ,link: [
-      { 
-        rel: 'stylesheet', 
-        href: '/assets/js/rainbow-custom.min.js'
-      },
-      { 
-        rel: 'stylesheet', 
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
-      }
-    ]});
+__vite_ssr_import_5__.useHead({ title: "HTML Tools - Organic Rankings"});
 
-  const htmlOptions = [
-	{name: 'collapseWhitespace', value: false, label: "Collapse Whitespace (Minify)", toltip: "Collapse Whitespace (Minify Output HTML)"},
-	{name: 'minifyJS', value: false, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
-	{name: 'minifyCSS', value: false, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
-	{name: 'removeComments', value: false, label: "Remove Comments", toltip: "Remove all Comments from code"},
-	{name: 'collapseBooleanAttributes', value: false, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
-	{name: 'removeEmptyElements', value: false, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
+
+const htmlOptionsArr = [
+	{name: 'minifyJS', value: true, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
+	{name: 'minifyCSS', value: true, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
+	{name: 'removeComments', value: true, label: "Remove Comments", toltip: "Remove all Comments from code"},
+	{name: 'collapseBooleanAttributes', value: true, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
+	{name: 'removeEmptyElements', value: true, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
 	{name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: "Remove Empty Attributes. EX: class=''"},
 	{name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: "Remove any spaces between display:inline; elements"},
 	{name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: "Keep a space before and after each tag"},
@@ -6684,34 +6710,35 @@ __vite_ssr_import_5__.useHead({ title: "HTML Tools - Organic Rankings" ,link: [
 	{name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: "Remove Attribute Quotes for single value. EX: class=btn"},
 	{name: 'removeScriptTypeAttributes', value: false, label: "Remove Script `Type` Attributes", toltip: "Remove Script `Type` Attributes"},
 	{name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link `Type` Attributes", toltip: "Remove Link `Type` Attributes"},
-	{name: 'sortAttributes', value: false, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
-	{name: 'sortClassName', value: false, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
+	{name: 'sortAttributes', value: true, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
+	{name: 'sortClassName', value: true, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
 ]
 
 
 const html = __vite_ssr_import_6__.ref('')
-const options = __vite_ssr_import_6__.ref(htmlOptions)
+const htmlOptions = __vite_ssr_import_6__.ref(htmlOptionsArr)
 const cssClass = __vite_ssr_import_6__.ref('')
 const processing = __vite_ssr_import_6__.ref(false)
-const cssLength = __vite_ssr_import_6__.ref(0)
+const htmlLength = __vite_ssr_import_6__.ref(0)
 const showOutputModal = __vite_ssr_import_6__.ref(false)
 const outputHtml = __vite_ssr_import_6__.ref('')
 const upload = __vite_ssr_import_6__.ref(false)
 const genarate = __vite_ssr_import_6__.ref(false)
-const minify = __vite_ssr_import_6__.ref(false)
+const beautify = __vite_ssr_import_6__.ref(false)
 
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
-  var option = {};
-  for (var val of options.value) {
-    option[val.name] = val.value;
+  var options = {collapseWhitespace: true}
+  for (var val of htmlOptions.value) {
+    options[val.name] = val.value;
   }
   await $fetch("/htmlTools", {
     method: "POST",
     body: html.value,
     headers: {
-      options: JSON.stringify(option),
+      options: JSON.stringify(options),
+      beautify: beautify.value,
       "content-type": "application/octet-stream",
       "cache-control": "no-cache"
     }
@@ -6734,8 +6761,12 @@ function copyToClipboard() {
 	window.getSelection().removeAllRanges();
 }
 
+__vite_ssr_import_6__.watch(html, async (val) => {
+	htmlLength.value = val.length;
+})
 
-const __returned__ = { htmlOptions, html, options, cssClass, processing, cssLength, showOutputModal, outputHtml, upload, genarate, minify, optimizeHtml, copyToClipboard }
+
+const __returned__ = { htmlOptionsArr, html, htmlOptions, cssClass, processing, htmlLength, showOutputModal, outputHtml, upload, genarate, beautify, optimizeHtml, copyToClipboard }
 Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
 return __returned__
 }
@@ -6767,13 +6798,31 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
           _scopeId
         }><label class="settingLvl" data-v-e2ebeaf7${
           _scopeId
-        }>Output Settings</label><div class="form-check ps-0" data-v-e2ebeaf7${
+        }>Output Settings</label><div class="form-check form-switch d-flex align-items-center ps-0 mt-1" data-v-e2ebeaf7${
+          _scopeId
+        }><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': !$setup.beautify }, "toggle me-1"])
+        }" data-v-e2ebeaf7${
+          _scopeId
+        }>Minify </div><div class="ms-5 me-2" data-v-e2ebeaf7${
+          _scopeId
+        }><input class="form-check-input" type="checkbox"${
+          (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray($setup.beautify))
+            ? __vite_ssr_import_8__.ssrLooseContain($setup.beautify, null)
+            : $setup.beautify)) ? " checked" : ""
+        } data-v-e2ebeaf7${
+          _scopeId
+        }></div><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': $setup.beautify }, "toggle"])
+        }" data-v-e2ebeaf7${
+          _scopeId
+        }>Beautify</div></div><div class="form-check ps-0 mt-2" data-v-e2ebeaf7${
           _scopeId
         }><!--[-->`)
-        __vite_ssr_import_8__.ssrRenderList($setup.options, (item, index) => {
-          _push(`<label class="form-check-label me-3" data-v-e2ebeaf7${
+        __vite_ssr_import_8__.ssrRenderList($setup.htmlOptions, (item, index) => {
+          _push(`<label class="form-check-label me-3 mt-2" data-v-e2ebeaf7${
             _scopeId
-          }><input class="formaa-check-input me-1" type="checkbox"${
+          }><input class="form-check-input me-1" type="checkbox"${
             (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray(item.value))
               ? __vite_ssr_import_8__.ssrLooseContain(item.value, null)
               : item.value)) ? " checked" : ""
@@ -6806,11 +6855,13 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
           _scopeId
         }>${
           __vite_ssr_import_8__.ssrInterpolate($setup.html)
-        }</textarea></div><small class="cssLength" data-v-e2ebeaf7${
+        }</textarea></div><div class="text-end" data-v-e2ebeaf7${
+          _scopeId
+        }><small data-v-e2ebeaf7${
           _scopeId
         }>${
-          __vite_ssr_import_8__.ssrInterpolate($setup.cssLength)
-        } character</small><div class="mb-1 text-end mt-4" data-v-e2ebeaf7${
+          __vite_ssr_import_8__.ssrInterpolate($setup.htmlLength)
+        } character</small></div><div class="mb-1 text-end mt-4" data-v-e2ebeaf7${
           _scopeId
         }><button class="btn btn-primary" data-v-e2ebeaf7${
           _scopeId
@@ -6838,14 +6889,33 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             __vite_ssr_import_7__.createVNode("div", { class: "pb-2" }, [
               __vite_ssr_import_7__.createVNode("div", { class: "outputSettings me-3" }, [
                 __vite_ssr_import_7__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
-                __vite_ssr_import_7__.createVNode("div", { class: "form-check ps-0" }, [
-                  (__vite_ssr_import_7__.openBlock(true), __vite_ssr_import_7__.createBlock(__vite_ssr_import_7__.Fragment, null, __vite_ssr_import_7__.renderList($setup.options, (item, index) => {
-                    return (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", { class: "form-check-label me-3" }, [
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check form-switch d-flex align-items-center ps-0 mt-1" }, [
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle me-1", { 'text-primary': !$setup.beautify }],
+                    onClick: $event => ($setup.beautify = false)
+                  }, "Minify ", 10 /* CLASS, PROPS */, ["onClick"]),
+                  __vite_ssr_import_7__.createVNode("div", { class: "ms-5 me-2" }, [
+                    __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
+                      class: "form-check-input",
+                      type: "checkbox",
+                      "onUpdate:modelValue": $event => (($setup.beautify) = $event)
+                    }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                      [__vite_ssr_import_7__.vModelCheckbox, $setup.beautify]
+                    ])
+                  ]),
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle", { 'text-primary': $setup.beautify }],
+                    onClick: $event => ($setup.beautify = true)
+                  }, "Beautify", 10 /* CLASS, PROPS */, ["onClick"])
+                ]),
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check ps-0 mt-2" }, [
+                  (__vite_ssr_import_7__.openBlock(true), __vite_ssr_import_7__.createBlock(__vite_ssr_import_7__.Fragment, null, __vite_ssr_import_7__.renderList($setup.htmlOptions, (item, index) => {
+                    return (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", { class: "form-check-label me-3 mt-2" }, [
                       __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
-                        class: "formaa-check-input me-1",
+                        class: "form-check-input me-1",
                         type: "checkbox",
                         "onUpdate:modelValue": $event => ((item.value) = $event),
-                        onClick: $event => {$setup.minify = (item.name == 'collapseWhitespace') ? true : false;}
+                        onClick: $event => {_ctx.minify = (item.name == 'collapseWhitespace') ? true : false;}
                       }, null, 8 /* PROPS */, ["onUpdate:modelValue", "onClick"]), [
                         [__vite_ssr_import_7__.vModelCheckbox, item.value]
                       ]),
@@ -6874,7 +6944,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
                 [__vite_ssr_import_7__.vModelText, $setup.html]
               ])
             ], 2 /* CLASS */),
-            __vite_ssr_import_7__.createVNode("small", { class: "cssLength" }, __vite_ssr_import_7__.toDisplayString($setup.cssLength) + " character", 1 /* TEXT */),
+            __vite_ssr_import_7__.createVNode("div", { class: "text-end" }, [
+              __vite_ssr_import_7__.createVNode("small", null, __vite_ssr_import_7__.toDisplayString($setup.htmlLength) + " character", 1 /* TEXT */)
+            ]),
             __vite_ssr_import_7__.createVNode("div", { class: "mb-1 text-end mt-4" }, [
               __vite_ssr_import_7__.createVNode("button", { class: "btn btn-primary" }, [
                 (!$setup.processing)
@@ -6897,7 +6969,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
   }, _parent))
   _push(`</div></div><!-- Modal -->`)
   if ($setup.showOutputModal) {
-    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-e2ebeaf7><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-e2ebeaf7><div class="modal-content" data-v-e2ebeaf7><div class="modal-header" data-v-e2ebeaf7><h5 class="modal-title" data-v-e2ebeaf7>CSS Output (${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml.length)} character)</h5><button type="button" class="btn-close" data-v-e2ebeaf7><i class="material-icons" data-v-e2ebeaf7>close</i></button></div><div class="modal-body" data-v-e2ebeaf7>`)
+    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-e2ebeaf7><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-e2ebeaf7><div class="modal-content" data-v-e2ebeaf7><div class="modal-header" data-v-e2ebeaf7><h5 class="modal-title" data-v-e2ebeaf7>Output (${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml.length)} character)</h5><button type="button" class="btn-close" data-v-e2ebeaf7><i class="material-icons" data-v-e2ebeaf7>close</i></button></div><div class="modal-body" data-v-e2ebeaf7>`)
     if ($setup.processing) {
       _push(`<div class="text-success text-center" data-v-e2ebeaf7><p data-v-e2ebeaf7>`)
       if (!$setup.upload) {
@@ -6910,7 +6982,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
       } else {
         _push(`<!---->`)
       }
-      _push(` Uploading Your CSS. </p>`)
+      _push(` Uploading Your CODE. </p>`)
       if ($setup.upload) {
         _push(`<p data-v-e2ebeaf7>`)
         if (!$setup.genarate && $setup.upload) {
@@ -6923,14 +6995,14 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
         } else {
           _push(`<!---->`)
         }
-        _push(` Genarating Critical CSS. </p>`)
+        _push(` Genarating CODE. </p>`)
       } else {
         _push(`<!---->`)
       }
       if ($setup.genarate) {
         _push(`<p data-v-e2ebeaf7>`)
         _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
-        _push(` Downloading Critical CSS. </p>`)
+        _push(` Downloading CODE. </p>`)
       } else {
         _push(`<!---->`)
       }
@@ -6938,9 +7010,9 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
     } else {
       _push(`<!---->`)
     }
-    _push(`<div data-v-e2ebeaf7><pre id="outputHtml" data-language="html" class="language-html" data-v-e2ebeaf7>${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml)}</pre></div></div><div class="modal-footer" data-v-e2ebeaf7><button class="btn btn-secondary" data-v-e2ebeaf7> Close </button>`)
+    _push(`<div data-v-e2ebeaf7><pre data-v-e2ebeaf7><code id="outputHtml" data-language="html" class="html" data-v-e2ebeaf7>${__vite_ssr_import_8__.ssrInterpolate($setup.outputHtml)}</code></pre></div></div><div class="modal-footer" data-v-e2ebeaf7><button class="btn btn-secondary" data-v-e2ebeaf7> Close </button>`)
     if ($setup.outputHtml) {
-      _push(`<button class="btn btn-primary" data-v-e2ebeaf7> Copy Css </button>`)
+      _push(`<button class="btn btn-primary" data-v-e2ebeaf7> Copy code </button>`)
     } else {
       _push(`<!---->`)
     }
@@ -6975,8 +7047,8 @@ __vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_11__.default(_sfc_
 // Dependencies: 
 
 // --------------------
-const $id_lSqGvBBtAB = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
-__vite_ssr_exports__.default = "\n#outputHtml[data-v-e2ebeaf7] {\r\n    white-space: break-spaces;\n}\n.todo input[data-v-e2ebeaf7] {\r\n    display: none;\n}\n.form-check.active label[data-v-e2ebeaf7] {\r\n    color: #fff !important\n}\n.cssLength[data-v-e2ebeaf7] {\r\n    float: right;\n}\n.modal[data-v-e2ebeaf7] {\r\n    display: block;\r\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-body .material-icons[data-v-e2ebeaf7] {\r\n    vertical-align: middle;\n}\n.btn-close[data-v-e2ebeaf7] {\r\n    padding: 0;\n}\n.btn-close .material-icons[data-v-e2ebeaf7] {\r\n    color: black;\r\n    vertical-align: top;\n}\n.todo label[data-v-e2ebeaf7] {\r\n    text-transform: capitalize;\n}\n.outputSettings[data-v-e2ebeaf7] {\r\n    display: inline-block;\r\n    position: relative;\r\n    border: 1px solid #d2d6da;\r\n    border-radius: 0.375rem;\r\n    margin: 30px 0 0 0;\r\n    padding: 15px 10px 10px 10px;\n}\n.outputSettings .settingLvl[data-v-e2ebeaf7] {\r\n    position: absolute;\r\n    top: -15px;\r\n    font-weight: bold;\r\n    background: #fff;\r\n    left: 2px;\r\n    padding: 3px;\n}\n.form-check:not(.form-switch) .form-check-input[type=\"checkbox\"][data-v-e2ebeaf7]:after {\r\n    content: \"\";\n}\n.form-check:not(.form-switch) .form-check-input[type=\"checkbox\"][data-v-e2ebeaf7] {\r\n    margin: 1px 2px 0 0;\n}\r\n  ";
+const $id_OWVnGxyy8j = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+__vite_ssr_exports__.default = "\n#outputHtml[data-v-e2ebeaf7] {\r\n    white-space: break-spaces;\n}\n.list-inline-item[data-v-e2ebeaf7] {\r\n    min-width: 235px;\n}\n.todo input[data-v-e2ebeaf7] {\r\n    display: none;\n}\n.form-check.active label[data-v-e2ebeaf7] {\r\n    color: #fff !important\n}\n.toggle[data-v-e2ebeaf7] {\r\n    cursor: pointer;\n}\n.modal[data-v-e2ebeaf7] {\r\n    display: block;\r\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-body .material-icons[data-v-e2ebeaf7] {\r\n    vertical-align: middle;\n}\n.btn-close[data-v-e2ebeaf7] {\r\n    padding: 0;\n}\n.btn-close .material-icons[data-v-e2ebeaf7] {\r\n    color: black;\r\n    vertical-align: top;\n}\n.todo label[data-v-e2ebeaf7] {\r\n    text-transform: capitalize;\n}\n.outputSettings[data-v-e2ebeaf7] {\r\n    display: inline-block;\r\n    position: relative;\r\n    border: 1px solid #d2d6da;\r\n    border-radius: 0.375rem;\r\n    margin: 30px 0 0 0;\r\n    padding: 15px 10px 10px 10px;\n}\n.outputSettings .settingLvl[data-v-e2ebeaf7] {\r\n    position: absolute;\r\n    top: -15px;\r\n    font-weight: bold;\r\n    background: #fff;\r\n    left: 2px;\r\n    padding: 3px;\n}\n.form-check:not(.form-switch) .form-check-input[type=\"checkbox\"][data-v-e2ebeaf7]:after {\r\n    content: \"\";\n}\n.form-check:not(.form-switch) .form-check-input[type=\"checkbox\"][data-v-e2ebeaf7] {\r\n    margin: 1px 2px 0 0;\n}\r\n  ";
 }
 
 
@@ -9537,20 +9609,20 @@ const __modules__ = {
   "/node_modules/nuxt/dist/pages/runtime/utils.mjs": $id_ZR0LUqwyer,
   "/node_modules/nuxt/dist/app/components/utils.mjs": $id_NgApSiB2xA,
   "/@id/virtual:nuxt:C:/www/organicrankings/.nuxt/routes.mjs": $id_Cf8Hlf9i6m,
-  "/pages/app/csstools.vue?macro=true": $id_uxu2BF1Njl,
+  "/pages/app/csstools.vue?macro=true": $id_KauFICH9ra,
   "/components/elements/BsCard.vue": $id_k2uADfOTl7,
   "vue/server-renderer": $id_aRHphPzMpI,
   "/components/elements/BsCard.vue?vue&type=style&index=0&scoped=026398e5&lang.css": $id_P42EDUSzaN,
   "/@id/__x00__plugin-vue:export-helper": $id_mHD6riC5ol,
   "/components/elements/Tooltip.vue": $id_0lRxI8bDIc,
-  "/components/elements/Tooltip.vue?vue&type=style&index=0&scoped=75e3e590&lang.css": $id_SpxjCTnbTY,
+  "/components/elements/Tooltip.vue?vue&type=style&index=0&scoped=75e3e590&lang.css": $id_IVUgL0SFyZ,
   "/components/elements/Spinner.vue": $id_SH4eH1Wz1R,
   "/components/elements/Spinner.vue?vue&type=style&index=0&scoped=fd317803&lang.css": $id_HZbO5u0MDL,
   "/components/elements/Processing.vue": $id_qIhB1ABUFi,
   "/components/elements/Processing.vue?vue&type=style&index=0&scoped=8000fe06&lang.css": $id_NcE1s8Wirl,
   "/node_modules/nuxt/dist/pages/runtime/composables.mjs": $id_PgbhbSnfkR,
   "/pages/app/dashboard.vue?macro=true": $id_dRS2pZfHBq,
-  "/pages/app/htmltools.vue?macro=true": $id_AFVRLHnP6T,
+  "/pages/app/htmltools.vue?macro=true": $id_YduHssUoYm,
   "/pages/app/index.vue?macro=true": $id_oY1Z7dLZzs,
   "/pages/app/jstools.vue?macro=true": $id_VKkuiZMX8E,
   "/pages/index.vue?macro=true": $id_Abu5Z9bR98,
@@ -9562,11 +9634,11 @@ const __modules__ = {
   "/pages/signin.vue?macro=true": $id_YYkkeVIgQ0,
   "/components/elements/InputPassword.vue": $id_UQ6QpqQah9,
   "/pages/signup.vue?macro=true": $id_XzxhBfjpAn,
-  "/pages/app/csstools.vue": $id_9BfplwZf5b,
+  "/pages/app/csstools.vue": $id_YJrKjAy5sz,
   "/pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css": $id_arVKCymY8s,
   "/pages/app/dashboard.vue": $id_2mqzKDTAoe,
-  "/pages/app/htmltools.vue": $id_lokpg74fII,
-  "/pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css": $id_lSqGvBBtAB,
+  "/pages/app/htmltools.vue": $id_Sa9pFDjvRu,
+  "/pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css": $id_OWVnGxyy8j,
   "/pages/app/index.vue": $id_lECjhA6j9J,
   "/pages/app/jstools.vue": $id_l3UlqH7l30,
   "/pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css": $id_PPIr5Py33A,

@@ -1,23 +1,14 @@
 <script setup>
 definePageMeta({ layout: "app-layout" });
-useHead({ title: "HTML Tools - Organic Rankings" ,link: [
-      { 
-        rel: 'stylesheet', 
-        href: '/assets/js/rainbow-custom.min.js'
-      },
-      { 
-        rel: 'stylesheet', 
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
-      }
-    ]});
+useHead({ title: "HTML Tools - Organic Rankings"});
 
-  const htmlOptions = [
-	{name: 'collapseWhitespace', value: false, label: "Collapse Whitespace (Minify)", toltip: "Collapse Whitespace (Minify Output HTML)"},
-	{name: 'minifyJS', value: false, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
-	{name: 'minifyCSS', value: false, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
-	{name: 'removeComments', value: false, label: "Remove Comments", toltip: "Remove all Comments from code"},
-	{name: 'collapseBooleanAttributes', value: false, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
-	{name: 'removeEmptyElements', value: false, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
+
+const htmlOptionsArr = [
+	{name: 'minifyJS', value: true, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
+	{name: 'minifyCSS', value: true, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
+	{name: 'removeComments', value: true, label: "Remove Comments", toltip: "Remove all Comments from code"},
+	{name: 'collapseBooleanAttributes', value: true, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
+	{name: 'removeEmptyElements', value: true, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
 	{name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: "Remove Empty Attributes. EX: class=''"},
 	{name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: "Remove any spaces between display:inline; elements"},
 	{name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: "Keep a space before and after each tag"},
@@ -25,34 +16,35 @@ useHead({ title: "HTML Tools - Organic Rankings" ,link: [
 	{name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: "Remove Attribute Quotes for single value. EX: class=btn"},
 	{name: 'removeScriptTypeAttributes', value: false, label: "Remove Script `Type` Attributes", toltip: "Remove Script `Type` Attributes"},
 	{name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link `Type` Attributes", toltip: "Remove Link `Type` Attributes"},
-	{name: 'sortAttributes', value: false, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
-	{name: 'sortClassName', value: false, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
+	{name: 'sortAttributes', value: true, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
+	{name: 'sortClassName', value: true, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
 ]
 
 
 const html = ref('')
-const options = ref(htmlOptions)
+const htmlOptions = ref(htmlOptionsArr)
 const cssClass = ref('')
 const processing = ref(false)
-const cssLength = ref(0)
+const htmlLength = ref(0)
 const showOutputModal = ref(false)
 const outputHtml = ref('')
 const upload = ref(false)
 const genarate = ref(false)
-const minify = ref(false)
+const beautify = ref(false)
 
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
-  var option = {};
-  for (var val of options.value) {
-    option[val.name] = val.value;
+  var options = {collapseWhitespace: true}
+  for (var val of htmlOptions.value) {
+    options[val.name] = val.value;
   }
   await $fetch("/htmlTools", {
     method: "POST",
     body: html.value,
     headers: {
-      options: JSON.stringify(option),
+      options: JSON.stringify(options),
+      beautify: beautify.value,
       "content-type": "application/octet-stream",
       "cache-control": "no-cache"
     }
@@ -75,6 +67,10 @@ function copyToClipboard() {
 	window.getSelection().removeAllRanges();
 }
 
+watch(html, async (val) => {
+	htmlLength.value = val.length;
+})
+
 </script>
   
 <template>
@@ -86,9 +82,18 @@ function copyToClipboard() {
             <div class="pb-2">
               <div class="outputSettings me-3">
                 <label class="settingLvl">Output Settings</label>
-                <div class="form-check ps-0">
-                  <label class="form-check-label me-3" v-for="(item, index) in options">
-                    <input class="formaa-check-input me-1" type="checkbox" v-model="item.value"
+                <div class="form-check form-switch d-flex align-items-center ps-0 mt-1">
+                  <div class="toggle me-1" :class="{ 'text-primary': !beautify }" @click="beautify = false">Minify
+                  </div>
+                  <div class="ms-5 me-2">
+                    <input class="form-check-input" type="checkbox" v-model="beautify" />
+                  </div>
+                  <div class="toggle" :class="{ 'text-primary': beautify }" @click="beautify = true">Beautify</div>
+                </div>
+
+                <div class="form-check ps-0 mt-2">
+                  <label class="form-check-label me-3 mt-2" v-for="(item, index) in htmlOptions">
+                    <input class="form-check-input me-1" type="checkbox" v-model="item.value"
                       @click="minify = (item.name == 'collapseWhitespace') ? true : false;">
                     <ElementsTooltip :tooltip="item.toltip">
                       {{item.label}}
@@ -102,7 +107,9 @@ function copyToClipboard() {
               <label class="form-label">All HTML </label>
               <textarea class="form-control" rows="10" v-model="html"></textarea>
             </div>
-            <small class="cssLength">{{ cssLength }} character</small>
+            <div class="text-end">
+              <small>{{ htmlLength }} character</small>
+            </div>
             <div class="mb-1 text-end mt-4">
               <button class="btn btn-primary">
                 <span v-if="!processing">Genarate</span>
@@ -123,7 +130,7 @@ function copyToClipboard() {
       <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">CSS Output ({{ outputHtml.length }} character)</h5>
+            <h5 class="modal-title">Output ({{ outputHtml.length }} character)</h5>
             <button type="button" class="btn-close" @click="showOutputModal = false">
               <i class="material-icons">close</i>
             </button>
@@ -132,18 +139,18 @@ function copyToClipboard() {
             <div v-if="processing" class="text-success text-center">
               <p>
                 <ElementsSpinner color="green" v-if="!upload" /><i v-if="upload" class='material-icons'>task_alt</i>
-                Uploading Your CSS.
+                Uploading Your CODE.
               </p>
               <p v-if="upload">
                 <ElementsSpinner color="green" v-if="!genarate && upload" /><i v-if="genarate"
-                  class='material-icons'>task_alt</i> Genarating Critical CSS.
+                  class='material-icons'>task_alt</i> Genarating CODE.
               </p>
               <p v-if="genarate">
-                <ElementsSpinner color="green" /> Downloading Critical CSS.
+                <ElementsSpinner color="green" /> Downloading CODE.
               </p>
             </div>
             <div>
-              <pre id="outputHtml" data-language="html" class="language-html">{{ outputHtml }}</pre>
+              <pre><code id="outputHtml" data-language="html" class="html">{{ outputHtml }}</code></pre>
             </div>
           </div>
           <div class="modal-footer">
@@ -151,7 +158,7 @@ function copyToClipboard() {
               Close
             </button>
             <button v-if="outputHtml" class="btn btn-primary" @click="copyToClipboard">
-              Copy Css
+              Copy code
             </button>
           </div>
         </div>
@@ -166,6 +173,10 @@ function copyToClipboard() {
     white-space: break-spaces;
   }
   
+  .list-inline-item {
+    min-width: 235px;
+  }
+  
   .todo input {
     display: none;
   }
@@ -174,8 +185,8 @@ function copyToClipboard() {
     color: #fff !important
   }
   
-  .cssLength {
-    float: right;
+  .toggle {
+    cursor: pointer;
   }
   
   .modal {

@@ -11,6 +11,7 @@ import jwt from 'file://C:/www/organicrankings/node_modules/jsonwebtoken/index.j
 import md5 from 'file://C:/www/organicrankings/node_modules/md5/md5.js';
 import * as mysql from 'file://C:/www/organicrankings/node_modules/mysql2/index.js';
 import * as HTMLMinifier from 'file://C:/www/organicrankings/node_modules/html-minifier/src/htmlminifier.js';
+import js_beautify from 'file://C:/www/organicrankings/node_modules/js-beautify/js/index.js';
 import { createRenderer } from 'file://C:/www/organicrankings/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import devalue from 'file://C:/www/organicrankings/node_modules/@nuxt/devalue/dist/devalue.mjs';
 import { renderToString } from 'file://C:/www/organicrankings/node_modules/vue/server-renderer/index.mjs';
@@ -644,8 +645,12 @@ const loadcaptcha$1 = /*#__PURE__*/Object.freeze({
 const minify = HTMLMinifier.minify;
 const htmlTools_post = defineEventHandler(async (event) => {
   var options = JSON.parse(getHeader(event.req, "options"));
+  var output = getHeader(event.req, "output");
   const body = await readBody(event);
-  const result = await minify(body, options);
+  var result = await minify(body, options);
+  if (output == "beautify") {
+    result = js_beautify.html(result, { indent_size: 2, space_in_empty_paren: true });
+  }
   return result;
 });
 

@@ -6,7 +6,7 @@
 
 <template>
   <div class="cus-tooltip">
-    <slot/>
+    <slot />
     <span class="cus-tooltiptext">{{tooltip}}</span>
   </div>
 </template>
@@ -27,7 +27,7 @@
   padding: 5px;
   position: absolute;
   z-index: 10;
-  bottom: 125%;
+  bottom: 150%;
   left: 50%;
   margin-left: -60px;
   opacity: 0;
