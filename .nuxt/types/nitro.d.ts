@@ -7,6 +7,7 @@ declare module 'nitropack' {
     '/requstLogout': Awaited<ReturnType<typeof import('../../server/routes/requstLogout.post').default>>
     '/passwordresetrequst': Awaited<ReturnType<typeof import('../../server/routes/passwordresetrequst.post').default>>
     '/loadcaptcha': Awaited<ReturnType<typeof import('../../server/routes/loadcaptcha').default>>
+    '/jsTools': Awaited<ReturnType<typeof import('../../server/routes/jsTools.post').default>>
     '/htmlTools': Awaited<ReturnType<typeof import('../../server/routes/htmlTools.post').default>>
     '/__nuxt_error': Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>
   }

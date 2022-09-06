@@ -1,147 +1,110 @@
-<script setup lang="ts">
+<script setup>
 import { ref, watch } from 'vue'
 definePageMeta({ layout: "app-layout" });
 useHead({ title: "JS Tools - Organic Rankings" });
 
-const website = ref('https://www.organicrankings.com/')
-const css = ref('')
-const urlClass = ref('')
-const cssClass = ref('')
+
+const htmlOptionsArr = [
+]
+
+const js = ref('')
 const processing = ref(false)
-const cssLength = ref(0)
+const jsLength = ref(0)
 const showOutputModal = ref(false)
-const outputcss = ref('')
+const outputJs = ref('')
 const upload = ref(false)
 const genarate = ref(false)
 const beautify = ref(false)
-const todo = ref('minify')
-const optimize = ref(1)
+const indent = ref(false)
 
 
+const htmlOptions = ref(htmlOptionsArr)
 
 function copyToClipboard() {
   var range = document.createRange();
-  range.selectNode(document.getElementById("criricalcss"));
+  range.selectNode(document.getElementById("outputJs"));
   window.getSelection().removeAllRanges();
   window.getSelection().addRange(range);
   document.execCommand("copy");
   window.getSelection().removeAllRanges();
 }
 
-async function genarateCss() {
-  if (website.value) {
-    showOutputModal.value = true;
-    processing.value = true;
-    upload.value = false;
-    genarate.value = false;
-    outputcss.value = "";
-    urlClass.value = "";
-    cssClass.value = "";
-    window.setTimeout(() => { if (processing.value) { upload.value = true; } }, 1500);
-    window.setTimeout(() => { if (processing.value) { genarate.value = true; } }, 3000);
+async function genarateJs() {
+  showOutputModal.value = true;
+  processing.value = true;
+  outputJs.value = '';
 
-
-    await $fetch("https://www.organicrankings.com/criticalcss", {
-      method: "POST",
-      body: css.value,
-      headers: {
-        website: website.value,
-        todo: todo.value,
-        optimize: optimize.value,
-        output: beautify.value ? 'beautify' : 'minify',
-        "content-type": "application/octet-stream",
-        "url": "https://www.organicrankings.com/",
-        "cache-control": "no-cache"
-      }
-    }).then((res) => {
-      processing.value = false;
-      outputcss.value = res;
-    }).catch((err) => {
-      processing.value = false;
-      outputcss.value = "Something went wrong please try again";
-    });
-  } else {
-    if (!website.value) {
-      urlClass.value = "is-invalid"
+  await $fetch("/jsTools", {
+    method: "POST",
+    body: js.value,
+    headers: {
+      output: beautify.value ? 'beautify' : 'minify',
+      indent: indent.value ? 4 : 2,
+      "content-type": "application/octet-stream",
+      "cache-control": "no-cache"
     }
-    if (!css.value) {
-      cssClass.value = "is-invalid"
-    }
-  }
+  }).then((res) => {
+    processing.value = false;
+    outputJs.value = res;
+  }).catch((err) => {
+    processing.value = false;
+    outputJs.value = "Something went wrong please try again";
+  });
 }
 
-watch(css, async (val) => {
-  cssLength.value = val.length;
+watch(js, async (val) => {
+  jsLength.value = val.length;
 })
 
 
 </script>
     
-    <template>
+<template>
   <div>
     <div class="row">
       <div class="col-12">
         <ElementsBsCard formTitle="Javascript Tools" titleClass="ps-3">
-          <form @submit.prevent="genarateCss">
-
-            <div class="todo">
-
-              <div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"
-                :class="todo == 'minify' ? 'active' : ''">
-                <label class="form-check-label m-0 px-3 py-2">
-                  <input class="form-check-input me-1" type="radio" name="option" value="minify" v-model="todo">
-                  Minify Javascript
-                </label>
-              </div>
-              <div class="form-check form-check-radio btn btn-outline-primary p-0  mb-3"
-                :class="todo == 'beautify' ? 'active' : ''">
-                <label class="form-check-label m-0 px-3 py-2">
-                  <input class="form-check-input me-1" type="radio" name="option" value="beautify" v-model="todo">
-                  Beautify Javascript
-                </label>
-              </div>
-            </div>
+          <form @submit.prevent="genarateJs">
 
             <div class="pb-2">
-              <div class="outputSettings me-3" v-if="todo == 'critical'">
+              <div class="outputSettings mt-2">
                 <label class="settingLvl">Output Settings</label>
-                <div class="form-check form-switch d-flex align-items-center">
-                  <div class="toggle me-1" :class="{ 'text-primary': !beautify }" @click="beautify = false">Minify</div>
+                <div class="form-check form-switch d-flex align-items-center ps-0 mt-1">
+                  <div class="toggle me-1" :class="{ 'text-primary': !beautify }" @click="beautify = false">Minify
+                  </div>
                   <div class="ms-5 me-2">
                     <input class="form-check-input" type="checkbox" v-model="beautify" />
                   </div>
-                  <div class="toggle " :class="{ 'text-primary': beautify }" @click="beautify = true">Beautify</div>
+                  <div class="toggle" :class="{ 'text-primary': beautify }" @click="beautify = true">Beautify</div>
                 </div>
-              </div>
 
-              <div class="outputSettings" v-if="todo == 'minify' || (todo == 'critical' && !beautify)">
-                <label class="settingLvl">Optimization</label>
-                <div class="form-check form-check-radio optimize p-0">
-                  <label class="form-check-label m-0 pe-3">
-                    <input class="form-check-input" type="radio" name="optimize" value="0" v-model="optimize">
-                    <ElementsTooltip tooltip="No Optimization">NO</ElementsTooltip>
+                <div class="form-check ps-0 mt-2">
+                  <label class="form-check-label me-3 mt-2" v-if="beautify">
+                    <input class="form-check-input me-1" type="checkbox" v-model="indent">
+                    <ElementsTooltip tooltip="Indent Size 4, Default indent size is 2.">
+                      Indent Size 4
+                    </ElementsTooltip>
                   </label>
-                  <label class="form-check-label m-0 pe-3">
-                    <input class="form-check-input" type="radio" name="optimize" value="1" v-model="optimize" checked>
-                    <ElementsTooltip
-                      tooltip="Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments">
-                      Level 1</ElementsTooltip>
-                  </label>
-                  <label class="form-check-label m-0 pe-3">
-                    <input class="form-check-input" type="radio" name="optimize" value="2" v-model="optimize">
-                    <ElementsTooltip
-                      tooltip="Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around.">
-                      Level 2</ElementsTooltip>
+
+                  <label class="form-check-label me-3 mt-2" v-for="(item, index) in htmlOptions">
+                    <input class="form-check-input me-1" type="checkbox" v-model="item.value"
+                      @click="minify = (item.name == 'collapseWhitespace') ? true : false;">
+                    <ElementsTooltip :tooltip="item.toltip">
+                      {{item.label}}
+                    </ElementsTooltip>
                   </label>
                 </div>
               </div>
             </div>
 
-            <div class="input-group input-group-outline mt-4" :class="cssClass">
+
+            <div class="input-group input-group-outline mt-4">
               <label class="form-label">All Javascript </label>
-              <textarea class="form-control" rows="10" v-model="css"></textarea>
+              <textarea class="form-control" rows="10" v-model="js"></textarea>
             </div>
-            <small class="cssLength">{{ cssLength }} character</small>
+            <div class="text-end">
+              <small>{{ jsLength }} character</small>
+            </div>
             <div class="mb-1 text-end mt-4">
               <button class="btn btn-primary">
                 <span v-if="!processing">Genarate</span>
@@ -161,7 +124,7 @@ watch(css, async (val) => {
       <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">CSS Output ({{ outputcss.length }} character)</h5>
+            <h5 class="modal-title">Output ({{ outputJs.length }} character)</h5>
             <button type="button" class="btn-close" @click="showOutputModal = false">
               <i class="material-icons">close</i>
             </button>
@@ -170,27 +133,25 @@ watch(css, async (val) => {
             <div v-if="processing" class="text-success text-center">
               <p>
                 <ElementsSpinner color="green" v-if="!upload" /><i v-if="upload" class='material-icons'>task_alt</i>
-                Uploading Your CSS.
+                Uploading Your Code.
               </p>
               <p v-if="upload">
                 <ElementsSpinner color="green" v-if="!genarate && upload" /><i v-if="genarate"
-                  class='material-icons'>task_alt</i> Genarating Critical CSS.
+                  class='material-icons'>task_alt</i> Genarating Code.
               </p>
               <p v-if="genarate">
-                <ElementsSpinner color="green" /> Downloading Critical CSS.
+                <ElementsSpinner color="green" /> Downloading Code.
               </p>
             </div>
-            <div id="criricalcss">
-              <pre v-if="todo == 'beautify' || (todo == 'critical' && beautify)">{{ outputcss }}</pre>
-              <div v-else>{{ outputcss }}</div>
-            </div>
+            <pre><code id="outputJs" data-language="html" class="html">{{ outputJs }}</code></pre>
+
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" @click="showOutputModal = false">
               Close
             </button>
-            <button v-if="outputcss" class="btn btn-primary" @click="copyToClipboard">
-              Copy Css
+            <button v-if="outputJs" class="btn btn-primary" @click="copyToClipboard">
+              Copy Code
             </button>
           </div>
         </div>
@@ -201,6 +162,10 @@ watch(css, async (val) => {
     
     
     <style scoped>
+    #outputJs {
+      white-space: break-spaces;
+    }
+    
     .todo input {
       display: none;
     }
@@ -251,6 +216,10 @@ watch(css, async (val) => {
     .form-check:not(.form-switch) .form-check-input[type="radio"]:after {
       width: 0.8rem;
       height: 0.8rem;
+    }
+    
+    .form-check:not(.form-switch) .form-check-input[type="checkbox"]:after {
+      content: "";
     }
     
     .outputSettings {

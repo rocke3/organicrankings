@@ -10,8 +10,9 @@ import { eventHandler, defineEventHandler, handleCacheHeaders, createEvent, getH
 import jwt from 'file://C:/www/organicrankings/node_modules/jsonwebtoken/index.js';
 import md5 from 'file://C:/www/organicrankings/node_modules/md5/md5.js';
 import * as mysql from 'file://C:/www/organicrankings/node_modules/mysql2/index.js';
-import * as HTMLMinifier from 'file://C:/www/organicrankings/node_modules/html-minifier/src/htmlminifier.js';
 import js_beautify from 'file://C:/www/organicrankings/node_modules/js-beautify/js/index.js';
+import UglifyJS from 'file://C:/www/organicrankings/node_modules/uglify-js/tools/node.js';
+import * as HTMLMinifier from 'file://C:/www/organicrankings/node_modules/html-minifier/src/htmlminifier.js';
 import { createRenderer } from 'file://C:/www/organicrankings/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import devalue from 'file://C:/www/organicrankings/node_modules/@nuxt/devalue/dist/devalue.mjs';
 import { renderToString } from 'file://C:/www/organicrankings/node_modules/vue/server-renderer/index.mjs';
@@ -424,6 +425,7 @@ const _lazy_RGRKVB = () => Promise.resolve().then(function () { return requstSig
 const _lazy_aXY4Sf = () => Promise.resolve().then(function () { return requstLogout_post$1; });
 const _lazy_gOUoue = () => Promise.resolve().then(function () { return passwordresetrequst_post$1; });
 const _lazy_6MLPhB = () => Promise.resolve().then(function () { return loadcaptcha$1; });
+const _lazy_Dbht3K = () => Promise.resolve().then(function () { return jsTools_post$1; });
 const _lazy_1hY6BS = () => Promise.resolve().then(function () { return htmlTools_post$1; });
 const _lazy_u3PQD0 = () => Promise.resolve().then(function () { return renderer$1; });
 
@@ -434,6 +436,7 @@ const handlers = [
   { route: '/requstLogout', handler: _lazy_aXY4Sf, lazy: true, middleware: false, method: "post" },
   { route: '/passwordresetrequst', handler: _lazy_gOUoue, lazy: true, middleware: false, method: "post" },
   { route: '/loadcaptcha', handler: _lazy_6MLPhB, lazy: true, middleware: false, method: undefined },
+  { route: '/jsTools', handler: _lazy_Dbht3K, lazy: true, middleware: false, method: "post" },
   { route: '/htmlTools', handler: _lazy_1hY6BS, lazy: true, middleware: false, method: "post" },
   { route: '/__nuxt_error', handler: _lazy_u3PQD0, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_u3PQD0, lazy: true, middleware: false, method: undefined }
@@ -640,6 +643,24 @@ const loadcaptcha = defineEventHandler((event) => {
 const loadcaptcha$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   'default': loadcaptcha
+});
+
+const jsTools_post = defineEventHandler(async (event) => {
+  var output = getHeader(event.req, "output");
+  var indent = getHeader(event.req, "indent");
+  const body = await readBody(event);
+  if (output == "beautify") {
+    var result = js_beautify(body, { indent_size: indent });
+  } else {
+    var result = await UglifyJS.minify(body, { annotations: false });
+    result = result.code;
+  }
+  return result;
+});
+
+const jsTools_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  'default': jsTools_post
 });
 
 const minify = HTMLMinifier.minify;

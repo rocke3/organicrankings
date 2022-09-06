@@ -35,6 +35,7 @@ const beautify = ref(false)
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
+  outputHtml.value = '';
   var options = {collapseWhitespace: true}
   for (var val of htmlOptions.value) {
     options[val.name] = val.value;
@@ -44,7 +45,7 @@ async function optimizeHtml() {
     body: html.value,
     headers: {
       options: JSON.stringify(options),
-      beautify: beautify.value,
+      output: beautify.value ? 'beautify' : 'minify',
       "content-type": "application/octet-stream",
       "cache-control": "no-cache"
     }
@@ -80,7 +81,7 @@ watch(html, async (val) => {
         <ElementsBsCard formTitle="HTML Tools" titleClass="ps-3">
           <form @submit.prevent="optimizeHtml">
             <div class="pb-2">
-              <div class="outputSettings me-3">
+              <div class="outputSettings mt-2">
                 <label class="settingLvl">Output Settings</label>
                 <div class="form-check form-switch d-flex align-items-center ps-0 mt-1">
                   <div class="toggle me-1" :class="{ 'text-primary': !beautify }" @click="beautify = false">Minify

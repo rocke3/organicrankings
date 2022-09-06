@@ -4148,7 +4148,7 @@ Object.defineProperty(__vite_ssr_exports__, "meta", { enumerable: true, configur
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_YduHssUoYm = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_NYAZHRgv24 = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -4204,6 +4204,7 @@ const beautify = __vite_ssr_import_6__.ref(false)
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
+  outputHtml.value = '';
   var options = {collapseWhitespace: true}
   for (var val of htmlOptions.value) {
     options[val.name] = val.value;
@@ -4213,7 +4214,7 @@ async function optimizeHtml() {
     body: html.value,
     headers: {
       options: JSON.stringify(options),
-      beautify: beautify.value,
+      output: beautify.value ? 'beautify' : 'minify',
       "content-type": "application/octet-stream",
       "cache-control": "no-cache"
     }
@@ -4269,7 +4270,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
           _scopeId
         }><div class="pb-2" data-v-e2ebeaf7${
           _scopeId
-        }><div class="outputSettings me-3" data-v-e2ebeaf7${
+        }><div class="outputSettings mt-2" data-v-e2ebeaf7${
           _scopeId
         }><label class="settingLvl" data-v-e2ebeaf7${
           _scopeId
@@ -4362,7 +4363,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             onSubmit: __vite_ssr_import_7__.withModifiers($setup.optimizeHtml, ["prevent"])
           }, [
             __vite_ssr_import_7__.createVNode("div", { class: "pb-2" }, [
-              __vite_ssr_import_7__.createVNode("div", { class: "outputSettings me-3" }, [
+              __vite_ssr_import_7__.createVNode("div", { class: "outputSettings mt-2" }, [
                 __vite_ssr_import_7__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
                 __vite_ssr_import_7__.createVNode("div", { class: "form-check form-switch d-flex align-items-center ps-0 mt-1" }, [
                   __vite_ssr_import_7__.createVNode("div", {
@@ -4580,7 +4581,7 @@ Object.defineProperty(__vite_ssr_exports__, "meta", { enumerable: true, configur
 // - vue/server-renderer ($id_UyJffsox60)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_VKkuiZMX8E = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_0sOFe4yZkR = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -4595,400 +4596,381 @@ const __vite_ssr_import_5__ = await __vite_ssr_import__("/node_modules/nuxt/dist
 
 const __vite_ssr_import_6__ = await __vite_ssr_import__("vue");
 
+
+const _sfc_main = {
+  __name: 'jstools',
+  setup(__props, { expose }) {
+  expose();
+
+/*#__PURE__*/ false && __vite_ssr_import_4__.definePageMeta({ layout: "app-layout" });
+__vite_ssr_import_5__.useHead({ title: "JS Tools - Organic Rankings" });
+
+
+const htmlOptionsArr = [
+]
+
+const js = __vite_ssr_import_6__.ref('')
+const processing = __vite_ssr_import_6__.ref(false)
+const jsLength = __vite_ssr_import_6__.ref(0)
+const showOutputModal = __vite_ssr_import_6__.ref(false)
+const outputJs = __vite_ssr_import_6__.ref('')
+const upload = __vite_ssr_import_6__.ref(false)
+const genarate = __vite_ssr_import_6__.ref(false)
+const beautify = __vite_ssr_import_6__.ref(false)
+const indent = __vite_ssr_import_6__.ref(false)
+
+
+const htmlOptions = __vite_ssr_import_6__.ref(htmlOptionsArr)
+
+function copyToClipboard() {
+  var range = document.createRange();
+  range.selectNode(document.getElementById("outputJs"));
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  document.execCommand("copy");
+  window.getSelection().removeAllRanges();
+}
+
+async function genarateJs() {
+  showOutputModal.value = true;
+  processing.value = true;
+  outputJs.value = '';
+
+  await $fetch("/jsTools", {
+    method: "POST",
+    body: js.value,
+    headers: {
+      output: beautify.value ? 'beautify' : 'minify',
+      indent: indent.value ? 4 : 2,
+      "content-type": "application/octet-stream",
+      "cache-control": "no-cache"
+    }
+  }).then((res) => {
+    processing.value = false;
+    outputJs.value = res;
+  }).catch((err) => {
+    processing.value = false;
+    outputJs.value = "Something went wrong please try again";
+  });
+}
+
+__vite_ssr_import_6__.watch(js, async (val) => {
+  jsLength.value = val.length;
+})
+
+
+
+const __returned__ = { htmlOptionsArr, js, processing, jsLength, showOutputModal, outputJs, upload, genarate, beautify, indent, htmlOptions, copyToClipboard, genarateJs, ref: __vite_ssr_import_6__.ref, watch: __vite_ssr_import_6__.watch }
+Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+return __returned__
+}
+
+}
 const __vite_ssr_import_7__ = await __vite_ssr_import__("vue");
 
-const _sfc_main = /* @__PURE__ */ __vite_ssr_import_6__.defineComponent({
-  __name: "jstools",
-  setup(__props, { expose }) {
-    expose();
-    /*#__PURE__*/ false && __vite_ssr_import_4__.definePageMeta({ layout: "app-layout" });
-    __vite_ssr_import_5__.useHead({ title: "JS Tools - Organic Rankings" });
-    const website = __vite_ssr_import_7__.ref("https://www.organicrankings.com/");
-    const css = __vite_ssr_import_7__.ref("");
-    const urlClass = __vite_ssr_import_7__.ref("");
-    const cssClass = __vite_ssr_import_7__.ref("");
-    const processing = __vite_ssr_import_7__.ref(false);
-    const cssLength = __vite_ssr_import_7__.ref(0);
-    const showOutputModal = __vite_ssr_import_7__.ref(false);
-    const outputcss = __vite_ssr_import_7__.ref("");
-    const upload = __vite_ssr_import_7__.ref(false);
-    const genarate = __vite_ssr_import_7__.ref(false);
-    const beautify = __vite_ssr_import_7__.ref(false);
-    const todo = __vite_ssr_import_7__.ref("minify");
-    const optimize = __vite_ssr_import_7__.ref(1);
-    function copyToClipboard() {
-      var range = document.createRange();
-      range.selectNode(document.getElementById("criricalcss"));
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-      document.execCommand("copy");
-      window.getSelection().removeAllRanges();
-    }
-    async function genarateCss() {
-      if (website.value) {
-        showOutputModal.value = true;
-        processing.value = true;
-        upload.value = false;
-        genarate.value = false;
-        outputcss.value = "";
-        urlClass.value = "";
-        cssClass.value = "";
-        window.setTimeout(() => {
-          if (processing.value) {
-            upload.value = true;
-          }
-        }, 1500);
-        window.setTimeout(() => {
-          if (processing.value) {
-            genarate.value = true;
-          }
-        }, 3e3);
-        await $fetch("https://www.organicrankings.com/criticalcss", {
-          method: "POST",
-          body: css.value,
-          headers: {
-            website: website.value,
-            todo: todo.value,
-            optimize: optimize.value,
-            output: beautify.value ? "beautify" : "minify",
-            "content-type": "application/octet-stream",
-            "url": "https://www.organicrankings.com/",
-            "cache-control": "no-cache"
-          }
-        }).then((res) => {
-          processing.value = false;
-          outputcss.value = res;
-        }).catch((err) => {
-          processing.value = false;
-          outputcss.value = "Something went wrong please try again";
-        });
-      } else {
-        if (!website.value) {
-          urlClass.value = "is-invalid";
-        }
-        if (!css.value) {
-          cssClass.value = "is-invalid";
-        }
-      }
-    }
-    __vite_ssr_import_7__.watch(css, async (val) => {
-      cssLength.value = val.length;
-    });
-    const __returned__ = { website, css, urlClass, cssClass, processing, cssLength, showOutputModal, outputcss, upload, genarate, beautify, todo, optimize, copyToClipboard, genarateCss };
-    Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
-    return __returned__;
-  }
-});
-const __vite_ssr_import_8__ = await __vite_ssr_import__("vue");
+const __vite_ssr_import_8__ = await __vite_ssr_import__("vue/server-renderer");
 
-const __vite_ssr_import_9__ = await __vite_ssr_import__("vue/server-renderer");
 
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_ElementsBsCard = __vite_ssr_import_0__.default;
-  const _component_ElementsTooltip = __vite_ssr_import_1__.default;
-  const _component_ElementsSpinner = __vite_ssr_import_2__.default;
-  const _component_ElementsProcessing = __vite_ssr_import_3__.default;
-  _push(`<div${__vite_ssr_import_9__.ssrRenderAttrs(_attrs)} data-v-6823c786><div class="row" data-v-6823c786><div class="col-12" data-v-6823c786>`);
-  _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsBsCard, {
+  const _component_ElementsBsCard = __vite_ssr_import_0__.default
+  const _component_ElementsTooltip = __vite_ssr_import_1__.default
+  const _component_ElementsSpinner = __vite_ssr_import_2__.default
+  const _component_ElementsProcessing = __vite_ssr_import_3__.default
+
+  _push(`<div${__vite_ssr_import_8__.ssrRenderAttrs(_attrs)} data-v-6823c786><div class="row" data-v-6823c786><div class="col-12" data-v-6823c786>`)
+  _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsBsCard, {
     formTitle: "Javascript Tools",
     titleClass: "ps-3"
   }, {
-    default: __vite_ssr_import_8__.withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<form data-v-6823c786${_scopeId}><div class="todo" data-v-6823c786${_scopeId}><div class="${__vite_ssr_import_9__.ssrRenderClass([$setup.todo == "minify" ? "active" : "", "form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"])}" data-v-6823c786${_scopeId}><label class="form-check-label m-0 px-3 py-2" data-v-6823c786${_scopeId}><input class="form-check-input me-1" type="radio" name="option" value="minify"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.todo, "minify")) ? " checked" : ""} data-v-6823c786${_scopeId}> Minify Javascript </label></div><div class="${__vite_ssr_import_9__.ssrRenderClass([$setup.todo == "beautify" ? "active" : "", "form-check form-check-radio btn btn-outline-primary p-0 mb-3"])}" data-v-6823c786${_scopeId}><label class="form-check-label m-0 px-3 py-2" data-v-6823c786${_scopeId}><input class="form-check-input me-1" type="radio" name="option" value="beautify"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.todo, "beautify")) ? " checked" : ""} data-v-6823c786${_scopeId}> Beautify Javascript </label></div></div><div class="pb-2" data-v-6823c786${_scopeId}>`);
-        if ($setup.todo == "critical") {
-          _push2(`<div class="outputSettings me-3" data-v-6823c786${_scopeId}><label class="settingLvl" data-v-6823c786${_scopeId}>Output Settings</label><div class="form-check form-switch d-flex align-items-center" data-v-6823c786${_scopeId}><div class="${__vite_ssr_import_9__.ssrRenderClass([{ "text-primary": !$setup.beautify }, "toggle me-1"])}" data-v-6823c786${_scopeId}>Minify</div><div class="ms-5 me-2" data-v-6823c786${_scopeId}><input class="form-check-input" type="checkbox"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(Array.isArray($setup.beautify) ? __vite_ssr_import_9__.ssrLooseContain($setup.beautify, null) : $setup.beautify) ? " checked" : ""} data-v-6823c786${_scopeId}></div><div class="${__vite_ssr_import_9__.ssrRenderClass([{ "text-primary": $setup.beautify }, "toggle"])}" data-v-6823c786${_scopeId}>Beautify</div></div></div>`);
+    default: __vite_ssr_import_7__.withCtx((_, _push, _parent, _scopeId) => {
+      if (_push) {
+        _push(`<form data-v-6823c786${
+          _scopeId
+        }><div class="pb-2" data-v-6823c786${
+          _scopeId
+        }><div class="outputSettings mt-2" data-v-6823c786${
+          _scopeId
+        }><label class="settingLvl" data-v-6823c786${
+          _scopeId
+        }>Output Settings</label><div class="form-check form-switch d-flex align-items-center ps-0 mt-1" data-v-6823c786${
+          _scopeId
+        }><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': !$setup.beautify }, "toggle me-1"])
+        }" data-v-6823c786${
+          _scopeId
+        }>Minify </div><div class="ms-5 me-2" data-v-6823c786${
+          _scopeId
+        }><input class="form-check-input" type="checkbox"${
+          (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray($setup.beautify))
+            ? __vite_ssr_import_8__.ssrLooseContain($setup.beautify, null)
+            : $setup.beautify)) ? " checked" : ""
+        } data-v-6823c786${
+          _scopeId
+        }></div><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': $setup.beautify }, "toggle"])
+        }" data-v-6823c786${
+          _scopeId
+        }>Beautify</div></div><div class="form-check ps-0 mt-2" data-v-6823c786${
+          _scopeId
+        }>`)
+        if ($setup.beautify) {
+          _push(`<label class="form-check-label me-3 mt-2" data-v-6823c786${
+            _scopeId
+          }><input class="form-check-input me-1" type="checkbox"${
+            (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray($setup.indent))
+              ? __vite_ssr_import_8__.ssrLooseContain($setup.indent, null)
+              : $setup.indent)) ? " checked" : ""
+          } data-v-6823c786${
+            _scopeId
+          }>`)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "Indent Size 4, Default indent size is 2." }, {
+            default: __vite_ssr_import_7__.withCtx((_, _push, _parent, _scopeId) => {
+              if (_push) {
+                _push(` Indent Size 4 `)
+              } else {
+                return [
+                  __vite_ssr_import_7__.createTextVNode(" Indent Size 4 ")
+                ]
+              }
+            }),
+            _: 1 /* STABLE */
+          }, _parent, _scopeId))
+          _push(`</label>`)
         } else {
-          _push2(`<!---->`);
+          _push(`<!---->`)
         }
-        if ($setup.todo == "minify" || $setup.todo == "critical" && !$setup.beautify) {
-          _push2(`<div class="outputSettings" data-v-6823c786${_scopeId}><label class="settingLvl" data-v-6823c786${_scopeId}>Optimization</label><div class="form-check form-check-radio optimize p-0" data-v-6823c786${_scopeId}><label class="form-check-label m-0 pe-3" data-v-6823c786${_scopeId}><input class="form-check-input" type="radio" name="optimize" value="0"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.optimize, "0")) ? " checked" : ""} data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "No Optimization" }, {
-            default: __vite_ssr_import_8__.withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(`NO`);
+        _push(`<!--[-->`)
+        __vite_ssr_import_8__.ssrRenderList($setup.htmlOptions, (item, index) => {
+          _push(`<label class="form-check-label me-3 mt-2" data-v-6823c786${
+            _scopeId
+          }><input class="form-check-input me-1" type="checkbox"${
+            (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray(item.value))
+              ? __vite_ssr_import_8__.ssrLooseContain(item.value, null)
+              : item.value)) ? " checked" : ""
+          } data-v-6823c786${
+            _scopeId
+          }>`)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsTooltip, {
+            tooltip: item.toltip
+          }, {
+            default: __vite_ssr_import_7__.withCtx((_, _push, _parent, _scopeId) => {
+              if (_push) {
+                _push(`${__vite_ssr_import_8__.ssrInterpolate(item.label)}`)
               } else {
                 return [
-                  __vite_ssr_import_8__.createTextVNode("NO")
-                ];
+                  __vite_ssr_import_7__.createTextVNode(__vite_ssr_import_7__.toDisplayString(item.label), 1 /* TEXT */)
+                ]
               }
             }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</label><label class="form-check-label m-0 pe-3" data-v-6823c786${_scopeId}><input class="form-check-input" type="radio" name="optimize" value="1"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.optimize, "1")) ? " checked" : ""} checked data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments" }, {
-            default: __vite_ssr_import_8__.withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(` Level 1`);
-              } else {
-                return [
-                  __vite_ssr_import_8__.createTextVNode(" Level 1")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</label><label class="form-check-label m-0 pe-3" data-v-6823c786${_scopeId}><input class="form-check-input" type="radio" name="optimize" value="2"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.optimize, "2")) ? " checked" : ""} data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around." }, {
-            default: __vite_ssr_import_8__.withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(` Level 2`);
-              } else {
-                return [
-                  __vite_ssr_import_8__.createTextVNode(" Level 2")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</label></div></div>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`</div><div class="${__vite_ssr_import_9__.ssrRenderClass([$setup.cssClass, "input-group input-group-outline mt-4"])}" data-v-6823c786${_scopeId}><label class="form-label" data-v-6823c786${_scopeId}>All Javascript </label><textarea class="form-control" rows="10" data-v-6823c786${_scopeId}>${__vite_ssr_import_9__.ssrInterpolate($setup.css)}</textarea></div><small class="cssLength" data-v-6823c786${_scopeId}>${__vite_ssr_import_9__.ssrInterpolate($setup.cssLength)} character</small><div class="mb-1 text-end mt-4" data-v-6823c786${_scopeId}><button class="btn btn-primary" data-v-6823c786${_scopeId}>`);
+            _: 2 /* DYNAMIC */
+          }, _parent, _scopeId))
+          _push(`</label>`)
+        })
+        _push(`<!--]--></div></div></div><div class="input-group input-group-outline mt-4" data-v-6823c786${
+          _scopeId
+        }><label class="form-label" data-v-6823c786${
+          _scopeId
+        }>All Javascript </label><textarea class="form-control" rows="10" data-v-6823c786${
+          _scopeId
+        }>${
+          __vite_ssr_import_8__.ssrInterpolate($setup.js)
+        }</textarea></div><div class="text-end" data-v-6823c786${
+          _scopeId
+        }><small data-v-6823c786${
+          _scopeId
+        }>${
+          __vite_ssr_import_8__.ssrInterpolate($setup.jsLength)
+        } character</small></div><div class="mb-1 text-end mt-4" data-v-6823c786${
+          _scopeId
+        }><button class="btn btn-primary" data-v-6823c786${
+          _scopeId
+        }>`)
         if (!$setup.processing) {
-          _push2(`<span data-v-6823c786${_scopeId}>Genarate</span>`);
+          _push(`<span data-v-6823c786${_scopeId}>Genarate</span>`)
         } else {
-          _push2(`<!---->`);
+          _push(`<!---->`)
         }
         if ($setup.processing) {
-          _push2(`<div data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, null, null, _parent2, _scopeId));
-          _push2(` Genarating `);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsProcessing, null, null, _parent2, _scopeId));
-          _push2(`</div>`);
+          _push(`<div data-v-6823c786${_scopeId}>`)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, null, null, _parent, _scopeId))
+          _push(` Genarating `)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsProcessing, null, null, _parent, _scopeId))
+          _push(`</div>`)
         } else {
-          _push2(`<!---->`);
+          _push(`<!---->`)
         }
-        _push2(`</button></div></form>`);
+        _push(`</button></div></form>`)
       } else {
         return [
-          __vite_ssr_import_8__.createVNode("form", {
-            onSubmit: __vite_ssr_import_8__.withModifiers($setup.genarateCss, ["prevent"])
+          __vite_ssr_import_7__.createVNode("form", {
+            onSubmit: __vite_ssr_import_7__.withModifiers($setup.genarateJs, ["prevent"])
           }, [
-            __vite_ssr_import_8__.createVNode("div", { class: "todo" }, [
-              __vite_ssr_import_8__.createVNode("div", {
-                class: ["form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0", $setup.todo == "minify" ? "active" : ""]
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 px-3 py-2" }, [
-                  __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                    class: "form-check-input me-1",
-                    type: "radio",
-                    name: "option",
-                    value: "minify",
-                    "onUpdate:modelValue": ($event) => $setup.todo = $event
-                  }, null, 8, ["onUpdate:modelValue"]), [
-                    [__vite_ssr_import_8__.vModelRadio, $setup.todo]
-                  ]),
-                  __vite_ssr_import_8__.createTextVNode(" Minify Javascript ")
-                ])
-              ], 2),
-              __vite_ssr_import_8__.createVNode("div", {
-                class: ["form-check form-check-radio btn btn-outline-primary p-0 mb-3", $setup.todo == "beautify" ? "active" : ""]
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 px-3 py-2" }, [
-                  __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                    class: "form-check-input me-1",
-                    type: "radio",
-                    name: "option",
-                    value: "beautify",
-                    "onUpdate:modelValue": ($event) => $setup.todo = $event
-                  }, null, 8, ["onUpdate:modelValue"]), [
-                    [__vite_ssr_import_8__.vModelRadio, $setup.todo]
-                  ]),
-                  __vite_ssr_import_8__.createTextVNode(" Beautify Javascript ")
-                ])
-              ], 2)
-            ]),
-            __vite_ssr_import_8__.createVNode("div", { class: "pb-2" }, [
-              $setup.todo == "critical" ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("div", {
-                key: 0,
-                class: "outputSettings me-3"
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
-                __vite_ssr_import_8__.createVNode("div", { class: "form-check form-switch d-flex align-items-center" }, [
-                  __vite_ssr_import_8__.createVNode("div", {
-                    class: ["toggle me-1", { "text-primary": !$setup.beautify }],
-                    onClick: ($event) => $setup.beautify = false
-                  }, "Minify", 10, ["onClick"]),
-                  __vite_ssr_import_8__.createVNode("div", { class: "ms-5 me-2" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
+            __vite_ssr_import_7__.createVNode("div", { class: "pb-2" }, [
+              __vite_ssr_import_7__.createVNode("div", { class: "outputSettings mt-2" }, [
+                __vite_ssr_import_7__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check form-switch d-flex align-items-center ps-0 mt-1" }, [
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle me-1", { 'text-primary': !$setup.beautify }],
+                    onClick: $event => ($setup.beautify = false)
+                  }, "Minify ", 10 /* CLASS, PROPS */, ["onClick"]),
+                  __vite_ssr_import_7__.createVNode("div", { class: "ms-5 me-2" }, [
+                    __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
                       class: "form-check-input",
                       type: "checkbox",
-                      "onUpdate:modelValue": ($event) => $setup.beautify = $event
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelCheckbox, $setup.beautify]
+                      "onUpdate:modelValue": $event => (($setup.beautify) = $event)
+                    }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                      [__vite_ssr_import_7__.vModelCheckbox, $setup.beautify]
                     ])
                   ]),
-                  __vite_ssr_import_8__.createVNode("div", {
-                    class: ["toggle", { "text-primary": $setup.beautify }],
-                    onClick: ($event) => $setup.beautify = true
-                  }, "Beautify", 10, ["onClick"])
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle", { 'text-primary': $setup.beautify }],
+                    onClick: $event => ($setup.beautify = true)
+                  }, "Beautify", 10 /* CLASS, PROPS */, ["onClick"])
+                ]),
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check ps-0 mt-2" }, [
+                  ($setup.beautify)
+                    ? (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", {
+                        key: 0,
+                        class: "form-check-label me-3 mt-2"
+                      }, [
+                        __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
+                          class: "form-check-input me-1",
+                          type: "checkbox",
+                          "onUpdate:modelValue": $event => (($setup.indent) = $event)
+                        }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                          [__vite_ssr_import_7__.vModelCheckbox, $setup.indent]
+                        ]),
+                        __vite_ssr_import_7__.createVNode(_component_ElementsTooltip, { tooltip: "Indent Size 4, Default indent size is 2." }, {
+                          default: __vite_ssr_import_7__.withCtx(() => [
+                            __vite_ssr_import_7__.createTextVNode(" Indent Size 4 ")
+                          ]),
+                          _: 1 /* STABLE */
+                        })
+                      ]))
+                    : __vite_ssr_import_7__.createCommentVNode("v-if", true),
+                  (__vite_ssr_import_7__.openBlock(true), __vite_ssr_import_7__.createBlock(__vite_ssr_import_7__.Fragment, null, __vite_ssr_import_7__.renderList($setup.htmlOptions, (item, index) => {
+                    return (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", { class: "form-check-label me-3 mt-2" }, [
+                      __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
+                        class: "form-check-input me-1",
+                        type: "checkbox",
+                        "onUpdate:modelValue": $event => ((item.value) = $event),
+                        onClick: $event => {_ctx.minify = (item.name == 'collapseWhitespace') ? true : false;}
+                      }, null, 8 /* PROPS */, ["onUpdate:modelValue", "onClick"]), [
+                        [__vite_ssr_import_7__.vModelCheckbox, item.value]
+                      ]),
+                      __vite_ssr_import_7__.createVNode(_component_ElementsTooltip, {
+                        tooltip: item.toltip
+                      }, {
+                        default: __vite_ssr_import_7__.withCtx(() => [
+                          __vite_ssr_import_7__.createTextVNode(__vite_ssr_import_7__.toDisplayString(item.label), 1 /* TEXT */)
+                        ]),
+                        _: 2 /* DYNAMIC */
+                      }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["tooltip"])
+                    ]))
+                  }), 256 /* UNKEYED_FRAGMENT */))
                 ])
-              ])) : __vite_ssr_import_8__.createCommentVNode("v-if", true),
-              $setup.todo == "minify" || $setup.todo == "critical" && !$setup.beautify ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("div", {
-                key: 1,
-                class: "outputSettings"
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "settingLvl" }, "Optimization"),
-                __vite_ssr_import_8__.createVNode("div", { class: "form-check form-check-radio optimize p-0" }, [
-                  __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 pe-3" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                      class: "form-check-input",
-                      type: "radio",
-                      name: "optimize",
-                      value: "0",
-                      "onUpdate:modelValue": ($event) => $setup.optimize = $event
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelRadio, $setup.optimize]
-                    ]),
-                    __vite_ssr_import_8__.createVNode(_component_ElementsTooltip, { tooltip: "No Optimization" }, {
-                      default: __vite_ssr_import_8__.withCtx(() => [
-                        __vite_ssr_import_8__.createTextVNode("NO")
-                      ]),
-                      _: 1
-                    })
-                  ]),
-                  __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 pe-3" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                      class: "form-check-input",
-                      type: "radio",
-                      name: "optimize",
-                      value: "1",
-                      "onUpdate:modelValue": ($event) => $setup.optimize = $event,
-                      checked: ""
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelRadio, $setup.optimize]
-                    ]),
-                    __vite_ssr_import_8__.createVNode(_component_ElementsTooltip, { tooltip: "Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments" }, {
-                      default: __vite_ssr_import_8__.withCtx(() => [
-                        __vite_ssr_import_8__.createTextVNode(" Level 1")
-                      ]),
-                      _: 1
-                    })
-                  ]),
-                  __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 pe-3" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                      class: "form-check-input",
-                      type: "radio",
-                      name: "optimize",
-                      value: "2",
-                      "onUpdate:modelValue": ($event) => $setup.optimize = $event
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelRadio, $setup.optimize]
-                    ]),
-                    __vite_ssr_import_8__.createVNode(_component_ElementsTooltip, { tooltip: "Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around." }, {
-                      default: __vite_ssr_import_8__.withCtx(() => [
-                        __vite_ssr_import_8__.createTextVNode(" Level 2")
-                      ]),
-                      _: 1
-                    })
-                  ])
-                ])
-              ])) : __vite_ssr_import_8__.createCommentVNode("v-if", true)
+              ])
             ]),
-            __vite_ssr_import_8__.createVNode("div", {
-              class: ["input-group input-group-outline mt-4", $setup.cssClass]
-            }, [
-              __vite_ssr_import_8__.createVNode("label", { class: "form-label" }, "All Javascript "),
-              __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("textarea", {
+            __vite_ssr_import_7__.createVNode("div", { class: "input-group input-group-outline mt-4" }, [
+              __vite_ssr_import_7__.createVNode("label", { class: "form-label" }, "All Javascript "),
+              __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("textarea", {
                 class: "form-control",
                 rows: "10",
-                "onUpdate:modelValue": ($event) => $setup.css = $event
-              }, null, 8, ["onUpdate:modelValue"]), [
-                [__vite_ssr_import_8__.vModelText, $setup.css]
+                "onUpdate:modelValue": $event => (($setup.js) = $event)
+              }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                [__vite_ssr_import_7__.vModelText, $setup.js]
               ])
-            ], 2),
-            __vite_ssr_import_8__.createVNode("small", { class: "cssLength" }, __vite_ssr_import_8__.toDisplayString($setup.cssLength) + " character", 1),
-            __vite_ssr_import_8__.createVNode("div", { class: "mb-1 text-end mt-4" }, [
-              __vite_ssr_import_8__.createVNode("button", { class: "btn btn-primary" }, [
-                !$setup.processing ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("span", { key: 0 }, "Genarate")) : __vite_ssr_import_8__.createCommentVNode("v-if", true),
-                $setup.processing ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("div", { key: 1 }, [
-                  __vite_ssr_import_8__.createVNode(_component_ElementsSpinner),
-                  __vite_ssr_import_8__.createTextVNode(" Genarating "),
-                  __vite_ssr_import_8__.createVNode(_component_ElementsProcessing)
-                ])) : __vite_ssr_import_8__.createCommentVNode("v-if", true)
+            ]),
+            __vite_ssr_import_7__.createVNode("div", { class: "text-end" }, [
+              __vite_ssr_import_7__.createVNode("small", null, __vite_ssr_import_7__.toDisplayString($setup.jsLength) + " character", 1 /* TEXT */)
+            ]),
+            __vite_ssr_import_7__.createVNode("div", { class: "mb-1 text-end mt-4" }, [
+              __vite_ssr_import_7__.createVNode("button", { class: "btn btn-primary" }, [
+                (!$setup.processing)
+                  ? (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("span", { key: 0 }, "Genarate"))
+                  : __vite_ssr_import_7__.createCommentVNode("v-if", true),
+                ($setup.processing)
+                  ? (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("div", { key: 1 }, [
+                      __vite_ssr_import_7__.createVNode(_component_ElementsSpinner),
+                      __vite_ssr_import_7__.createTextVNode(" Genarating "),
+                      __vite_ssr_import_7__.createVNode(_component_ElementsProcessing)
+                    ]))
+                  : __vite_ssr_import_7__.createCommentVNode("v-if", true)
               ])
             ])
-          ], 40, ["onSubmit"])
-        ];
+          ], 40 /* PROPS, HYDRATE_EVENTS */, ["onSubmit"])
+        ]
       }
     }),
-    _: 1
-  }, _parent));
-  _push(`</div></div><!-- Modal -->`);
+    _: 1 /* STABLE */
+  }, _parent))
+  _push(`</div></div><!-- Modal -->`)
   if ($setup.showOutputModal) {
-    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-6823c786><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-6823c786><div class="modal-content" data-v-6823c786><div class="modal-header" data-v-6823c786><h5 class="modal-title" data-v-6823c786>CSS Output (${__vite_ssr_import_9__.ssrInterpolate($setup.outputcss.length)} character)</h5><button type="button" class="btn-close" data-v-6823c786><i class="material-icons" data-v-6823c786>close</i></button></div><div class="modal-body" data-v-6823c786>`);
+    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-6823c786><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-6823c786><div class="modal-content" data-v-6823c786><div class="modal-header" data-v-6823c786><h5 class="modal-title" data-v-6823c786>Output (${__vite_ssr_import_8__.ssrInterpolate($setup.outputJs.length)} character)</h5><button type="button" class="btn-close" data-v-6823c786><i class="material-icons" data-v-6823c786>close</i></button></div><div class="modal-body" data-v-6823c786>`)
     if ($setup.processing) {
-      _push(`<div class="text-success text-center" data-v-6823c786><p data-v-6823c786>`);
+      _push(`<div class="text-success text-center" data-v-6823c786><p data-v-6823c786>`)
       if (!$setup.upload) {
-        _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent));
+        _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
       if ($setup.upload) {
-        _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`);
+        _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`)
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
-      _push(` Uploading Your CSS. </p>`);
+      _push(` Uploading Your Code. </p>`)
       if ($setup.upload) {
-        _push(`<p data-v-6823c786>`);
+        _push(`<p data-v-6823c786>`)
         if (!$setup.genarate && $setup.upload) {
-          _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent));
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
         } else {
-          _push(`<!---->`);
+          _push(`<!---->`)
         }
         if ($setup.genarate) {
-          _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`);
+          _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`)
         } else {
-          _push(`<!---->`);
+          _push(`<!---->`)
         }
-        _push(` Genarating Critical CSS. </p>`);
+        _push(` Genarating Code. </p>`)
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
       if ($setup.genarate) {
-        _push(`<p data-v-6823c786>`);
-        _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent));
-        _push(` Downloading Critical CSS. </p>`);
+        _push(`<p data-v-6823c786>`)
+        _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
+        _push(` Downloading Code. </p>`)
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
-      _push(`</div>`);
+      _push(`</div>`)
     } else {
-      _push(`<!---->`);
+      _push(`<!---->`)
     }
-    _push(`<div id="criricalcss" data-v-6823c786>`);
-    if ($setup.todo == "beautify" || $setup.todo == "critical" && $setup.beautify) {
-      _push(`<pre data-v-6823c786>${__vite_ssr_import_9__.ssrInterpolate($setup.outputcss)}</pre>`);
+    _push(`<pre data-v-6823c786><code id="outputJs" data-language="html" class="html" data-v-6823c786>${__vite_ssr_import_8__.ssrInterpolate($setup.outputJs)}</code></pre></div><div class="modal-footer" data-v-6823c786><button class="btn btn-secondary" data-v-6823c786> Close </button>`)
+    if ($setup.outputJs) {
+      _push(`<button class="btn btn-primary" data-v-6823c786> Copy Code </button>`)
     } else {
-      _push(`<div data-v-6823c786>${__vite_ssr_import_9__.ssrInterpolate($setup.outputcss)}</div>`);
+      _push(`<!---->`)
     }
-    _push(`</div></div><div class="modal-footer" data-v-6823c786><button class="btn btn-secondary" data-v-6823c786> Close </button>`);
-    if ($setup.outputcss) {
-      _push(`<button class="btn btn-primary" data-v-6823c786> Copy Css </button>`);
-    } else {
-      _push(`<!---->`);
-    }
-    _push(`</div></div></div></div>`);
+    _push(`</div></div></div></div>`)
   } else {
-    _push(`<!---->`);
+    _push(`<!---->`)
   }
-  _push(`</div>`);
+  _push(`</div>`)
 }
-const __vite_ssr_import_10__ = await __vite_ssr_import__("vue");
 
-const _sfc_setup = _sfc_main.setup;
+const __vite_ssr_import_9__ = await __vite_ssr_import__("vue");
+
+const _sfc_setup = _sfc_main.setup
 _sfc_main.setup = (props, ctx) => {
-  const ssrContext = __vite_ssr_import_10__.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("pages/app/jstools.vue");
-  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
-};
-const __vite_ssr_import_11__ = await __vite_ssr_import__("/@id/__x00__plugin-vue:export-helper");
+  const ssrContext = __vite_ssr_import_9__.useSSRContext()
+  ;(ssrContext.modules || (ssrContext.modules = new Set())).add("pages/app/jstools.vue")
+  return _sfc_setup ? _sfc_setup(props, ctx) : undefined
+}
+const __vite_ssr_import_10__ = await __vite_ssr_import__("/@id/__x00__plugin-vue:export-helper");
 
-__vite_ssr_exports__.default = /* @__PURE__ */ __vite_ssr_import_11__.default(_sfc_main, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-6823c786"], ["__file", "C:/www/organicrankings/pages/app/jstools.vue"]]);
-
+__vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_10__.default(_sfc_main, [['ssrRender',_sfc_ssrRender],['__scopeId',"data-v-6823c786"],['__file',"C:/www/organicrankings/pages/app/jstools.vue"]])
 const meta = { layout: "app-layout" }
 Object.defineProperty(__vite_ssr_exports__, "meta", { enumerable: true, configurable: true, get(){ return meta }});;
 }
@@ -6673,7 +6655,7 @@ __vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_5__.default(_sfc_m
 // - /pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css ($id_vbTj8JkooZ)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_Sa9pFDjvRu = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_9y7d8tDtnL = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -6729,6 +6711,7 @@ const beautify = __vite_ssr_import_6__.ref(false)
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
+  outputHtml.value = '';
   var options = {collapseWhitespace: true}
   for (var val of htmlOptions.value) {
     options[val.name] = val.value;
@@ -6738,7 +6721,7 @@ async function optimizeHtml() {
     body: html.value,
     headers: {
       options: JSON.stringify(options),
-      beautify: beautify.value,
+      output: beautify.value ? 'beautify' : 'minify',
       "content-type": "application/octet-stream",
       "cache-control": "no-cache"
     }
@@ -6794,7 +6777,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
           _scopeId
         }><div class="pb-2" data-v-e2ebeaf7${
           _scopeId
-        }><div class="outputSettings me-3" data-v-e2ebeaf7${
+        }><div class="outputSettings mt-2" data-v-e2ebeaf7${
           _scopeId
         }><label class="settingLvl" data-v-e2ebeaf7${
           _scopeId
@@ -6887,7 +6870,7 @@ function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $op
             onSubmit: __vite_ssr_import_7__.withModifiers($setup.optimizeHtml, ["prevent"])
           }, [
             __vite_ssr_import_7__.createVNode("div", { class: "pb-2" }, [
-              __vite_ssr_import_7__.createVNode("div", { class: "outputSettings me-3" }, [
+              __vite_ssr_import_7__.createVNode("div", { class: "outputSettings mt-2" }, [
                 __vite_ssr_import_7__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
                 __vite_ssr_import_7__.createVNode("div", { class: "form-check form-switch d-flex align-items-center ps-0 mt-1" }, [
                   __vite_ssr_import_7__.createVNode("div", {
@@ -7117,7 +7100,7 @@ __vite_ssr_exports__.default = /* @__PURE__ */ __vite_ssr_import_5__.default(_sf
 // - /pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css ($id_ikA1WyjcJN)
 // - /@id/__x00__plugin-vue:export-helper ($id_eFZ80lXORx)
 // --------------------
-const $id_l3UlqH7l30 = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+const $id_4GjsggBItG = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
 const __vite_ssr_import_0__ = await __vite_ssr_import__("/components/elements/BsCard.vue");
 
 const __vite_ssr_import_1__ = await __vite_ssr_import__("/components/elements/Tooltip.vue");
@@ -7132,402 +7115,384 @@ const __vite_ssr_import_5__ = await __vite_ssr_import__("/node_modules/nuxt/dist
 
 const __vite_ssr_import_6__ = await __vite_ssr_import__("vue");
 
+
+const _sfc_main = {
+  __name: 'jstools',
+  setup(__props, { expose }) {
+  expose();
+
+/*#__PURE__*/ false && __vite_ssr_import_4__.definePageMeta({ layout: "app-layout" });
+__vite_ssr_import_5__.useHead({ title: "JS Tools - Organic Rankings" });
+
+
+const htmlOptionsArr = [
+]
+
+const js = __vite_ssr_import_6__.ref('')
+const processing = __vite_ssr_import_6__.ref(false)
+const jsLength = __vite_ssr_import_6__.ref(0)
+const showOutputModal = __vite_ssr_import_6__.ref(false)
+const outputJs = __vite_ssr_import_6__.ref('')
+const upload = __vite_ssr_import_6__.ref(false)
+const genarate = __vite_ssr_import_6__.ref(false)
+const beautify = __vite_ssr_import_6__.ref(false)
+const indent = __vite_ssr_import_6__.ref(false)
+
+
+const htmlOptions = __vite_ssr_import_6__.ref(htmlOptionsArr)
+
+function copyToClipboard() {
+  var range = document.createRange();
+  range.selectNode(document.getElementById("outputJs"));
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  document.execCommand("copy");
+  window.getSelection().removeAllRanges();
+}
+
+async function genarateJs() {
+  showOutputModal.value = true;
+  processing.value = true;
+  outputJs.value = '';
+
+  await $fetch("/jsTools", {
+    method: "POST",
+    body: js.value,
+    headers: {
+      output: beautify.value ? 'beautify' : 'minify',
+      indent: indent.value ? 4 : 2,
+      "content-type": "application/octet-stream",
+      "cache-control": "no-cache"
+    }
+  }).then((res) => {
+    processing.value = false;
+    outputJs.value = res;
+  }).catch((err) => {
+    processing.value = false;
+    outputJs.value = "Something went wrong please try again";
+  });
+}
+
+__vite_ssr_import_6__.watch(js, async (val) => {
+  jsLength.value = val.length;
+})
+
+
+
+const __returned__ = { htmlOptionsArr, js, processing, jsLength, showOutputModal, outputJs, upload, genarate, beautify, indent, htmlOptions, copyToClipboard, genarateJs, ref: __vite_ssr_import_6__.ref, watch: __vite_ssr_import_6__.watch }
+Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+return __returned__
+}
+
+}
 const __vite_ssr_import_7__ = await __vite_ssr_import__("vue");
 
-const _sfc_main = /* @__PURE__ */ __vite_ssr_import_6__.defineComponent({
-  __name: "jstools",
-  setup(__props, { expose }) {
-    expose();
-    /*#__PURE__*/ false && __vite_ssr_import_4__.definePageMeta({ layout: "app-layout" });
-    __vite_ssr_import_5__.useHead({ title: "JS Tools - Organic Rankings" });
-    const website = __vite_ssr_import_7__.ref("https://www.organicrankings.com/");
-    const css = __vite_ssr_import_7__.ref("");
-    const urlClass = __vite_ssr_import_7__.ref("");
-    const cssClass = __vite_ssr_import_7__.ref("");
-    const processing = __vite_ssr_import_7__.ref(false);
-    const cssLength = __vite_ssr_import_7__.ref(0);
-    const showOutputModal = __vite_ssr_import_7__.ref(false);
-    const outputcss = __vite_ssr_import_7__.ref("");
-    const upload = __vite_ssr_import_7__.ref(false);
-    const genarate = __vite_ssr_import_7__.ref(false);
-    const beautify = __vite_ssr_import_7__.ref(false);
-    const todo = __vite_ssr_import_7__.ref("minify");
-    const optimize = __vite_ssr_import_7__.ref(1);
-    function copyToClipboard() {
-      var range = document.createRange();
-      range.selectNode(document.getElementById("criricalcss"));
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-      document.execCommand("copy");
-      window.getSelection().removeAllRanges();
-    }
-    async function genarateCss() {
-      if (website.value) {
-        showOutputModal.value = true;
-        processing.value = true;
-        upload.value = false;
-        genarate.value = false;
-        outputcss.value = "";
-        urlClass.value = "";
-        cssClass.value = "";
-        window.setTimeout(() => {
-          if (processing.value) {
-            upload.value = true;
-          }
-        }, 1500);
-        window.setTimeout(() => {
-          if (processing.value) {
-            genarate.value = true;
-          }
-        }, 3e3);
-        await $fetch("https://www.organicrankings.com/criticalcss", {
-          method: "POST",
-          body: css.value,
-          headers: {
-            website: website.value,
-            todo: todo.value,
-            optimize: optimize.value,
-            output: beautify.value ? "beautify" : "minify",
-            "content-type": "application/octet-stream",
-            "url": "https://www.organicrankings.com/",
-            "cache-control": "no-cache"
-          }
-        }).then((res) => {
-          processing.value = false;
-          outputcss.value = res;
-        }).catch((err) => {
-          processing.value = false;
-          outputcss.value = "Something went wrong please try again";
-        });
-      } else {
-        if (!website.value) {
-          urlClass.value = "is-invalid";
-        }
-        if (!css.value) {
-          cssClass.value = "is-invalid";
-        }
-      }
-    }
-    __vite_ssr_import_7__.watch(css, async (val) => {
-      cssLength.value = val.length;
-    });
-    const __returned__ = { website, css, urlClass, cssClass, processing, cssLength, showOutputModal, outputcss, upload, genarate, beautify, todo, optimize, copyToClipboard, genarateCss };
-    Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
-    return __returned__;
-  }
-});
-const __vite_ssr_import_8__ = await __vite_ssr_import__("vue");
+const __vite_ssr_import_8__ = await __vite_ssr_import__("vue/server-renderer");
 
-const __vite_ssr_import_9__ = await __vite_ssr_import__("vue/server-renderer");
 
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_ElementsBsCard = __vite_ssr_import_0__.default;
-  const _component_ElementsTooltip = __vite_ssr_import_1__.default;
-  const _component_ElementsSpinner = __vite_ssr_import_2__.default;
-  const _component_ElementsProcessing = __vite_ssr_import_3__.default;
-  _push(`<div${__vite_ssr_import_9__.ssrRenderAttrs(_attrs)} data-v-6823c786><div class="row" data-v-6823c786><div class="col-12" data-v-6823c786>`);
-  _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsBsCard, {
+  const _component_ElementsBsCard = __vite_ssr_import_0__.default
+  const _component_ElementsTooltip = __vite_ssr_import_1__.default
+  const _component_ElementsSpinner = __vite_ssr_import_2__.default
+  const _component_ElementsProcessing = __vite_ssr_import_3__.default
+
+  _push(`<div${__vite_ssr_import_8__.ssrRenderAttrs(_attrs)} data-v-6823c786><div class="row" data-v-6823c786><div class="col-12" data-v-6823c786>`)
+  _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsBsCard, {
     formTitle: "Javascript Tools",
     titleClass: "ps-3"
   }, {
-    default: __vite_ssr_import_8__.withCtx((_, _push2, _parent2, _scopeId) => {
-      if (_push2) {
-        _push2(`<form data-v-6823c786${_scopeId}><div class="todo" data-v-6823c786${_scopeId}><div class="${__vite_ssr_import_9__.ssrRenderClass([$setup.todo == "minify" ? "active" : "", "form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"])}" data-v-6823c786${_scopeId}><label class="form-check-label m-0 px-3 py-2" data-v-6823c786${_scopeId}><input class="form-check-input me-1" type="radio" name="option" value="minify"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.todo, "minify")) ? " checked" : ""} data-v-6823c786${_scopeId}> Minify Javascript </label></div><div class="${__vite_ssr_import_9__.ssrRenderClass([$setup.todo == "beautify" ? "active" : "", "form-check form-check-radio btn btn-outline-primary p-0 mb-3"])}" data-v-6823c786${_scopeId}><label class="form-check-label m-0 px-3 py-2" data-v-6823c786${_scopeId}><input class="form-check-input me-1" type="radio" name="option" value="beautify"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.todo, "beautify")) ? " checked" : ""} data-v-6823c786${_scopeId}> Beautify Javascript </label></div></div><div class="pb-2" data-v-6823c786${_scopeId}>`);
-        if ($setup.todo == "critical") {
-          _push2(`<div class="outputSettings me-3" data-v-6823c786${_scopeId}><label class="settingLvl" data-v-6823c786${_scopeId}>Output Settings</label><div class="form-check form-switch d-flex align-items-center" data-v-6823c786${_scopeId}><div class="${__vite_ssr_import_9__.ssrRenderClass([{ "text-primary": !$setup.beautify }, "toggle me-1"])}" data-v-6823c786${_scopeId}>Minify</div><div class="ms-5 me-2" data-v-6823c786${_scopeId}><input class="form-check-input" type="checkbox"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(Array.isArray($setup.beautify) ? __vite_ssr_import_9__.ssrLooseContain($setup.beautify, null) : $setup.beautify) ? " checked" : ""} data-v-6823c786${_scopeId}></div><div class="${__vite_ssr_import_9__.ssrRenderClass([{ "text-primary": $setup.beautify }, "toggle"])}" data-v-6823c786${_scopeId}>Beautify</div></div></div>`);
+    default: __vite_ssr_import_7__.withCtx((_, _push, _parent, _scopeId) => {
+      if (_push) {
+        _push(`<form data-v-6823c786${
+          _scopeId
+        }><div class="pb-2" data-v-6823c786${
+          _scopeId
+        }><div class="outputSettings mt-2" data-v-6823c786${
+          _scopeId
+        }><label class="settingLvl" data-v-6823c786${
+          _scopeId
+        }>Output Settings</label><div class="form-check form-switch d-flex align-items-center ps-0 mt-1" data-v-6823c786${
+          _scopeId
+        }><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': !$setup.beautify }, "toggle me-1"])
+        }" data-v-6823c786${
+          _scopeId
+        }>Minify </div><div class="ms-5 me-2" data-v-6823c786${
+          _scopeId
+        }><input class="form-check-input" type="checkbox"${
+          (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray($setup.beautify))
+            ? __vite_ssr_import_8__.ssrLooseContain($setup.beautify, null)
+            : $setup.beautify)) ? " checked" : ""
+        } data-v-6823c786${
+          _scopeId
+        }></div><div class="${
+          __vite_ssr_import_8__.ssrRenderClass([{ 'text-primary': $setup.beautify }, "toggle"])
+        }" data-v-6823c786${
+          _scopeId
+        }>Beautify</div></div><div class="form-check ps-0 mt-2" data-v-6823c786${
+          _scopeId
+        }>`)
+        if ($setup.beautify) {
+          _push(`<label class="form-check-label me-3 mt-2" data-v-6823c786${
+            _scopeId
+          }><input class="form-check-input me-1" type="checkbox"${
+            (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray($setup.indent))
+              ? __vite_ssr_import_8__.ssrLooseContain($setup.indent, null)
+              : $setup.indent)) ? " checked" : ""
+          } data-v-6823c786${
+            _scopeId
+          }>`)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "Indent Size 4, Default indent size is 2." }, {
+            default: __vite_ssr_import_7__.withCtx((_, _push, _parent, _scopeId) => {
+              if (_push) {
+                _push(` Indent Size 4 `)
+              } else {
+                return [
+                  __vite_ssr_import_7__.createTextVNode(" Indent Size 4 ")
+                ]
+              }
+            }),
+            _: 1 /* STABLE */
+          }, _parent, _scopeId))
+          _push(`</label>`)
         } else {
-          _push2(`<!---->`);
+          _push(`<!---->`)
         }
-        if ($setup.todo == "minify" || $setup.todo == "critical" && !$setup.beautify) {
-          _push2(`<div class="outputSettings" data-v-6823c786${_scopeId}><label class="settingLvl" data-v-6823c786${_scopeId}>Optimization</label><div class="form-check form-check-radio optimize p-0" data-v-6823c786${_scopeId}><label class="form-check-label m-0 pe-3" data-v-6823c786${_scopeId}><input class="form-check-input" type="radio" name="optimize" value="0"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.optimize, "0")) ? " checked" : ""} data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "No Optimization" }, {
-            default: __vite_ssr_import_8__.withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(`NO`);
+        _push(`<!--[-->`)
+        __vite_ssr_import_8__.ssrRenderList($setup.htmlOptions, (item, index) => {
+          _push(`<label class="form-check-label me-3 mt-2" data-v-6823c786${
+            _scopeId
+          }><input class="form-check-input me-1" type="checkbox"${
+            (__vite_ssr_import_8__.ssrIncludeBooleanAttr((Array.isArray(item.value))
+              ? __vite_ssr_import_8__.ssrLooseContain(item.value, null)
+              : item.value)) ? " checked" : ""
+          } data-v-6823c786${
+            _scopeId
+          }>`)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsTooltip, {
+            tooltip: item.toltip
+          }, {
+            default: __vite_ssr_import_7__.withCtx((_, _push, _parent, _scopeId) => {
+              if (_push) {
+                _push(`${__vite_ssr_import_8__.ssrInterpolate(item.label)}`)
               } else {
                 return [
-                  __vite_ssr_import_8__.createTextVNode("NO")
-                ];
+                  __vite_ssr_import_7__.createTextVNode(__vite_ssr_import_7__.toDisplayString(item.label), 1 /* TEXT */)
+                ]
               }
             }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</label><label class="form-check-label m-0 pe-3" data-v-6823c786${_scopeId}><input class="form-check-input" type="radio" name="optimize" value="1"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.optimize, "1")) ? " checked" : ""} checked data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments" }, {
-            default: __vite_ssr_import_8__.withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(` Level 1`);
-              } else {
-                return [
-                  __vite_ssr_import_8__.createTextVNode(" Level 1")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</label><label class="form-check-label m-0 pe-3" data-v-6823c786${_scopeId}><input class="form-check-input" type="radio" name="optimize" value="2"${__vite_ssr_import_9__.ssrIncludeBooleanAttr(__vite_ssr_import_9__.ssrLooseEqual($setup.optimize, "2")) ? " checked" : ""} data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsTooltip, { tooltip: "Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around." }, {
-            default: __vite_ssr_import_8__.withCtx((_2, _push3, _parent3, _scopeId2) => {
-              if (_push3) {
-                _push3(` Level 2`);
-              } else {
-                return [
-                  __vite_ssr_import_8__.createTextVNode(" Level 2")
-                ];
-              }
-            }),
-            _: 1
-          }, _parent2, _scopeId));
-          _push2(`</label></div></div>`);
-        } else {
-          _push2(`<!---->`);
-        }
-        _push2(`</div><div class="${__vite_ssr_import_9__.ssrRenderClass([$setup.cssClass, "input-group input-group-outline mt-4"])}" data-v-6823c786${_scopeId}><label class="form-label" data-v-6823c786${_scopeId}>All Javascript </label><textarea class="form-control" rows="10" data-v-6823c786${_scopeId}>${__vite_ssr_import_9__.ssrInterpolate($setup.css)}</textarea></div><small class="cssLength" data-v-6823c786${_scopeId}>${__vite_ssr_import_9__.ssrInterpolate($setup.cssLength)} character</small><div class="mb-1 text-end mt-4" data-v-6823c786${_scopeId}><button class="btn btn-primary" data-v-6823c786${_scopeId}>`);
+            _: 2 /* DYNAMIC */
+          }, _parent, _scopeId))
+          _push(`</label>`)
+        })
+        _push(`<!--]--></div></div></div><div class="input-group input-group-outline mt-4" data-v-6823c786${
+          _scopeId
+        }><label class="form-label" data-v-6823c786${
+          _scopeId
+        }>All Javascript </label><textarea class="form-control" rows="10" data-v-6823c786${
+          _scopeId
+        }>${
+          __vite_ssr_import_8__.ssrInterpolate($setup.js)
+        }</textarea></div><div class="text-end" data-v-6823c786${
+          _scopeId
+        }><small data-v-6823c786${
+          _scopeId
+        }>${
+          __vite_ssr_import_8__.ssrInterpolate($setup.jsLength)
+        } character</small></div><div class="mb-1 text-end mt-4" data-v-6823c786${
+          _scopeId
+        }><button class="btn btn-primary" data-v-6823c786${
+          _scopeId
+        }>`)
         if (!$setup.processing) {
-          _push2(`<span data-v-6823c786${_scopeId}>Genarate</span>`);
+          _push(`<span data-v-6823c786${_scopeId}>Genarate</span>`)
         } else {
-          _push2(`<!---->`);
+          _push(`<!---->`)
         }
         if ($setup.processing) {
-          _push2(`<div data-v-6823c786${_scopeId}>`);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, null, null, _parent2, _scopeId));
-          _push2(` Genarating `);
-          _push2(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsProcessing, null, null, _parent2, _scopeId));
-          _push2(`</div>`);
+          _push(`<div data-v-6823c786${_scopeId}>`)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, null, null, _parent, _scopeId))
+          _push(` Genarating `)
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsProcessing, null, null, _parent, _scopeId))
+          _push(`</div>`)
         } else {
-          _push2(`<!---->`);
+          _push(`<!---->`)
         }
-        _push2(`</button></div></form>`);
+        _push(`</button></div></form>`)
       } else {
         return [
-          __vite_ssr_import_8__.createVNode("form", {
-            onSubmit: __vite_ssr_import_8__.withModifiers($setup.genarateCss, ["prevent"])
+          __vite_ssr_import_7__.createVNode("form", {
+            onSubmit: __vite_ssr_import_7__.withModifiers($setup.genarateJs, ["prevent"])
           }, [
-            __vite_ssr_import_8__.createVNode("div", { class: "todo" }, [
-              __vite_ssr_import_8__.createVNode("div", {
-                class: ["form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0", $setup.todo == "minify" ? "active" : ""]
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 px-3 py-2" }, [
-                  __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                    class: "form-check-input me-1",
-                    type: "radio",
-                    name: "option",
-                    value: "minify",
-                    "onUpdate:modelValue": ($event) => $setup.todo = $event
-                  }, null, 8, ["onUpdate:modelValue"]), [
-                    [__vite_ssr_import_8__.vModelRadio, $setup.todo]
-                  ]),
-                  __vite_ssr_import_8__.createTextVNode(" Minify Javascript ")
-                ])
-              ], 2),
-              __vite_ssr_import_8__.createVNode("div", {
-                class: ["form-check form-check-radio btn btn-outline-primary p-0 mb-3", $setup.todo == "beautify" ? "active" : ""]
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 px-3 py-2" }, [
-                  __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                    class: "form-check-input me-1",
-                    type: "radio",
-                    name: "option",
-                    value: "beautify",
-                    "onUpdate:modelValue": ($event) => $setup.todo = $event
-                  }, null, 8, ["onUpdate:modelValue"]), [
-                    [__vite_ssr_import_8__.vModelRadio, $setup.todo]
-                  ]),
-                  __vite_ssr_import_8__.createTextVNode(" Beautify Javascript ")
-                ])
-              ], 2)
-            ]),
-            __vite_ssr_import_8__.createVNode("div", { class: "pb-2" }, [
-              $setup.todo == "critical" ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("div", {
-                key: 0,
-                class: "outputSettings me-3"
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
-                __vite_ssr_import_8__.createVNode("div", { class: "form-check form-switch d-flex align-items-center" }, [
-                  __vite_ssr_import_8__.createVNode("div", {
-                    class: ["toggle me-1", { "text-primary": !$setup.beautify }],
-                    onClick: ($event) => $setup.beautify = false
-                  }, "Minify", 10, ["onClick"]),
-                  __vite_ssr_import_8__.createVNode("div", { class: "ms-5 me-2" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
+            __vite_ssr_import_7__.createVNode("div", { class: "pb-2" }, [
+              __vite_ssr_import_7__.createVNode("div", { class: "outputSettings mt-2" }, [
+                __vite_ssr_import_7__.createVNode("label", { class: "settingLvl" }, "Output Settings"),
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check form-switch d-flex align-items-center ps-0 mt-1" }, [
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle me-1", { 'text-primary': !$setup.beautify }],
+                    onClick: $event => ($setup.beautify = false)
+                  }, "Minify ", 10 /* CLASS, PROPS */, ["onClick"]),
+                  __vite_ssr_import_7__.createVNode("div", { class: "ms-5 me-2" }, [
+                    __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
                       class: "form-check-input",
                       type: "checkbox",
-                      "onUpdate:modelValue": ($event) => $setup.beautify = $event
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelCheckbox, $setup.beautify]
+                      "onUpdate:modelValue": $event => (($setup.beautify) = $event)
+                    }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                      [__vite_ssr_import_7__.vModelCheckbox, $setup.beautify]
                     ])
                   ]),
-                  __vite_ssr_import_8__.createVNode("div", {
-                    class: ["toggle", { "text-primary": $setup.beautify }],
-                    onClick: ($event) => $setup.beautify = true
-                  }, "Beautify", 10, ["onClick"])
+                  __vite_ssr_import_7__.createVNode("div", {
+                    class: ["toggle", { 'text-primary': $setup.beautify }],
+                    onClick: $event => ($setup.beautify = true)
+                  }, "Beautify", 10 /* CLASS, PROPS */, ["onClick"])
+                ]),
+                __vite_ssr_import_7__.createVNode("div", { class: "form-check ps-0 mt-2" }, [
+                  ($setup.beautify)
+                    ? (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", {
+                        key: 0,
+                        class: "form-check-label me-3 mt-2"
+                      }, [
+                        __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
+                          class: "form-check-input me-1",
+                          type: "checkbox",
+                          "onUpdate:modelValue": $event => (($setup.indent) = $event)
+                        }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                          [__vite_ssr_import_7__.vModelCheckbox, $setup.indent]
+                        ]),
+                        __vite_ssr_import_7__.createVNode(_component_ElementsTooltip, { tooltip: "Indent Size 4, Default indent size is 2." }, {
+                          default: __vite_ssr_import_7__.withCtx(() => [
+                            __vite_ssr_import_7__.createTextVNode(" Indent Size 4 ")
+                          ]),
+                          _: 1 /* STABLE */
+                        })
+                      ]))
+                    : __vite_ssr_import_7__.createCommentVNode("v-if", true),
+                  (__vite_ssr_import_7__.openBlock(true), __vite_ssr_import_7__.createBlock(__vite_ssr_import_7__.Fragment, null, __vite_ssr_import_7__.renderList($setup.htmlOptions, (item, index) => {
+                    return (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("label", { class: "form-check-label me-3 mt-2" }, [
+                      __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("input", {
+                        class: "form-check-input me-1",
+                        type: "checkbox",
+                        "onUpdate:modelValue": $event => ((item.value) = $event),
+                        onClick: $event => {_ctx.minify = (item.name == 'collapseWhitespace') ? true : false;}
+                      }, null, 8 /* PROPS */, ["onUpdate:modelValue", "onClick"]), [
+                        [__vite_ssr_import_7__.vModelCheckbox, item.value]
+                      ]),
+                      __vite_ssr_import_7__.createVNode(_component_ElementsTooltip, {
+                        tooltip: item.toltip
+                      }, {
+                        default: __vite_ssr_import_7__.withCtx(() => [
+                          __vite_ssr_import_7__.createTextVNode(__vite_ssr_import_7__.toDisplayString(item.label), 1 /* TEXT */)
+                        ]),
+                        _: 2 /* DYNAMIC */
+                      }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["tooltip"])
+                    ]))
+                  }), 256 /* UNKEYED_FRAGMENT */))
                 ])
-              ])) : __vite_ssr_import_8__.createCommentVNode("v-if", true),
-              $setup.todo == "minify" || $setup.todo == "critical" && !$setup.beautify ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("div", {
-                key: 1,
-                class: "outputSettings"
-              }, [
-                __vite_ssr_import_8__.createVNode("label", { class: "settingLvl" }, "Optimization"),
-                __vite_ssr_import_8__.createVNode("div", { class: "form-check form-check-radio optimize p-0" }, [
-                  __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 pe-3" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                      class: "form-check-input",
-                      type: "radio",
-                      name: "optimize",
-                      value: "0",
-                      "onUpdate:modelValue": ($event) => $setup.optimize = $event
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelRadio, $setup.optimize]
-                    ]),
-                    __vite_ssr_import_8__.createVNode(_component_ElementsTooltip, { tooltip: "No Optimization" }, {
-                      default: __vite_ssr_import_8__.withCtx(() => [
-                        __vite_ssr_import_8__.createTextVNode("NO")
-                      ]),
-                      _: 1
-                    })
-                  ]),
-                  __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 pe-3" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                      class: "form-check-input",
-                      type: "radio",
-                      name: "optimize",
-                      value: "1",
-                      "onUpdate:modelValue": ($event) => $setup.optimize = $event,
-                      checked: ""
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelRadio, $setup.optimize]
-                    ]),
-                    __vite_ssr_import_8__.createVNode(_component_ElementsTooltip, { tooltip: "Level 1 optimization. Turn rgb colors to a shorter hex representation, remove comments" }, {
-                      default: __vite_ssr_import_8__.withCtx(() => [
-                        __vite_ssr_import_8__.createTextVNode(" Level 1")
-                      ]),
-                      _: 1
-                    })
-                  ]),
-                  __vite_ssr_import_8__.createVNode("label", { class: "form-check-label m-0 pe-3" }, [
-                    __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("input", {
-                      class: "form-check-input",
-                      type: "radio",
-                      name: "optimize",
-                      value: "2",
-                      "onUpdate:modelValue": ($event) => $setup.optimize = $event
-                    }, null, 8, ["onUpdate:modelValue"]), [
-                      [__vite_ssr_import_8__.vModelRadio, $setup.optimize]
-                    ]),
-                    __vite_ssr_import_8__.createVNode(_component_ElementsTooltip, { tooltip: "Level 2 optimization. Turn rgb colors to a shorter hex representation, remove comments, remove duplicate rules, remove properties redefined further down a stylesheet, or restructure rules by moving them around." }, {
-                      default: __vite_ssr_import_8__.withCtx(() => [
-                        __vite_ssr_import_8__.createTextVNode(" Level 2")
-                      ]),
-                      _: 1
-                    })
-                  ])
-                ])
-              ])) : __vite_ssr_import_8__.createCommentVNode("v-if", true)
+              ])
             ]),
-            __vite_ssr_import_8__.createVNode("div", {
-              class: ["input-group input-group-outline mt-4", $setup.cssClass]
-            }, [
-              __vite_ssr_import_8__.createVNode("label", { class: "form-label" }, "All Javascript "),
-              __vite_ssr_import_8__.withDirectives(__vite_ssr_import_8__.createVNode("textarea", {
+            __vite_ssr_import_7__.createVNode("div", { class: "input-group input-group-outline mt-4" }, [
+              __vite_ssr_import_7__.createVNode("label", { class: "form-label" }, "All Javascript "),
+              __vite_ssr_import_7__.withDirectives(__vite_ssr_import_7__.createVNode("textarea", {
                 class: "form-control",
                 rows: "10",
-                "onUpdate:modelValue": ($event) => $setup.css = $event
-              }, null, 8, ["onUpdate:modelValue"]), [
-                [__vite_ssr_import_8__.vModelText, $setup.css]
+                "onUpdate:modelValue": $event => (($setup.js) = $event)
+              }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+                [__vite_ssr_import_7__.vModelText, $setup.js]
               ])
-            ], 2),
-            __vite_ssr_import_8__.createVNode("small", { class: "cssLength" }, __vite_ssr_import_8__.toDisplayString($setup.cssLength) + " character", 1),
-            __vite_ssr_import_8__.createVNode("div", { class: "mb-1 text-end mt-4" }, [
-              __vite_ssr_import_8__.createVNode("button", { class: "btn btn-primary" }, [
-                !$setup.processing ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("span", { key: 0 }, "Genarate")) : __vite_ssr_import_8__.createCommentVNode("v-if", true),
-                $setup.processing ? (__vite_ssr_import_8__.openBlock(), __vite_ssr_import_8__.createBlock("div", { key: 1 }, [
-                  __vite_ssr_import_8__.createVNode(_component_ElementsSpinner),
-                  __vite_ssr_import_8__.createTextVNode(" Genarating "),
-                  __vite_ssr_import_8__.createVNode(_component_ElementsProcessing)
-                ])) : __vite_ssr_import_8__.createCommentVNode("v-if", true)
+            ]),
+            __vite_ssr_import_7__.createVNode("div", { class: "text-end" }, [
+              __vite_ssr_import_7__.createVNode("small", null, __vite_ssr_import_7__.toDisplayString($setup.jsLength) + " character", 1 /* TEXT */)
+            ]),
+            __vite_ssr_import_7__.createVNode("div", { class: "mb-1 text-end mt-4" }, [
+              __vite_ssr_import_7__.createVNode("button", { class: "btn btn-primary" }, [
+                (!$setup.processing)
+                  ? (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("span", { key: 0 }, "Genarate"))
+                  : __vite_ssr_import_7__.createCommentVNode("v-if", true),
+                ($setup.processing)
+                  ? (__vite_ssr_import_7__.openBlock(), __vite_ssr_import_7__.createBlock("div", { key: 1 }, [
+                      __vite_ssr_import_7__.createVNode(_component_ElementsSpinner),
+                      __vite_ssr_import_7__.createTextVNode(" Genarating "),
+                      __vite_ssr_import_7__.createVNode(_component_ElementsProcessing)
+                    ]))
+                  : __vite_ssr_import_7__.createCommentVNode("v-if", true)
               ])
             ])
-          ], 40, ["onSubmit"])
-        ];
+          ], 40 /* PROPS, HYDRATE_EVENTS */, ["onSubmit"])
+        ]
       }
     }),
-    _: 1
-  }, _parent));
-  _push(`</div></div><!-- Modal -->`);
+    _: 1 /* STABLE */
+  }, _parent))
+  _push(`</div></div><!-- Modal -->`)
   if ($setup.showOutputModal) {
-    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-6823c786><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-6823c786><div class="modal-content" data-v-6823c786><div class="modal-header" data-v-6823c786><h5 class="modal-title" data-v-6823c786>CSS Output (${__vite_ssr_import_9__.ssrInterpolate($setup.outputcss.length)} character)</h5><button type="button" class="btn-close" data-v-6823c786><i class="material-icons" data-v-6823c786>close</i></button></div><div class="modal-body" data-v-6823c786>`);
+    _push(`<div class="modal fade show" aria-modal="true" role="dialog" data-v-6823c786><div class="modal-dialog modal-dialog-scrollable modal-xl" data-v-6823c786><div class="modal-content" data-v-6823c786><div class="modal-header" data-v-6823c786><h5 class="modal-title" data-v-6823c786>Output (${__vite_ssr_import_8__.ssrInterpolate($setup.outputJs.length)} character)</h5><button type="button" class="btn-close" data-v-6823c786><i class="material-icons" data-v-6823c786>close</i></button></div><div class="modal-body" data-v-6823c786>`)
     if ($setup.processing) {
-      _push(`<div class="text-success text-center" data-v-6823c786><p data-v-6823c786>`);
+      _push(`<div class="text-success text-center" data-v-6823c786><p data-v-6823c786>`)
       if (!$setup.upload) {
-        _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent));
+        _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
       if ($setup.upload) {
-        _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`);
+        _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`)
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
-      _push(` Uploading Your CSS. </p>`);
+      _push(` Uploading Your Code. </p>`)
       if ($setup.upload) {
-        _push(`<p data-v-6823c786>`);
+        _push(`<p data-v-6823c786>`)
         if (!$setup.genarate && $setup.upload) {
-          _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent));
+          _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
         } else {
-          _push(`<!---->`);
+          _push(`<!---->`)
         }
         if ($setup.genarate) {
-          _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`);
+          _push(`<i class="material-icons" data-v-6823c786>task_alt</i>`)
         } else {
-          _push(`<!---->`);
+          _push(`<!---->`)
         }
-        _push(` Genarating Critical CSS. </p>`);
+        _push(` Genarating Code. </p>`)
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
       if ($setup.genarate) {
-        _push(`<p data-v-6823c786>`);
-        _push(__vite_ssr_import_9__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent));
-        _push(` Downloading Critical CSS. </p>`);
+        _push(`<p data-v-6823c786>`)
+        _push(__vite_ssr_import_8__.ssrRenderComponent(_component_ElementsSpinner, { color: "green" }, null, _parent))
+        _push(` Downloading Code. </p>`)
       } else {
-        _push(`<!---->`);
+        _push(`<!---->`)
       }
-      _push(`</div>`);
+      _push(`</div>`)
     } else {
-      _push(`<!---->`);
+      _push(`<!---->`)
     }
-    _push(`<div id="criricalcss" data-v-6823c786>`);
-    if ($setup.todo == "beautify" || $setup.todo == "critical" && $setup.beautify) {
-      _push(`<pre data-v-6823c786>${__vite_ssr_import_9__.ssrInterpolate($setup.outputcss)}</pre>`);
+    _push(`<pre data-v-6823c786><code id="outputJs" data-language="html" class="html" data-v-6823c786>${__vite_ssr_import_8__.ssrInterpolate($setup.outputJs)}</code></pre></div><div class="modal-footer" data-v-6823c786><button class="btn btn-secondary" data-v-6823c786> Close </button>`)
+    if ($setup.outputJs) {
+      _push(`<button class="btn btn-primary" data-v-6823c786> Copy Code </button>`)
     } else {
-      _push(`<div data-v-6823c786>${__vite_ssr_import_9__.ssrInterpolate($setup.outputcss)}</div>`);
+      _push(`<!---->`)
     }
-    _push(`</div></div><div class="modal-footer" data-v-6823c786><button class="btn btn-secondary" data-v-6823c786> Close </button>`);
-    if ($setup.outputcss) {
-      _push(`<button class="btn btn-primary" data-v-6823c786> Copy Css </button>`);
-    } else {
-      _push(`<!---->`);
-    }
-    _push(`</div></div></div></div>`);
+    _push(`</div></div></div></div>`)
   } else {
-    _push(`<!---->`);
+    _push(`<!---->`)
   }
-  _push(`</div>`);
+  _push(`</div>`)
 }
-const __vite_ssr_import_10__ = await __vite_ssr_import__("/pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css");
 
-const __vite_ssr_import_11__ = await __vite_ssr_import__("vue");
+const __vite_ssr_import_9__ = await __vite_ssr_import__("/pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css");
 
-const _sfc_setup = _sfc_main.setup;
+
+const __vite_ssr_import_10__ = await __vite_ssr_import__("vue");
+
+const _sfc_setup = _sfc_main.setup
 _sfc_main.setup = (props, ctx) => {
-  const ssrContext = __vite_ssr_import_11__.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("pages/app/jstools.vue");
-  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
-};
-const __vite_ssr_import_12__ = await __vite_ssr_import__("/@id/__x00__plugin-vue:export-helper");
+  const ssrContext = __vite_ssr_import_10__.useSSRContext()
+  ;(ssrContext.modules || (ssrContext.modules = new Set())).add("pages/app/jstools.vue")
+  return _sfc_setup ? _sfc_setup(props, ctx) : undefined
+}
+const __vite_ssr_import_11__ = await __vite_ssr_import__("/@id/__x00__plugin-vue:export-helper");
 
-__vite_ssr_exports__.default = /* @__PURE__ */ __vite_ssr_import_12__.default(_sfc_main, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-6823c786"], ["__file", "C:/www/organicrankings/pages/app/jstools.vue"]]);
-;
+__vite_ssr_exports__.default = /*#__PURE__*/__vite_ssr_import_11__.default(_sfc_main, [['ssrRender',_sfc_ssrRender],['__scopeId',"data-v-6823c786"],['__file',"C:/www/organicrankings/pages/app/jstools.vue"]]);
 }
 
 
@@ -7538,8 +7503,8 @@ __vite_ssr_exports__.default = /* @__PURE__ */ __vite_ssr_import_12__.default(_s
 // Dependencies: 
 
 // --------------------
-const $id_PPIr5Py33A = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
-__vite_ssr_exports__.default = "\n.todo input[data-v-6823c786] {\r\n      display: none;\n}\n.form-check.active label[data-v-6823c786] {\r\n      color: #fff !important\n}\n.cssLength[data-v-6823c786] {\r\n      float: right;\n}\n.modal[data-v-6823c786] {\r\n      display: block;\r\n      background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-body .material-icons[data-v-6823c786] {\r\n      vertical-align: middle;\n}\n.btn-close[data-v-6823c786] {\r\n      padding: 0;\n}\n.btn-close .material-icons[data-v-6823c786] {\r\n      color: black;\r\n      vertical-align: top;\n}\n.form-switch[data-v-6823c786] {\r\n      padding-left: 0 !important;\n}\n.todo label[data-v-6823c786] {\r\n      text-transform: capitalize;\n}\n.toggle[data-v-6823c786] {\r\n      cursor: pointer;\n}\n.form-check-input[data-v-6823c786] {\r\n      margin-right: 5px;\r\n      vertical-align: text-bottom;\n}\n.form-check:not(.form-switch) .form-check-input[type=\"radio\"][data-v-6823c786]:after {\r\n      width: 0.8rem;\r\n      height: 0.8rem;\n}\n.outputSettings[data-v-6823c786] {\r\n      display: inline-block;\r\n      position: relative;\r\n      border: 1px solid #d2d6da;\r\n      border-radius: 0.375rem;\r\n      margin: 30px 0 0 0;\r\n      padding: 15px 10px 10px 10px;\n}\n.outputSettings .settingLvl[data-v-6823c786] {\r\n      position: absolute;\r\n      top: -15px;\r\n      font-weight: bold;\r\n      background: #fff;\r\n      left: 2px;\r\n      padding: 3px;\n}\r\n    ";
+const $id_zSprfXm6OX = async function (global, module, exports, __vite_ssr_exports__, __vite_ssr_import_meta__, __vite_ssr_import__, __vite_ssr_dynamic_import__, __vite_ssr_exportAll__) {
+__vite_ssr_exports__.default = "\n#outputJs[data-v-6823c786] {\r\n      white-space: break-spaces;\n}\n.todo input[data-v-6823c786] {\r\n      display: none;\n}\n.form-check.active label[data-v-6823c786] {\r\n      color: #fff !important\n}\n.cssLength[data-v-6823c786] {\r\n      float: right;\n}\n.modal[data-v-6823c786] {\r\n      display: block;\r\n      background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-body .material-icons[data-v-6823c786] {\r\n      vertical-align: middle;\n}\n.btn-close[data-v-6823c786] {\r\n      padding: 0;\n}\n.btn-close .material-icons[data-v-6823c786] {\r\n      color: black;\r\n      vertical-align: top;\n}\n.form-switch[data-v-6823c786] {\r\n      padding-left: 0 !important;\n}\n.todo label[data-v-6823c786] {\r\n      text-transform: capitalize;\n}\n.toggle[data-v-6823c786] {\r\n      cursor: pointer;\n}\n.form-check-input[data-v-6823c786] {\r\n      margin-right: 5px;\r\n      vertical-align: text-bottom;\n}\n.form-check:not(.form-switch) .form-check-input[type=\"radio\"][data-v-6823c786]:after {\r\n      width: 0.8rem;\r\n      height: 0.8rem;\n}\n.form-check:not(.form-switch) .form-check-input[type=\"checkbox\"][data-v-6823c786]:after {\r\n      content: \"\";\n}\n.outputSettings[data-v-6823c786] {\r\n      display: inline-block;\r\n      position: relative;\r\n      border: 1px solid #d2d6da;\r\n      border-radius: 0.375rem;\r\n      margin: 30px 0 0 0;\r\n      padding: 15px 10px 10px 10px;\n}\n.outputSettings .settingLvl[data-v-6823c786] {\r\n      position: absolute;\r\n      top: -15px;\r\n      font-weight: bold;\r\n      background: #fff;\r\n      left: 2px;\r\n      padding: 3px;\n}\r\n    ";
 }
 
 
@@ -9622,9 +9587,9 @@ const __modules__ = {
   "/components/elements/Processing.vue?vue&type=style&index=0&scoped=8000fe06&lang.css": $id_NcE1s8Wirl,
   "/node_modules/nuxt/dist/pages/runtime/composables.mjs": $id_PgbhbSnfkR,
   "/pages/app/dashboard.vue?macro=true": $id_dRS2pZfHBq,
-  "/pages/app/htmltools.vue?macro=true": $id_YduHssUoYm,
+  "/pages/app/htmltools.vue?macro=true": $id_NYAZHRgv24,
   "/pages/app/index.vue?macro=true": $id_oY1Z7dLZzs,
-  "/pages/app/jstools.vue?macro=true": $id_VKkuiZMX8E,
+  "/pages/app/jstools.vue?macro=true": $id_0sOFe4yZkR,
   "/pages/index.vue?macro=true": $id_Abu5Z9bR98,
   "/pages/resetpassword.vue?macro=true": $id_G68cUP9Doq,
   "/components/elements/InputEmail.vue": $id_f7j9HF21wo,
@@ -9637,11 +9602,11 @@ const __modules__ = {
   "/pages/app/csstools.vue": $id_YJrKjAy5sz,
   "/pages/app/csstools.vue?vue&type=style&index=0&scoped=ac7a0ea1&lang.css": $id_arVKCymY8s,
   "/pages/app/dashboard.vue": $id_2mqzKDTAoe,
-  "/pages/app/htmltools.vue": $id_Sa9pFDjvRu,
+  "/pages/app/htmltools.vue": $id_9y7d8tDtnL,
   "/pages/app/htmltools.vue?vue&type=style&index=0&scoped=e2ebeaf7&lang.css": $id_OWVnGxyy8j,
   "/pages/app/index.vue": $id_lECjhA6j9J,
-  "/pages/app/jstools.vue": $id_l3UlqH7l30,
-  "/pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css": $id_PPIr5Py33A,
+  "/pages/app/jstools.vue": $id_4GjsggBItG,
+  "/pages/app/jstools.vue?vue&type=style&index=0&scoped=6823c786&lang.css": $id_zSprfXm6OX,
   "/pages/index.vue": $id_vdTnpezFOX,
   "/pages/resetpassword.vue": $id_v45cDvxpq3,
   "/pages/resetpassword.vue?vue&type=style&index=0&lang.css": $id_Q5ZsrA1TeX,

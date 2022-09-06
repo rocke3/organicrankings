@@ -19,6 +19,7 @@
 		"js-beautify": "^1.14.6",
 		"jsonwebtoken": "^8.5.1",
 		"md5": "^2.3.0",
-		"mysql2": "^2.3.3"
+		"mysql2": "^2.3.3",
+		"uglify-js": "^3.17.0"
 	}
 }
