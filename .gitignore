@@ -6,4 +6,6 @@ node_modules/
 build/
 tmp/
 temp/
+.nuxt/*
+.nuxt
 .env
