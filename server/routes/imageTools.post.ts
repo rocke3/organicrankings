@@ -12,9 +12,9 @@ export default defineEventHandler(async (event) => {
 		const fileInfo = JSON.parse(JSON.stringify(files));
 		const image = fileInfo.maxImg[0];
 
-		const outImg = await imagemin([image.filepath]);
+		//const outImg = await imagemin([image.filepath]);
 
-		console.log(outImg[0].data);
+		console.log(image);
 	});
 });
 
