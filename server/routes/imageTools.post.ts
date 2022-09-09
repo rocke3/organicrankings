@@ -8,14 +8,13 @@ export default defineEventHandler(async (event) => {
 		res = event.res;
 	console.log("in");
 
-	await form.parse(req, async (err, fields, files) => {
+	form.parse(req, async (err, fields, files) => {
 		const fileInfo = JSON.parse(JSON.stringify(files));
 		const image = fileInfo.maxImg[0];
 
-		//const outImg = await imagemin([image.filepath]);
-
 		console.log(image);
 	});
+	//const outImg = await imagemin([image.filepath]);
 });
 
 // export default async (req, res, next) => {
