@@ -1,12 +1,12 @@
 import imagemin from "imagemin";
 import formidable from "formidable";
-import { defineEventHandler, getHeader, readRawBody, setResponseHeader } from "h3";
-import { Buffer } from "node:buffer";
+import { defineEventHandler } from "h3";
 
 export default defineEventHandler(async (event) => {
 	const form = formidable();
 	const req = event.req,
 		res = event.res;
+	console.log("in");
 
 	form.parse(req, async (err, fields, files) => {
 		const fileInfo = JSON.parse(JSON.stringify(files));
