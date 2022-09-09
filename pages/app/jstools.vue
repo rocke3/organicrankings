@@ -218,10 +218,6 @@ watch(js, async (val) => {
       height: 0.8rem;
     }
     
-    .form-check:not(.form-switch) .form-check-input[type="checkbox"]:after {
-      content: "";
-    }
-    
     .outputSettings {
       display: inline-block;
       position: relative;

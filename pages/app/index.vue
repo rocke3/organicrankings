@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 definePageMeta({ layout: "app-layout" });
 useHead({ title: "Dashboard - Organic Rankings" });
 </script>

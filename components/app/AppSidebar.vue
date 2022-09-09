@@ -13,6 +13,7 @@ const menuItems = [
 	{ name: 'HTML Tools', path: '/app/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/app/csstools', icon: 'css' },
 	{ name: 'JS Tools', path: '/app/jstools', icon: 'javascript' },
+	{ name: 'Image Tools', path: '/app/imagetools', icon: 'image' },
 ]
 
 async function requstLogout() {

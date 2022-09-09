@@ -261,10 +261,6 @@ watch(css, async (val) => {
 	vertical-align: text-bottom;
 }
 
-.form-check:not(.form-switch) .form-check-input[type="radio"]:after {
-	width: 0.8rem;
-	height: 0.8rem;
-}
 
 .outputSettings {
 	display: inline-block;

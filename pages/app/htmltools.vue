@@ -72,6 +72,7 @@ watch(html, async (val) => {
 	htmlLength.value = val.length;
 })
 
+
 </script>
   
 <template>
@@ -83,13 +84,12 @@ watch(html, async (val) => {
             <div class="pb-2">
               <div class="outputSettings mt-2">
                 <label class="settingLvl">Output Settings</label>
-                <div class="form-check form-switch d-flex align-items-center ps-0 mt-1">
-                  <div class="toggle me-1" :class="{ 'text-primary': !beautify }" @click="beautify = false">Minify
-                  </div>
+                <div class="form-check form-switch d-flex align-items-center">
+                  <div class="toggle me-1" :class="{ 'text-primary': !beautify }" @click="beautify = false">Minify</div>
                   <div class="ms-5 me-2">
                     <input class="form-check-input" type="checkbox" v-model="beautify" />
                   </div>
-                  <div class="toggle" :class="{ 'text-primary': beautify }" @click="beautify = true">Beautify</div>
+                  <div class="toggle " :class="{ 'text-primary': beautify }" @click="beautify = true">Beautify</div>
                 </div>
 
                 <div class="form-check ps-0 mt-2">
@@ -230,9 +230,6 @@ watch(html, async (val) => {
     padding: 3px;
   }
   
-  .form-check:not(.form-switch) .form-check-input[type="checkbox"]:after {
-    content: "";
-  }
   
   .form-check:not(.form-switch) .form-check-input[type="checkbox"] {
     margin: 1px 2px 0 0;
