@@ -1,36 +1,40 @@
 import imagemin from "imagemin";
-//import formidable from "formidable";
 import { IncomingForm } from "formidable";
 import { defineEventHandler } from "h3";
 
-export default defineEventHandler(async (event) => {
-	const form = new IncomingForm();
-	const req = event.req,
-		res = event.res;
+// export default defineEventHandler(async (event) => {
+// 	const form = new IncomingForm({ multiples: true });
+// 	form.on("file", (field, file) => {
+// 		// Do something with the file
+// 		// e.g. save it to the database
+// 		// originalFilename , mimetype, filepath, newFilename
+// 		console.log("file", file.filepath);
+// 	});
+// 	form.on("end", (err) => {
+// 		console.log(err);
+// 	});
+// 	form.parse(event.req);
+// 	//const outImg = await imagemin([image.filepath]);
 
-	form.on("file", (field, file) => {
+// 	return "asd";
+// });
+
+export default (req, res, next) => {
+	const form = new IncomingForm();
+	form.multiples = true;
+	form.maxFileSize = 50 * 1024 * 1024; // 5MB
+	form.uploadDir = "./";
+	form.on("file", async (field, file) => {
 		// Do something with the file
 		// e.g. save it to the database
-		// you can access it using file.path
-		//originalFilename
+		// originalFilename , mimetype, filepath, newFilename
 		console.log("file", file.filepath);
+		const outImg = await imagemin([file.filepath]);
+		console.log(outImg[0].data);
+		return outImg[0].data;
 	});
-	form.on("end", () => {
-		console.log("end");
+	form.on("end", (data) => {
+		console.log(data);
 	});
 	form.parse(req);
-
-	// form.parse(req, async (err, fields, files) => {
-	// 	const fileInfo = JSON.parse(JSON.stringify(files));
-	// 	const image = fileInfo.maxImg[0];
-
-	// 	console.log(image);
-	// });
-	//const outImg = await imagemin([image.filepath]);
-
-	return "asd";
-});
-
-// export default async (req, res, next) => {
-// 	console.log(req);
-// };
+};
