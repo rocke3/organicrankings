@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 		res = event.res;
 	console.log("in");
 
-	form.parse(req, async (err, fields, files) => {
+	await form.parse(req, async (err, fields, files) => {
 		const fileInfo = JSON.parse(JSON.stringify(files));
 		const image = fileInfo.maxImg[0];
 
