@@ -33,7 +33,7 @@ async function selectFile(event) {
     }
   };
 
-  imageData.append('image', upFiles[0])
+  imageData.append('maxImg', upFiles[0])
 
   axios.post('/imageTools', imageData, axiosConfig)
     .then(function (response) {
