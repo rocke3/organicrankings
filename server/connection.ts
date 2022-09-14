@@ -1,4 +1,4 @@
-import { env } from "node:process";
+const env = useRuntimeConfig();
 import * as mysql from "mysql2";
 
 const db = mysql.createConnection({

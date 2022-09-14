@@ -157,9 +157,9 @@ watch(css, async (val) => {
 						<small class="cssLength">{{ cssLength }} character</small>
 						<div class="mb-1 text-end mt-4">
 							<button class="btn btn-primary">
-								<span v-if="!processing">Genarate</span>
+								<span v-if="!processing">Generate</span>
 								<div v-if="processing">
-									<ElementsSpinner /> Genarating
+									<ElementsSpinner /> Generating
 									<ElementsProcessing />
 								</div>
 							</button>

@@ -107,9 +107,9 @@ watch(js, async (val) => {
             </div>
             <div class="mb-1 text-end mt-4">
               <button class="btn btn-primary">
-                <span v-if="!processing">Genarate</span>
+                <span v-if="!processing">Generate</span>
                 <div v-if="processing">
-                  <ElementsSpinner /> Genarating
+                  <ElementsSpinner /> Generating
                   <ElementsProcessing />
                 </div>
               </button>
@@ -161,79 +161,79 @@ watch(js, async (val) => {
 </template>
     
     
-    <style scoped>
-    #outputJs {
-      white-space: break-spaces;
-    }
-    
-    .todo input {
-      display: none;
-    }
-    
-    .form-check.active label {
-      color: #fff !important
-    }
-    
-    .cssLength {
-      float: right;
-    }
-    
-    .modal {
-      display: block;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-    
-    .modal-body .material-icons {
-      vertical-align: middle;
-    }
-    
-    .btn-close {
-      padding: 0;
-    }
-    
-    .btn-close .material-icons {
-      color: black;
-      vertical-align: top;
-    }
-    
-    .form-switch {
-      padding-left: 0 !important;
-    }
-    
-    .todo label {
-      text-transform: capitalize;
-    }
-    
-    .toggle {
-      cursor: pointer;
-    }
-    
-    .form-check-input {
-      margin-right: 5px;
-      vertical-align: text-bottom;
-    }
-    
-    .form-check:not(.form-switch) .form-check-input[type="radio"]:after {
-      width: 0.8rem;
-      height: 0.8rem;
-    }
-    
-    .outputSettings {
-      display: inline-block;
-      position: relative;
-      border: 1px solid #d2d6da;
-      border-radius: 0.375rem;
-      margin: 30px 0 0 0;
-      padding: 15px 10px 10px 10px;
-    }
-    
-    .outputSettings .settingLvl {
-      position: absolute;
-      top: -15px;
-      font-weight: bold;
-      background: #fff;
-      left: 2px;
-      padding: 3px;
-    }
-    </style>
+<style scoped>
+#outputJs {
+  white-space: break-spaces;
+}
+
+.todo input {
+  display: none;
+}
+
+.form-check.active label {
+  color: #fff !important
+}
+
+.cssLength {
+  float: right;
+}
+
+.modal {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body .material-icons {
+  vertical-align: middle;
+}
+
+.btn-close {
+  padding: 0;
+}
+
+.btn-close .material-icons {
+  color: black;
+  vertical-align: top;
+}
+
+.form-switch {
+  padding-left: 0 !important;
+}
+
+.todo label {
+  text-transform: capitalize;
+}
+
+.toggle {
+  cursor: pointer;
+}
+
+.form-check-input {
+  margin-right: 5px;
+  vertical-align: text-bottom;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="radio"]:after {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.outputSettings {
+  display: inline-block;
+  position: relative;
+  border: 1px solid #d2d6da;
+  border-radius: 0.375rem;
+  margin: 30px 0 0 0;
+  padding: 15px 10px 10px 10px;
+}
+
+.outputSettings .settingLvl {
+  position: absolute;
+  top: -15px;
+  font-weight: bold;
+  background: #fff;
+  left: 2px;
+  padding: 3px;
+}
+</style>
     

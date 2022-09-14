@@ -27,7 +27,6 @@ async function requstSignin() {
 		loginStatus.value = "";
 	}, 3500);
 }
-
 </script>
 
 

@@ -1,23 +1,23 @@
 <script setup>
 definePageMeta({ layout: "app-layout" });
-useHead({ title: "HTML Tools - Organic Rankings"});
+useHead({ title: "HTML Tools - Organic Rankings" });
 
 
 const htmlOptionsArr = [
-	{name: 'minifyJS', value: true, label: "Minify Internal JS", toltip: "Minify Internal Javascript code"},
-	{name: 'minifyCSS', value: true, label: "Minify Internal CSS", toltip: "Minify Internal CSS code"},
-	{name: 'removeComments', value: true, label: "Remove Comments", toltip: "Remove all Comments from code"},
-	{name: 'collapseBooleanAttributes', value: true, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>"},
-	{name: 'removeEmptyElements', value: true, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>"},
-	{name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: "Remove Empty Attributes. EX: class=''"},
-	{name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: "Remove any spaces between display:inline; elements"},
-	{name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: "Keep a space before and after each tag"},
-	{name: 'keepClosingSlash', value: false, label: "Keep Closing Slash", toltip: "Keep the trailing slash on singleton elements"},
-	{name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: "Remove Attribute Quotes for single value. EX: class=btn"},
-	{name: 'removeScriptTypeAttributes', value: false, label: "Remove Script `Type` Attributes", toltip: "Remove Script `Type` Attributes"},
-	{name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link `Type` Attributes", toltip: "Remove Link `Type` Attributes"},
-	{name: 'sortAttributes', value: true, label: "Sort Attributes", toltip: "Sort attributes by frequency"},
-	{name: 'sortClassName', value: true, label: "Sort Class Name", toltip: "Sort style classes by frequency"}
+  { name: 'minifyJS', value: true, label: "Minify Internal JS", toltip: "Minify Internal Javascript code" },
+  { name: 'minifyCSS', value: true, label: "Minify Internal CSS", toltip: "Minify Internal CSS code" },
+  { name: 'removeComments', value: true, label: "Remove Comments", toltip: "Remove all Comments from code" },
+  { name: 'collapseBooleanAttributes', value: true, label: "Collapse Boolean Attributes", toltip: "Boolean attributes—“selected”, “disabled”, “checked”, etc. instead of  <input disabled='disabled'>, convert to <input disabled>" },
+  { name: 'removeEmptyElements', value: true, label: "Remove Empty Elements", toltip: "Remove Empty Elements. EX: <span></span>" },
+  { name: 'removeEmptyAttributes', value: false, label: "Remove Empty Attributes", toltip: "Remove Empty Attributes. EX: class=''" },
+  { name: 'collapseInlineTagWhitespace', value: false, label: "Collapse Inline Tag Whitespace", toltip: "Remove any spaces between display:inline; elements" },
+  { name: 'conservativeCollapse', value: false, label: "Conservative Collapse", toltip: "Keep a space before and after each tag" },
+  { name: 'keepClosingSlash', value: false, label: "Keep Closing Slash", toltip: "Keep the trailing slash on singleton elements" },
+  { name: 'removeAttributeQuotes', value: false, label: "Remove Attribute Quotes", toltip: "Remove Attribute Quotes for single value. EX: class=btn" },
+  { name: 'removeScriptTypeAttributes', value: false, label: "Remove Script `Type` Attributes", toltip: "Remove Script `Type` Attributes" },
+  { name: 'removeStyleLinkTypeAttributes', value: false, label: "Remove Link `Type` Attributes", toltip: "Remove Link `Type` Attributes" },
+  { name: 'sortAttributes', value: true, label: "Sort Attributes", toltip: "Sort attributes by frequency" },
+  { name: 'sortClassName', value: true, label: "Sort Class Name", toltip: "Sort style classes by frequency" }
 ]
 
 
@@ -36,7 +36,7 @@ async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
   outputHtml.value = '';
-  var options = {collapseWhitespace: true}
+  var options = { collapseWhitespace: true }
   for (var val of htmlOptions.value) {
     options[val.name] = val.value;
   }
@@ -60,16 +60,16 @@ async function optimizeHtml() {
 
 
 function copyToClipboard() {
-	var range = document.createRange();
-	range.selectNode(document.getElementById("outputHtml"));
-	window.getSelection().removeAllRanges();
-	window.getSelection().addRange(range);
-	document.execCommand("copy");
-	window.getSelection().removeAllRanges();
+  var range = document.createRange();
+  range.selectNode(document.getElementById("outputHtml"));
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  document.execCommand("copy");
+  window.getSelection().removeAllRanges();
 }
 
 watch(html, async (val) => {
-	htmlLength.value = val.length;
+  htmlLength.value = val.length;
 })
 
 
@@ -113,9 +113,9 @@ watch(html, async (val) => {
             </div>
             <div class="mb-1 text-end mt-4">
               <button class="btn btn-primary">
-                <span v-if="!processing">Genarate</span>
+                <span v-if="!processing">Generate</span>
                 <div v-if="processing">
-                  <ElementsSpinner /> Genarating
+                  <ElementsSpinner /> Generating
                   <ElementsProcessing />
                 </div>
               </button>
@@ -169,70 +169,70 @@ watch(html, async (val) => {
 </template>
   
   
-  <style scoped>
-  #outputHtml {
-    white-space: break-spaces;
-  }
-  
-  .list-inline-item {
-    min-width: 235px;
-  }
-  
-  .todo input {
-    display: none;
-  }
-  
-  .form-check.active label {
-    color: #fff !important
-  }
-  
-  .toggle {
-    cursor: pointer;
-  }
-  
-  .modal {
-    display: block;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal-body .material-icons {
-    vertical-align: middle;
-  }
-  
-  .btn-close {
-    padding: 0;
-  }
-  
-  .btn-close .material-icons {
-    color: black;
-    vertical-align: top;
-  }
-  
-  .todo label {
-    text-transform: capitalize;
-  }
-  
-  .outputSettings {
-    display: inline-block;
-    position: relative;
-    border: 1px solid #d2d6da;
-    border-radius: 0.375rem;
-    margin: 30px 0 0 0;
-    padding: 15px 10px 10px 10px;
-  }
-  
-  .outputSettings .settingLvl {
-    position: absolute;
-    top: -15px;
-    font-weight: bold;
-    background: #fff;
-    left: 2px;
-    padding: 3px;
-  }
-  
-  
-  .form-check:not(.form-switch) .form-check-input[type="checkbox"] {
-    margin: 1px 2px 0 0;
-  }
-  </style>
+<style scoped>
+#outputHtml {
+  white-space: break-spaces;
+}
+
+.list-inline-item {
+  min-width: 235px;
+}
+
+.todo input {
+  display: none;
+}
+
+.form-check.active label {
+  color: #fff !important
+}
+
+.toggle {
+  cursor: pointer;
+}
+
+.modal {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body .material-icons {
+  vertical-align: middle;
+}
+
+.btn-close {
+  padding: 0;
+}
+
+.btn-close .material-icons {
+  color: black;
+  vertical-align: top;
+}
+
+.todo label {
+  text-transform: capitalize;
+}
+
+.outputSettings {
+  display: inline-block;
+  position: relative;
+  border: 1px solid #d2d6da;
+  border-radius: 0.375rem;
+  margin: 30px 0 0 0;
+  padding: 15px 10px 10px 10px;
+}
+
+.outputSettings .settingLvl {
+  position: absolute;
+  top: -15px;
+  font-weight: bold;
+  background: #fff;
+  left: 2px;
+  padding: 3px;
+}
+
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  margin: 1px 2px 0 0;
+}
+</style>
   

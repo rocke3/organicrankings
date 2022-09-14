@@ -1,4 +1,4 @@
-import { env } from "node:process";
+const env = useRuntimeConfig();
 import { defineEventHandler, getHeader, readBody } from "h3";
 import jwt from "jsonwebtoken";
 import md5 from "md5";

@@ -9,4 +9,12 @@ export default defineNuxtConfig({
 			noscript: [{ children: "Javascript is required" }],
 		},
 	},
+	runtimeConfig: {
+		dbHost: process.env.dbHost,
+		dbUser: process.env.dbUser,
+		dbDb: process.env.dbDb,
+		dbPass: process.env.dbPass,
+		jwtSecret: process.env.jwtSecret,
+		agentSecret: process.env.agentSecret,
+	},
 });

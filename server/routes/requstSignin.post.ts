@@ -1,4 +1,4 @@
-import { env } from "node:process";
+const env = useRuntimeConfig();
 import jwt from "jsonwebtoken";
 import md5 from "md5";
 import db from "../connection";
