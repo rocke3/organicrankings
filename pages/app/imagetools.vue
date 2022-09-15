@@ -6,7 +6,7 @@ definePageMeta({ layout: "app-layout" });
 useHead({ title: "JS Tools - Organic Rankings" });
 
 const processing = ref('');
-var files = ref([]);
+var files = ref({});
 const uploadPercentage = ref(0);
 
 
@@ -14,11 +14,7 @@ const uploadPercentage = ref(0);
 async function selectFile(event) {
   const totalFiles = event.target.files.length;
   const upFiles = event.target.files;
-  for (let i = 0; i < totalFiles; i++) {
-    files.value[i] = { name: upFiles[i].name, size: upFiles[i].size, progress: 0, newSize: 0, download: '', compressed: 0 };
-  }
 
-  const imageData = new formData();
 
   const axiosConfig = {
     headers: {
@@ -31,15 +27,36 @@ async function selectFile(event) {
     }
   };
 
-  imageData.append('maxImg', upFiles[0])
+  for (let i = 0; i < totalFiles; i++) {
 
-  axios.post('/imageTools', imageData, axiosConfig)
-    .then(function (response) {
-      console.log(response);
+    files.value["img" + i] = { name: upFiles[i].name, size: upFiles[i].size, progress: 0, newSize: 0, download: '', compressed: 0 };
+    uploadImage(upFiles[i], "img" + i)
+  }
+
+  function uploadImage(file, id) {
+    const imageData = new formData();
+    imageData.append('img', file)
+    axios.post('http://localhost:3005/', imageData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: function (event) {
+        var progress = Math.round((100 * event.loaded) / event.total);
+        files.value[id].progress = progress
+        console.log(progress);
+      }
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (response) {
+        let imgID = response.data.key;
+        let loadFile = files.value[imgID]
+        console.log(files.value[imgID]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
 
 }
 
@@ -66,8 +83,8 @@ async function selectFile(event) {
             </div>
             <div class="upSize">{{ Math.floor(file.size / 1000) }}kb</div>
             <div class="progres">
-              <div class="progress">
-                <div class="progress-bar" :class="'w-' + file.progress" role="progressbar" v-if="file.progress < 100">
+              <div class="progress" v-if="file.progress < 100">
+                <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">
                 </div>
               </div>
               <div class="progress" v-if="file.progress > 99 && !file.newSize">
