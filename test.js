@@ -1,9 +1,9 @@
 const express = require("express");
 const fs = require("fs");
 const compress_images = require("compress-images");
+const fileUpload = require("express-fileupload");
 
 const cors = require("cors");
-const fileUpload = require("express-fileupload");
 const app = express();
 
 const tempFolder = "./public/temp/";
