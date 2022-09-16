@@ -6,7 +6,11 @@ definePageMeta({ layout: "app-layout" });
 useHead({ title: "JS Tools - Organic Rankings" });
 
 const processing = ref('');
-var files = ref({});
+
+let images = ref({});
+let imagesPrefix = ref(0);
+let invalids = ref({});
+let showDowload = ref(0);
 const uploadPercentage = ref(0);
 
 
@@ -14,7 +18,6 @@ const uploadPercentage = ref(0);
 async function selectFile(event) {
   const totalFiles = event.target.files.length;
   const upFiles = event.target.files;
-
 
   const axiosConfig = {
     headers: {
@@ -28,91 +31,120 @@ async function selectFile(event) {
   };
 
   for (let i = 0; i < totalFiles; i++) {
-
-    files.value["img" + i] = { name: upFiles[i].name, size: upFiles[i].size, progress: 0, newSize: 0, download: '', compressed: 0 };
-    uploadImage(upFiles[i], "img" + i)
+    let size = Math.floor(upFiles[i].size / 1000)
+    let imgID = "img" + imagesPrefix.value + i
+    if (size > 6291) {
+      invalids.value[imgID] = { name: upFiles[i].name, size: size };
+    } else {
+      images.value[imgID] = { name: upFiles[i].name, size: size, progress: 0, newSize: 0, download: '', compressed: 0 };
+    }
+    uploadImage(upFiles[i], imgID)
   }
 
-  function uploadImage(file, id) {
-    const imageData = new formData();
-    imageData.append('img', file)
-    axios.post('http://localhost:3005/', imageData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      onUploadProgress: function (event) {
-        var progress = Math.round((100 * event.loaded) / event.total);
-        files.value[id].progress = progress
-        console.log(progress);
+  imagesPrefix.value++
+}
+
+function uploadImage(file, id) {
+  const imageData = new formData();
+  imageData.append(id, file)
+  axios.post('http://localhost:3005/', imageData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    onUploadProgress: function (event) {
+      var progress = Math.round((100 * event.loaded) / event.total);
+      images.value[id].progress = progress
+      console.log(progress);
+    }
+  })
+    .then(function (response) {
+      let data = response.data;
+      console.log(data.error);
+      if (!data.error) {
+        let imgID = data.key;
+        images.value[imgID].newSize = data.newSize;
+        images.value[imgID].compressed = data.compressed;
+        images.value[imgID].download = data.path;
+        showDowload.value = 1;
       }
     })
-      .then(function (response) {
-        let imgID = response.data.key;
-        let loadFile = files.value[imgID]
-        console.log(files.value[imgID]);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-
-
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
 </script>
       
 <template>
   <div>
-    {{files}}
     <ElementsBsCard formTitle="Image Tools" titleClass="ps-3">
-      <div class="uploadArea">
-        <label for="imageUpload">
-          <i class="material-icons">upload</i>
-          <p>Upload Your Image</p>
-          <input id="imageUpload" type="file" accept=".jpeg,.jpg,.png,image/jpeg,image/png" @change="selectFile"
-            multiple />
-        </label>
-      </div>
-
-      <div class="">
-        <div class="imageFiles" v-for="file in files">
-          <div class="imageItem">
-            <div class="name">
-              <i class="material-icons">image</i> {{ file.name }}
-            </div>
-            <div class="upSize">{{ Math.floor(file.size / 1000) }}kb</div>
-            <div class="progres">
-              <div class="progress" v-if="file.progress < 100">
-                <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">
-                </div>
-              </div>
-              <div class="progress" v-if="file.progress > 99 && !file.newSize">
-                <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
-              </div>
-            </div>
-            <div class="downSize">
-              <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
-              <span v-else>{{ file.output.size }}</span>
-            </div>
-            <div class="download">
-              <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
-              <span v-else>
-                <a href="" class="text-primary">
-                  <i class="material-icons">file_download</i> Download
-                </a>
-              </span>
-            </div>
-            <div class="compressed">
-              <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
-              <span v-else>{{ file.compressed }}%</span>
-            </div>
+      <div class="uploadArea mb-4">
+        <div class="card mx-auto bg-light" style="width: 18rem;">
+          <div class="card-body p-0 ">
+            <label for="imageUpload">
+              <i class="material-icons">upload</i>
+              <p>Upload Your Images</p>
+              <input class="" id="imageUpload" type="file" accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+                @change="selectFile" multiple />
+            </label>
           </div>
         </div>
-        <div class="text-center mt-4">
-          <button class="btn btn-primary"><i class="material-icons">file_download</i> Download All (ZIP)</button>
+      </div>
+
+      <div class="imageFiles" v-for="file in images">
+        <div class="imageItem bg-light shadow">
+          <div class="name">
+            <i class="material-icons">image</i> {{ file.name }}
+          </div>
+          <div class="upSize">{{ file.size }}kb</div>
+          <div class="progres">
+            <div class="progress" v-if="file.progress < 100">
+              <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">Uploading {{file.progress}}%
+              </div>
+            </div>
+            <div class="progress" v-if="file.progress > 99 && !file.newSize">
+              <div class="progress-bar progress-bar-striped progress-bar-animated w-100">Processing</div>
+            </div>
+            <div class="progress" v-if="file.newSize">
+              <div class="progress-bar bg-success w-100">Done</div>
+            </div>
+          </div>
+          <div class="downSize">
+            <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
+            <span v-else>{{ file.newSize }}kb</span>
+          </div>
+          <div class="download">
+            <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
+            <span v-else>
+              <a :href="file.download" class="text-primary nav-link" download>
+                <i class="material-icons">file_download</i> Download
+              </a>
+            </span>
+          </div>
+          <div class="compressed">
+            <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
+            <span v-else>{{ file.compressed }}%</span>
+          </div>
         </div>
       </div>
+
+      <div class="imageFiles" v-for="file in invalids">
+        <div class="imageItem bg-light shadow">
+          <div class="name">
+            <i class="material-icons">image</i> {{ file.name }}
+          </div>
+          <div class="upSize">{{ file.size }}kb</div>
+          <div class="faildError text-danger text-start">
+            File should less then 6Mb
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" v-if="showDowload">
+        <button class="btn btn-primary mt-2"><i class="material-icons">file_download</i> Download All (ZIP)</button>
+      </div>
+
+
 
     </ElementsBsCard>
   </div>
@@ -120,13 +152,13 @@ async function selectFile(event) {
       
 <style scoped>
 .uploadArea label {
+  font-size: 25px;
   position: relative;
   padding: 15px;
-  font-size: 25px;
 }
 
 .uploadArea label i {
-  font-size: 25px;
+  font-size: 40px;
 }
 
 #imageUpload {
@@ -145,8 +177,11 @@ async function selectFile(event) {
   width: 400px;
   max-width: 100%;
   height: 120px;
-  background-color: #f1f1f1;
   margin-bottom: 10px;
+}
+
+.uploadArea p {
+  font-weight: 600;
 }
 
 .uploadArea input {
@@ -156,10 +191,9 @@ async function selectFile(event) {
 .imageItem {
   display: flex !important;
   text-align: center;
-  margin-top: 10px;
-  background: #f1f1f1;
+  margin-bottom: 15px;
   padding: 5px;
-  color: #444;
+  border-radius: 5px;
 }
 
 .imageItem i {
@@ -171,6 +205,7 @@ async function selectFile(event) {
 .imageItem .progres,
 .imageItem .downSize,
 .imageItem .download,
+.imageItem .faildError,
 .imageItem .compressed {
   padding: 5px;
 }
@@ -201,20 +236,28 @@ async function selectFile(event) {
   width: 8%;
 }
 
+.imageItem .faildError {
+  width: 60%;
+}
+
 .progress {
   background: #cbcbcb;
-  height: 10px;
+  height: 15px;
   border-radius: 3px;
   overflow: hidden;
 }
 
 .imageItem .progres {
   width: 30%;
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
 .progress-bar {
-  height: 10px;
+  height: 15px;
+}
+
+.dark-version .bg-light {
+  background-color: #243656 !important;
 }
 
 @media only screen and (max-width: 750px) {
