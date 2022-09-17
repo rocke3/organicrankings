@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 definePageMeta({ layout: "app-layout" });
 useHead({ title: "CSS Tools - Organic Rankings" });
 
-const website = ref('https://www.organicrankings.com/')
+const website = ref('')
 const css = ref('')
 const urlClass = ref('')
 const cssClass = ref('')
@@ -29,7 +29,7 @@ function copyToClipboard() {
 }
 
 async function genarateCss() {
-	if (website.value) {
+	if (css.value) {
 		showOutputModal.value = true;
 		processing.value = true;
 		upload.value = false;

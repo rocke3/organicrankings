@@ -56,7 +56,7 @@ async function selectFile(event) {
 function uploadImage(file, id) {
   const imageData = new formData();
   imageData.append(id, file)
-  axios.post('http://organicrankings.com/imageApi', imageData, {
+  axios.post('https://www.organicrankings.com/imageapi', imageData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     },
