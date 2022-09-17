@@ -5,7 +5,7 @@ import md5 from "md5";
 import cookie from "../cookie";
 
 const ignoreAuth = ["/requstLogout"];
-const noLogin = ["/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha"];
+const noLogin = ["/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha", "/public"];
 
 export default defineEventHandler((event) => {
 	const req = event.req,

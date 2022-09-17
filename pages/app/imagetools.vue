@@ -34,7 +34,7 @@ async function selectFile(event) {
   };
 
   for (let i = 0; i < totalFiles; i++) {
-    let size = Math.floor(upFiles[i].size / 1024)
+    let size = Math.round(upFiles[i].size / 1024)
     let type = upFiles[i].type.replace("image/", "");
     let imgID = "img" + imagesPrefix.value + i;
 
