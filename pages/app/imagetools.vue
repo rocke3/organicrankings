@@ -11,6 +11,9 @@ let images = ref({});
 let imagesPrefix = ref(0);
 let invalids = ref({});
 let showDowload = ref(0);
+let qualiy = ref(false)
+let convert = ref(false)
+let supported = ['jpeg', 'png', 'gif', 'webp'];
 const uploadPercentage = ref(0);
 
 
@@ -31,14 +34,20 @@ async function selectFile(event) {
   };
 
   for (let i = 0; i < totalFiles; i++) {
-    let size = Math.floor(upFiles[i].size / 1000)
-    let imgID = "img" + imagesPrefix.value + i
-    if (size > 6291) {
-      invalids.value[imgID] = { name: upFiles[i].name, size: size };
-    } else {
+    let size = Math.floor(upFiles[i].size / 1024)
+    let type = upFiles[i].type.replace("image/", "");
+    let imgID = "img" + imagesPrefix.value + i;
+
+    if (supported.includes(type) && size < 6292) {
       images.value[imgID] = { name: upFiles[i].name, size: size, progress: 0, newSize: 0, download: '', compressed: 0 };
+      uploadImage(upFiles[i], imgID)
+
+    } else {
+      let msg = 'File not supported';
+      if (size > 6291)
+        msg = 'Max allow 6MB file';
+      invalids.value[imgID] = { name: upFiles[i].name, size: size, msg: msg };
     }
-    uploadImage(upFiles[i], imgID)
   }
 
   imagesPrefix.value++
@@ -47,9 +56,13 @@ async function selectFile(event) {
 function uploadImage(file, id) {
   const imageData = new formData();
   imageData.append(id, file)
-  axios.post('http://localhost:3005/', imageData, {
+  axios.post('http://organicrankings.com/imageApi', imageData, {
     headers: {
       'Content-Type': 'multipart/form-data'
+    },
+    params: {
+      qualiy: qualiy.value,
+      convert: convert.value
     },
     onUploadProgress: function (event) {
       var progress = Math.round((100 * event.loaded) / event.total);
@@ -78,15 +91,57 @@ function uploadImage(file, id) {
 <template>
   <div>
     <ElementsBsCard formTitle="Image Tools" titleClass="ps-3">
-      <div class="uploadArea mb-4">
-        <div class="card mx-auto bg-light" style="width: 18rem;">
-          <div class="card-body p-0 ">
-            <label for="imageUpload">
-              <i class="material-icons">upload</i>
-              <p>Upload Your Images</p>
-              <input class="" id="imageUpload" type="file" accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-                @change="selectFile" multiple />
-            </label>
+      <div class="row justify-content-center">
+        <div class="uploadArea col-sm-6 col-md-4 mb-4 ">
+          <div class="card mx-auto bg-light" style="max-width: 18rem;">
+            <div class="card-body p-0 ">
+              <label for="imageUpload" style="margin: 0 !important;">
+                <i class="material-icons">upload</i>
+                <p>Upload Your Images</p>
+                <input class="" id="imageUpload" type="file" accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+                  @change="selectFile" multiple />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-4 ">
+          <div class="card mx-auto bg-light" style="max-width: 18rem;">
+            <div class="card-body p-3 pt-2">
+              <p class="text-bold mb-1">Output Settings</p>
+              <hr class="bg-primary mt-0 mb-2">
+              <div class="form-check form-switch d-flex align-items-center p-0">
+                <div class="toggle me-1" :class="{ 'text-primary': !qualiy }" @click="qualiy = false">
+                  <ElementsTooltip tooltip="Best optimization. Prioritize optimization over quality.">
+                    Optimization
+                  </ElementsTooltip>
+                </div>
+                <div class="ms-5 me-2">
+                  <input class="form-check-input" type="checkbox" v-model="qualiy" />
+                </div>
+                <div class="toggle " :class="{ 'text-primary': qualiy }" @click="qualiy = true">
+                  <ElementsTooltip tooltip="Least optimization. Prioritize quality over optimization.">
+                    Quality
+                  </ElementsTooltip>
+                </div>
+              </div>
+
+              <div class="form-check form-switch d-flex align-items-center p-0 mt-2">
+                <div class="toggle me-1" :class="{ 'text-primary': !convert }" @click="convert = false">
+                  <ElementsTooltip tooltip="Keep the output format the same as your input file.">
+                    Same format
+                  </ElementsTooltip>
+                </div>
+                <div class="ms-5 me-2">
+                  <input class="form-check-input" type="checkbox" v-model="convert" />
+                </div>
+                <div class="toggle " :class="{ 'text-primary': convert }" @click="convert = true">
+                  <ElementsTooltip
+                    tooltip="Convert the output file to WEBP format. Less size better quality. (Work for .jpg,.jpeg,.png)">
+                    WEBP
+                  </ElementsTooltip>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -128,14 +183,14 @@ function uploadImage(file, id) {
         </div>
       </div>
 
-      <div class="imageFiles" v-for="file in invalids">
+      <div class="imageFiles error" v-for="file in invalids">
         <div class="imageItem bg-light shadow">
           <div class="name">
             <i class="material-icons">image</i> {{ file.name }}
           </div>
           <div class="upSize">{{ file.size }}kb</div>
           <div class="faildError text-danger text-start">
-            File should less then 6Mb
+            {{file.msg}}
           </div>
         </div>
       </div>
@@ -143,8 +198,6 @@ function uploadImage(file, id) {
       <div class="text-center" v-if="showDowload">
         <button class="btn btn-primary mt-2"><i class="material-icons">file_download</i> Download All (ZIP)</button>
       </div>
-
-
 
     </ElementsBsCard>
   </div>
@@ -166,13 +219,24 @@ function uploadImage(file, id) {
   left: 0;
   top: 0;
   z-index: 5;
+  width: 100%;
+  height: 100%;
+}
+
+.toggle {
+  cursor: pointer;
+}
+
+.imageFiles.error .imageItem {
+  border: 1px solid #e99c9c;
+  opacity: 0.7;
 }
 
 .uploadArea {
   text-align: center;
 }
 
-.uploadArea input,
+.imageUpload input,
 .uploadArea label {
   width: 400px;
   max-width: 100%;
@@ -236,13 +300,17 @@ function uploadImage(file, id) {
   width: 8%;
 }
 
-.imageItem .faildError {
+.imageFiles.error .faildError {
   width: 60%;
+}
+
+.imageFiles.error .upSize {
+  width: 15%;
 }
 
 .progress {
   background: #cbcbcb;
-  height: 15px;
+  height: 17px;
   border-radius: 3px;
   overflow: hidden;
 }
@@ -253,7 +321,7 @@ function uploadImage(file, id) {
 }
 
 .progress-bar {
-  height: 15px;
+  height: 17px;
 }
 
 .dark-version .bg-light {
@@ -269,6 +337,10 @@ function uploadImage(file, id) {
 
   .imageItem .name {
     width: 35%;
+  }
+
+  .imageFiles.error .faildError {
+    width: 65%;
   }
 
   .imageItem .download {
