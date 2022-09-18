@@ -5,8 +5,6 @@ import formData from 'form-data'
 definePageMeta({ layout: "app-layout" });
 useHead({ title: "JS Tools - Organic Rankings" });
 
-const processing = ref('');
-
 let images = ref({});
 let imagesPrefix = ref(0);
 let invalids = ref({});
@@ -14,24 +12,11 @@ let showDowload = ref(0);
 let qualiy = ref(false)
 let convert = ref(false)
 let supported = ['jpeg', 'png', 'gif', 'webp'];
-const uploadPercentage = ref(0);
-
 
 
 async function selectFile(event) {
   const totalFiles = event.target.files.length;
   const upFiles = event.target.files;
-
-  const axiosConfig = {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    onUploadProgress: function (event) {
-      var progress = Math.round((100 * event.loaded) / event.total);
-
-      console.log(progress);
-    }
-  };
 
   for (let i = 0; i < totalFiles; i++) {
     let size = Math.round(upFiles[i].size / 1024)
