@@ -41,7 +41,7 @@ async function genarateCss() {
 		window.setTimeout(() => { if (processing.value) { genarate.value = true; } }, 3000);
 
 
-		await $fetch("https://www.organicrankings.com/cssapi", {
+		await $fetch("http://www.organicrankings.com:3010/csstool", {
 			method: "POST",
 			body: css.value,
 			headers: {

@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import formData from 'form-data'
 definePageMeta({ layout: "user-layout" });
-useHead({ title: "JS Tools - Organic Rankings" });
+useHead({ title: "Image Tools - Organic Rankings" });
 
 let images = ref({});
 let imagesPrefix = ref(0);
@@ -41,7 +41,7 @@ async function selectFile(event) {
 function uploadImage(file, id) {
   const imageData = new formData();
   imageData.append(id, file)
-  axios.post('https://www.organicrankings.com/imageapi', imageData, {
+  axios.post('http://www.organicrankings.com:3010/imagetool', imageData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     },
@@ -57,7 +57,6 @@ function uploadImage(file, id) {
   })
     .then(function (response) {
       let data = response.data;
-      console.log(data.error);
       if (!data.error) {
         let imgID = data.key;
         images.value[imgID].newSize = data.newSize;
@@ -69,6 +68,21 @@ function uploadImage(file, id) {
     .catch(function (error) {
       console.log(error);
     });
+}
+
+function downloadAll() {
+  axios({
+    method: 'post',
+    url: 'http://www.organicrankings.com:3010/downloadall',
+    responseType: 'arraybuffer',
+    data: dates
+  }).then(function (response) {
+    let blob = new Blob([response.data], { type: 'application/pdf' })
+    let link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = 'Report.pdf'
+    link.click()
+  })
 }
 
 </script>
@@ -181,7 +195,8 @@ function uploadImage(file, id) {
       </div>
 
       <div class="text-center" v-if="showDowload">
-        <button class="btn btn-primary mt-2"><i class="material-icons">file_download</i> Download All (ZIP)</button>
+        <button class="btn btn-primary mt-2" @click="downloadAll"><i class="material-icons">file_download</i> Download
+          All (ZIP)</button>
       </div>
 
     </ElementsBsCard>
