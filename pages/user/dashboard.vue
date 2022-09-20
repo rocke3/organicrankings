@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: "app-layout" });
+definePageMeta({ layout: "user-layout" });
 useHead({ title: "Dashboard - Organic Rankings" });
 </script>
   
@@ -54,4 +54,5 @@ useHead({ title: "Dashboard - Organic Rankings" });
 
   
 <style scoped>
+
 </style>

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import formData from 'form-data'
-definePageMeta({ layout: "app-layout" });
+definePageMeta({ layout: "user-layout" });
 useHead({ title: "JS Tools - Organic Rankings" });
 
 let images = ref({});
@@ -156,7 +156,7 @@ function uploadImage(file, id) {
           <div class="download">
             <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
             <span v-else>
-              <a :href="file.download" class="text-primary nav-link" download>
+              <a :href="file.download" class="text-primary nav-link" :title="file.name" download>
                 <i class="material-icons">file_download</i> Download
               </a>
             </span>

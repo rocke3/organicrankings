@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: "app-layout" });
+definePageMeta({ layout: "user-layout" });
 useHead({ title: "HTML Tools - Organic Rankings" });
 
 

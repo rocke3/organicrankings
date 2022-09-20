@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-definePageMeta({ layout: "app-layout" });
+definePageMeta({ layout: "user-layout" });
 useHead({ title: "JS Tools - Organic Rankings" });
 
 

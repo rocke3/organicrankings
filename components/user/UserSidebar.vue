@@ -9,11 +9,11 @@ function signout() {
 }
 
 const menuItems = [
-	{ name: 'Dashboard', path: '/app', icon: 'dashboard' },
-	{ name: 'HTML Tools', path: '/app/htmltools', icon: 'html' },
-	{ name: 'CSS Tools', path: '/app/csstools', icon: 'css' },
-	{ name: 'JS Tools', path: '/app/jstools', icon: 'javascript' },
-	{ name: 'Image Tools', path: '/app/imagetools', icon: 'image' },
+	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
+	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
+	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
+	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },
+	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
 ]
 
 async function requstLogout() {

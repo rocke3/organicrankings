@@ -16,7 +16,7 @@ export default defineEventHandler((event) => {
 		cookieAgent = getCookie(req, cookie.name.AGENT);
 
 	if (toUrl == "/") {
-		redirect(res, "/app");
+		redirect(res, "/user");
 	} else {
 		if (!ignoreAuth.includes(toUrl)) {
 			if (cookieJwt && cookieAgent && cookieAgent == userAgent) {
@@ -24,7 +24,7 @@ export default defineEventHandler((event) => {
 					if (!err) {
 						if (noLogin.includes(toUrl)) {
 							console.log("Access Redirect");
-							redirect(res, "/app");
+							redirect(res, "/user");
 						}
 					} else {
 						console.log("Invalid sign Redirect");

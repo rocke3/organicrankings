@@ -1,16 +1,19 @@
 <script setup>
+import UserSidebar from "../components/user/UserSidebar.vue";
+import UserFooter from "../components/user/UserFooter.vue";
+import UserNavbar from "../components/user/UserNavbar.vue";
 
 </script>
 
 <template>
 	<div>
-		<AppSidebar />
+		<UserSidebar />
 		<main class="main-content position-relative max-height-vh-100 h-100">
-			<AppNavbar />
+			<UserNavbar />
 			<div class="container-fluid py-4 pageContent">
 				<slot />
 			</div>
-			<AppFooter />
+			<UserFooter />
 		</main>
 	</div>
 </template>
