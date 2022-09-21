@@ -1,5 +1,5 @@
 import { setCookie, deleteCookie, getHeader } from "h3";
-import { env } from "node:process";
+const env = useRuntimeConfig();
 
 enum cookieName {
 	JWT = "org_user",

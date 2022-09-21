@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
+import axios from 'axios'
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "CSS Tools - Organic Rankings" });
 
@@ -11,55 +12,47 @@ const processing = ref(false)
 const cssLength = ref(0)
 const showOutputModal = ref(false)
 const outputcss = ref('')
-const upload = ref(false)
-const genarate = ref(false)
 const beautify = ref(false)
 const todo = ref('critical')
 const optimize = ref(1)
+let progress = ref(0)
 
-
-
-function copyToClipboard() {
-	var range = document.createRange();
-	range.selectNode(document.getElementById("criricalcss"));
-	window.getSelection().removeAllRanges();
-	window.getSelection().addRange(range);
-	document.execCommand("copy");
-	window.getSelection().removeAllRanges();
-}
 
 async function genarateCss() {
 	if (css.value) {
 		showOutputModal.value = true;
 		processing.value = true;
-		upload.value = false;
-		genarate.value = false;
+		progress.value = 1;
 		outputcss.value = "";
 		urlClass.value = "";
 		cssClass.value = "";
-		window.setTimeout(() => { if (processing.value) { upload.value = true; } }, 1500);
-		window.setTimeout(() => { if (processing.value) { genarate.value = true; } }, 3000);
 
-
-		await $fetch("http://www.organicrankings.com:3010/csstool", {
-			method: "POST",
-			body: css.value,
+		axios.post('http://www.organicrankings.com:3010/csstool', css.value, {
 			headers: {
+				'Content-Type': 'application/octet-stream',
 				website: website.value,
 				todo: todo.value,
 				optimize: optimize.value,
 				output: beautify.value ? 'beautify' : 'minify',
-				"content-type": "application/octet-stream",
-				"url": "https://www.organicrankings.com/",
-				"cache-control": "no-cache"
+			},
+			onUploadProgress: function (event) {
+				var uploaded = Math.round((100 * event.loaded) / event.total);
+				if (uploaded > 99) {
+					progress.value = 2;
+					window.setTimeout(() => { if (processing.value) { progress.value = 3; } }, 1000);
+				}
 			}
-		}).then((res) => {
-			processing.value = false;
-			outputcss.value = res;
-		}).catch((err) => {
-			processing.value = false;
-			outputcss.value = "Something went wrong please try again";
-		});
+		})
+			.then(function (res) {
+				let data = res.data;
+				processing.value = false;
+				progress.value = 0;
+				outputcss.value = data;
+			})
+			.catch(function (error) {
+				processing.value = false;
+				outputcss.value = "Something went wrong please try again";
+			});
 	} else {
 		if (!website.value) {
 			urlClass.value = "is-invalid"
@@ -170,45 +163,8 @@ watch(css, async (val) => {
 		</div>
 
 		<!-- Modal -->
-		<div class="modal fade show" aria-modal="true" role="dialog" v-if="showOutputModal">
-			<div class="modal-dialog modal-dialog-scrollable modal-xl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">CSS Output ({{ outputcss.length }} character)</h5>
-						<button type="button" class="btn-close" @click="showOutputModal = false">
-							<i class="material-icons">close</i>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div v-if="processing" class="text-success text-center">
-							<p>
-								<ElementsSpinner color="green" v-if="!upload" /><i v-if="upload" class='material-icons'>task_alt</i>
-								Uploading Your CSS.
-							</p>
-							<p v-if="upload">
-								<ElementsSpinner color="green" v-if="!genarate && upload" /><i v-if="genarate"
-									class='material-icons'>task_alt</i> Genarating Critical CSS.
-							</p>
-							<p v-if="genarate">
-								<ElementsSpinner color="green" /> Downloading Critical CSS.
-							</p>
-						</div>
-						<div id="criricalcss">
-							<pre v-if="todo == 'beautify' || (todo == 'critical' && beautify)">{{ outputcss }}</pre>
-							<div v-else>{{ outputcss }}</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" @click="showOutputModal = false">
-							Close
-						</button>
-						<button v-if="outputcss" class="btn btn-primary" @click="copyToClipboard">
-							Copy Css
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		<ElementsCodeModal :showModal="showOutputModal" :body="outputcss" :progress="progress" />
+
 	</div>
 </template>
 

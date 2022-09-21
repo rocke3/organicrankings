@@ -57,8 +57,13 @@ body {
 	opacity: 0;
 }
 
+.btn-check:focus + .btn,
+.btn:focus {
+	box-shadow: none !important;
+}
+
 .form-check:not(.form-switch) .form-check-input[type="checkbox"]:after {
 	content: "\2714";
-	font-size: 16px;
-	bottom: -2px;
+	font-size: 15px;
+	bottom: 0;
 }

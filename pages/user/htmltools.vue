@@ -1,8 +1,10 @@
 <script setup>
+import axios from 'axios'
+
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "HTML Tools - Organic Rankings" });
 
-
+const copyBtnTxt = ref("Copy HTML")
 const htmlOptionsArr = [
   { name: 'minifyJS', value: true, label: "Minify Internal JS", toltip: "Minify Internal Javascript code" },
   { name: 'minifyCSS', value: true, label: "Minify Internal CSS", toltip: "Minify Internal CSS code" },
@@ -28,45 +30,48 @@ const processing = ref(false)
 const htmlLength = ref(0)
 const showOutputModal = ref(false)
 const outputHtml = ref('')
-const upload = ref(false)
-const genarate = ref(false)
 const beautify = ref(false)
+let progress = ref(0)
 
 async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
+  progress.value = 1;
+
   outputHtml.value = '';
   var options = { collapseWhitespace: true }
   for (var val of htmlOptions.value) {
     options[val.name] = val.value;
   }
-  await $fetch("/htmlTools", {
-    method: "POST",
-    body: html.value,
+
+
+
+  axios.post('http://www.organicrankings.com:3010/htmltool', html.value, {
     headers: {
       options: JSON.stringify(options),
       output: beautify.value ? 'beautify' : 'minify',
-      "content-type": "application/octet-stream",
-      "cache-control": "no-cache"
+      'Content-Type': 'application/octet-stream'
+    },
+    onUploadProgress: function (event) {
+      var uploaded = Math.round((100 * event.loaded) / event.total);
+      if (uploaded > 99) {
+        progress.value = 2;
+        window.setTimeout(() => { if (processing.value) { progress.value = 3; } }, 1000);
+      }
     }
-  }).then((res) => {
-    processing.value = false;
-    outputHtml.value = res;
-  }).catch((err) => {
-    processing.value = false;
-    outputHtml.value = "Something went wrong please try again";
-  });
+  })
+    .then(function (res) {
+      let data = res.data;
+      processing.value = false;
+      progress.value = 0;
+      outputHtml.value = data;
+    })
+    .catch(function (error) {
+      processing.value = false;
+      outputHtml.value = "Something went wrong please try again";
+    });
 }
 
-
-function copyToClipboard() {
-  var range = document.createRange();
-  range.selectNode(document.getElementById("outputHtml"));
-  window.getSelection().removeAllRanges();
-  window.getSelection().addRange(range);
-  document.execCommand("copy");
-  window.getSelection().removeAllRanges();
-}
 
 watch(html, async (val) => {
   htmlLength.value = val.length;
@@ -77,6 +82,7 @@ watch(html, async (val) => {
   
 <template>
   <div>
+
     <div class="row">
       <div class="col-12">
         <ElementsBsCard formTitle="HTML Tools" titleClass="ps-3">
@@ -127,53 +133,13 @@ watch(html, async (val) => {
     </div>
 
     <!-- Modal -->
-    <div class="modal fade show" aria-modal="true" role="dialog" v-if="showOutputModal">
-      <div class="modal-dialog modal-dialog-scrollable modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Output ({{ outputHtml.length }} character)</h5>
-            <button type="button" class="btn-close" @click="showOutputModal = false">
-              <i class="material-icons">close</i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div v-if="processing" class="text-success text-center">
-              <p>
-                <ElementsSpinner color="green" v-if="!upload" /><i v-if="upload" class='material-icons'>task_alt</i>
-                Uploading Your CODE.
-              </p>
-              <p v-if="upload">
-                <ElementsSpinner color="green" v-if="!genarate && upload" /><i v-if="genarate"
-                  class='material-icons'>task_alt</i> Genarating CODE.
-              </p>
-              <p v-if="genarate">
-                <ElementsSpinner color="green" /> Downloading CODE.
-              </p>
-            </div>
-            <div>
-              <pre><code id="outputHtml" data-language="html" class="html">{{ outputHtml }}</code></pre>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" @click="showOutputModal = false">
-              Close
-            </button>
-            <button v-if="outputHtml" class="btn btn-primary" @click="copyToClipboard">
-              Copy code
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ElementsCodeModal :showModal="showOutputModal" :body="outputHtml" :progress="progress" />
+
   </div>
 </template>
   
   
 <style scoped>
-#outputHtml {
-  white-space: break-spaces;
-}
-
 .list-inline-item {
   min-width: 235px;
 }
@@ -190,23 +156,6 @@ watch(html, async (val) => {
   cursor: pointer;
 }
 
-.modal {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-body .material-icons {
-  vertical-align: middle;
-}
-
-.btn-close {
-  padding: 0;
-}
-
-.btn-close .material-icons {
-  color: black;
-  vertical-align: top;
-}
 
 .todo label {
   text-transform: capitalize;

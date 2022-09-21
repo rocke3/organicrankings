@@ -4,9 +4,9 @@ import { ref, watch } from "vue";
 const darkMode = ref(false);
 watch(darkMode, (darkMode) => {
   if (darkMode)
-    useHead({bodyAttrs: {class: "dark-version"}});
+    useHead({ bodyAttrs: { class: "dark-version" } });
   else
-    useHead({bodyAttrs: {class: ""}});
+    useHead({ bodyAttrs: { class: "" } });
 })
 </script>
 
@@ -91,6 +91,7 @@ watch(darkMode, (darkMode) => {
   height: 23px;
   border-radius: 40px;
   transition: background 0.3s ease;
+  margin: 0 !important;
 }
 
 .night-day-toggle .planet {

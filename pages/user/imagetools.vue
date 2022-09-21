@@ -43,16 +43,13 @@ function uploadImage(file, id) {
   imageData.append(id, file)
   axios.post('http://www.organicrankings.com:3010/imagetool', imageData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    params: {
+      'Content-Type': 'multipart/form-data',
       qualiy: qualiy.value,
       convert: convert.value
     },
     onUploadProgress: function (event) {
       var progress = Math.round((100 * event.loaded) / event.total);
       images.value[id].progress = progress
-      console.log(progress);
     }
   })
     .then(function (response) {
