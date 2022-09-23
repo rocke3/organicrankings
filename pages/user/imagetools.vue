@@ -2,9 +2,12 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import formData from 'form-data'
+
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "Image Tools - Organic Rankings" });
 
+const userFolder = await axios('http://organicrankings.com:3010/imagefolder');
+const imageFolder = "https://www.organicrankings.com/api/compressed/" + userFolder.data;
 let images = ref({});
 let imagesPrefix = ref(0);
 let invalids = ref({});
@@ -12,7 +15,6 @@ let showDowload = ref(0);
 let qualiy = ref(false)
 let convert = ref(false)
 let supported = ['jpeg', 'png', 'gif', 'webp'];
-
 
 async function selectFile(event) {
   const totalFiles = event.target.files.length;
@@ -44,12 +46,14 @@ function uploadImage(file, id) {
   axios.post('http://www.organicrankings.com:3010/imagetool', imageData, {
     headers: {
       'Content-Type': 'multipart/form-data',
+      upload: userFolder.data,
       qualiy: qualiy.value,
       convert: convert.value
     },
     onUploadProgress: function (event) {
       var progress = Math.round((100 * event.loaded) / event.total);
       images.value[id].progress = progress
+      console.log(progress);
     }
   })
     .then(function (response) {
@@ -58,7 +62,7 @@ function uploadImage(file, id) {
         let imgID = data.key;
         images.value[imgID].newSize = data.newSize;
         images.value[imgID].compressed = data.compressed;
-        images.value[imgID].download = data.path;
+        images.value[imgID].download = imageFolder + "/" + data.path;
         showDowload.value = 1;
       }
     })
@@ -67,20 +71,6 @@ function uploadImage(file, id) {
     });
 }
 
-function downloadAll() {
-  axios({
-    method: 'post',
-    url: 'http://www.organicrankings.com:3010/downloadall',
-    responseType: 'arraybuffer',
-    data: dates
-  }).then(function (response) {
-    let blob = new Blob([response.data], { type: 'application/pdf' })
-    let link = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.download = 'Report.pdf'
-    link.click()
-  })
-}
 
 </script>
       
@@ -192,8 +182,9 @@ function downloadAll() {
       </div>
 
       <div class="text-center" v-if="showDowload">
-        <button class="btn btn-primary mt-2" @click="downloadAll"><i class="material-icons">file_download</i> Download
-          All (ZIP)</button>
+        <a class="btn btn-primary mt-2" :href=" imageFolder + '/All_Images.zip'"><i
+            class="material-icons">file_download</i> Download
+          All (ZIP)</a>
       </div>
 
     </ElementsBsCard>
