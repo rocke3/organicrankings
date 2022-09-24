@@ -26,7 +26,7 @@ async function selectFile(event) {
     let imgID = "img" + imagesPrefix.value + i;
 
     if (supported.includes(type) && size < 6292) {
-      images.value[imgID] = { name: upFiles[i].name, size: size, progress: 0, newSize: 0, download: '', compressed: 0 };
+      images.value[imgID] = { name: upFiles[i].name, size: size, progress: 0, newSize: 0, download: '', compressed: 0, expire: 1800, timer: '30:00', animate: '' };
       uploadImage(upFiles[i], imgID)
 
     } else {
@@ -52,8 +52,8 @@ function uploadImage(file, id) {
     },
     onUploadProgress: function (event) {
       var progress = Math.round((100 * event.loaded) / event.total);
-      images.value[id].progress = progress
-      console.log(progress);
+      images.value[id].progress = progress > 10 ? Math.round(progress / 5) * 5 : progress
+      images.value[id].animate = "animate";
     }
   })
     .then(function (response) {
@@ -64,14 +64,22 @@ function uploadImage(file, id) {
         images.value[imgID].compressed = data.compressed;
         images.value[imgID].download = imageFolder + "/" + data.path;
         showDowload.value = 1;
+        var x = setInterval(function () {
+          let expire = images.value[imgID].expire;
+          let newTime = expire - 1;
+          images.value[imgID].expire = newTime;
+          images.value[imgID].timer = Math.trunc(newTime / 60) + ":" + (newTime % 60);
+          if (expire <= 0) {
+            clearInterval(x);
+            delete images.value[imgID]
+          }
+        }, 1000)
       }
     })
     .catch(function (error) {
       console.log(error);
     });
 }
-
-
 </script>
       
 <template>
@@ -132,40 +140,10 @@ function uploadImage(file, id) {
         </div>
       </div>
 
-      <div class="imageFiles" v-for="file in images">
-        <div class="imageItem bg-light shadow">
-          <div class="name">
-            <i class="material-icons">image</i> {{ file.name }}
-          </div>
-          <div class="upSize">{{ file.size }}kb</div>
-          <div class="progres">
-            <div class="progress" v-if="file.progress < 100">
-              <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">Uploading {{file.progress}}%
-              </div>
-            </div>
-            <div class="progress" v-if="file.progress > 99 && !file.newSize">
-              <div class="progress-bar progress-bar-striped progress-bar-animated w-100">Processing</div>
-            </div>
-            <div class="progress" v-if="file.newSize">
-              <div class="progress-bar bg-success w-100">Done</div>
-            </div>
-          </div>
-          <div class="downSize">
-            <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
-            <span v-else>{{ file.newSize }}kb</span>
-          </div>
-          <div class="download">
-            <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
-            <span v-else>
-              <a :href="file.download" class="text-primary nav-link" :title="file.name" download>
-                <i class="material-icons">file_download</i> Download
-              </a>
-            </span>
-          </div>
-          <div class="compressed">
-            <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
-            <span v-else>{{ file.compressed }}%</span>
-          </div>
+
+      <div class="imageFiles mt-4 pt-2">
+        <div class="imageItemDiv" v-for="file in images">
+          <ElementsImageItem :file="file" />
         </div>
       </div>
 
@@ -180,11 +158,16 @@ function uploadImage(file, id) {
           </div>
         </div>
       </div>
-
-      <div class="text-center" v-if="showDowload">
-        <a class="btn btn-primary mt-2" :href=" imageFolder + '/All_Images.zip'"><i
-            class="material-icons">file_download</i> Download
-          All (ZIP)</a>
+      <div class="text-center" v-if="showDowload && Object.keys(images).length > 0">
+        <a class="btn btn-primary mt-3" :href=" imageFolder + '/All_Images.zip'">
+          <i class="material-icons">file_download</i>
+          Download All (ZIP)
+        </a>
+        <p class="mt-2">
+          <small class="text-info">
+            Image URLs will expire after 30 minutes of upload. Please download it before expires
+          </small>
+        </p>
       </div>
 
     </ElementsBsCard>
@@ -192,6 +175,10 @@ function uploadImage(file, id) {
 </template>
       
 <style scoped>
+.dark-version .bg-light {
+  background-color: #243656 !important;
+}
+
 .uploadArea label {
   font-size: 25px;
   position: relative;
@@ -209,10 +196,6 @@ function uploadImage(file, id) {
   z-index: 5;
   width: 100%;
   height: 100%;
-}
-
-.toggle {
-  cursor: pointer;
 }
 
 .imageFiles.error .imageItem {
@@ -240,125 +223,8 @@ function uploadImage(file, id) {
   opacity: 0;
 }
 
-.imageItem {
-  display: flex !important;
-  text-align: center;
-  margin-bottom: 15px;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.imageItem i {
-  vertical-align: text-bottom;
-}
-
-.imageItem .name,
-.imageItem .upSize,
-.imageItem .progres,
-.imageItem .downSize,
-.imageItem .download,
-.imageItem .faildError,
-.imageItem .compressed {
-  padding: 5px;
-}
-
-.imageItem .name {
-  width: 25%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-}
-
-.imageItem .upSize {
-  width: 10%;
-}
-
-
-
-.imageItem .downSize {
-  width: 10%;
-}
-
-.imageItem .download {
-  width: 17%;
-}
-
-.imageItem .compressed {
-  width: 8%;
-}
-
-.imageFiles.error .faildError {
-  width: 60%;
-}
-
-.imageFiles.error .upSize {
-  width: 15%;
-}
-
-.progress {
-  background: #cbcbcb;
-  height: 17px;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.imageItem .progres {
-  width: 30%;
-  margin-top: 5px;
-}
-
-.progress-bar {
-  height: 17px;
-}
-
-.dark-version .bg-light {
-  background-color: #243656 !important;
-}
-
-@media only screen and (max-width: 750px) {
-
-  .imageItem .upSize,
-  .imageItem .downSize {
-    display: none;
-  }
-
-  .imageItem .name {
-    width: 35%;
-  }
-
-  .imageFiles.error .faildError {
-    width: 65%;
-  }
-
-  .imageItem .download {
-    width: 25%;
-  }
-
-  .imageItem .compressed {
-    width: 10%;
-  }
-
-}
-
-@media only screen and (max-width: 750px) {
-  .imageItem .compressed {
-    display: none;
-  }
-
-  .imageItem .name,
-  .imageItem .progres,
-  .imageItem .download {
-    width: 33.33%;
-  }
-
-}
-
-@media only screen and (max-width: 420px) {
-  .imageItem i {
-    display: none;
-  }
-
+.toggle {
+  cursor: pointer;
 }
 </style>
       
