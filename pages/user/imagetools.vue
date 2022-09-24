@@ -148,15 +148,7 @@ function uploadImage(file, id) {
       </div>
 
       <div class="imageFiles error" v-for="file in invalids">
-        <div class="imageItem bg-light shadow">
-          <div class="name">
-            <i class="material-icons">image</i> {{ file.name }}
-          </div>
-          <div class="upSize">{{ file.size }}kb</div>
-          <div class="faildError text-danger text-start">
-            {{file.msg}}
-          </div>
-        </div>
+        <ElementsImageItem :file="file" :error="true" />
       </div>
       <div class="text-center" v-if="showDowload && Object.keys(images).length > 0">
         <a class="btn btn-primary mt-3" :href=" imageFolder + '/All_Images.zip'">
@@ -198,10 +190,6 @@ function uploadImage(file, id) {
   height: 100%;
 }
 
-.imageFiles.error .imageItem {
-  border: 1px solid #e99c9c;
-  opacity: 0.7;
-}
 
 .uploadArea {
   text-align: center;

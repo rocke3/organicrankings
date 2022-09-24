@@ -3,45 +3,62 @@ const props = defineProps({
   file: {
     type: Object,
     required: true,
+  },
+  error: {
+    type: Boolean,
+    required: false,
   }
 });
 </script>
 
 <template>
-  <div class="imageItem bg-light shadow">
-    <div class="name inCol">
-      <div>
+  <div>
+    <div class="imageItem bg-light shadow" v-if="error">
+      <div class="name">
         <i class="material-icons">image</i> {{ file.name }}
       </div>
+      <div class="upSize">{{ file.size }}kb</div>
+      <div class="faildError text-danger text-start">
+        {{file.msg}}
+      </div>
     </div>
-    <div class="upSize inCol">{{ file.size }}kb</div>
-    <div class="progres inCol">
-      <div class="progress" v-if="file.progress < 100">
-        <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">Uploading {{file.progress}}%
+    <div class="imageItem bg-light shadow" v-else>
+      <div class="name inCol">
+        <div>
+          <i class="material-icons">image</i> {{ file.name }}
         </div>
       </div>
-      <div class="progress" v-if="file.progress > 99 && !file.newSize">
-        <div class="progress-bar progress-bar-striped progress-bar-animated w-100">Processing</div>
+      <div class="upSize inCol">{{ file.size }}kb</div>
+      <div class="progres inCol">
+        <div class="progress" v-if="file.progress < 100">
+          <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">Uploading {{file.progress}}%
+          </div>
+        </div>
+        <div class="progress" v-if="file.progress > 99 && !file.newSize">
+          <div class="progress-bar progress-bar-striped progress-bar-animated w-100">Processing</div>
+        </div>
+        <div class="progress" v-if="file.newSize">
+          <div class="progress-bar bg-success w-100">{{ file.compressed }}% compressed</div>
+        </div>
       </div>
-      <div class="progress" v-if="file.newSize">
-        <div class="progress-bar bg-success w-100">{{ file.compressed }}% compressed</div>
+      <div class="downSize inCol">
+        <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
+        <span v-else>{{ file.newSize }}kb</span>
+      </div>
+      <div class="download inCol">
+        <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
+        <span v-else>
+          <a :href="file.download" class="text-primary nav-link" :title="file.name" download>
+            <i class="material-icons">file_download</i> Download
+          </a>
+        </span>
+      </div>
+      <div class="expire inCol">
+        <ElementsCircleProgress :text="file.timer" :class="file.animate" />
       </div>
     </div>
-    <div class="downSize inCol">
-      <ElementsSpinner color="#e91e63" v-if="!file.newSize" />
-      <span v-else>{{ file.newSize }}kb</span>
-    </div>
-    <div class="download inCol">
-      <ElementsSpinner color="#e91e63" v-if="file.newSize == 0" />
-      <span v-else>
-        <a :href="file.download" class="text-primary nav-link" :title="file.name" download>
-          <i class="material-icons">file_download</i> Download
-        </a>
-      </span>
-    </div>
-    <div class="expire inCol">
-      <ElementsCircleProgress :text="file.timer" :class="file.animate" />
-    </div>
+
+
   </div>
 </template>
 
@@ -123,6 +140,7 @@ const props = defineProps({
 
 .imageItem .name {
   width: 25%;
+  text-align: left;
 }
 
 .imageItem .name div {
@@ -147,12 +165,17 @@ const props = defineProps({
 }
 
 
+.imageFiles.error .imageItem {
+  border: 1px solid #e99c9c;
+  opacity: 0.7;
+}
+
 .imageFiles.error .faildError {
   width: 60%;
 }
 
 .imageFiles.error .upSize {
-  width: 15%;
+  width: 11%;
 }
 
 .progress {
