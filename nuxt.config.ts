@@ -9,9 +9,6 @@ export default defineNuxtConfig({
 			noscript: [{ children: "Javascript is required" }],
 		},
 	},
-	public: {
-		baseURL: process.env.baseUrl || "https://www.organicrankings.com/app",
-	},
 	runtimeConfig: {
 		dbHost: process.env.dbHost,
 		dbUser: process.env.dbUser,

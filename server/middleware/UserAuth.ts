@@ -1,11 +1,17 @@
-const env = useRuntimeConfig();
 import { defineEventHandler, getCookie } from "h3";
+const env = useRuntimeConfig();
 import jwt from "jsonwebtoken";
 import md5 from "md5";
 import cookie from "../cookie";
 
+const server = env.server;
+
 const ignoreAuth = ["/requstLogout"];
-const noLogin = ["/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha", "/public"];
+if (server == "local") {
+	const noLogin = ["/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha", "/public"];
+} else {
+	const noLogin = ["/app/signin", "/app/signup", "/app/resetpassword", "/app/requstSignin", "/app/requstSignup", "/app/requstReset", "/app/loadcaptcha", "/public"];
+}
 
 export default defineEventHandler((event) => {
 	const req = event.req,
