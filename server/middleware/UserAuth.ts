@@ -7,10 +7,9 @@ import cookie from "../cookie";
 const server = env.server ?? "";
 
 const ignoreAuth = ["/requstLogout"];
-if (server == "local") {
-	const noLogin = ["/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha", "/public"];
-} else {
-	const noLogin = ["/app/signin", "/app/signup", "/app/resetpassword", "/app/requstSignin", "/app/requstSignup", "/app/requstReset", "/app/loadcaptcha", "/public"];
+let noLogin = ["/signin", "/signup", "/resetpassword", "/requstSignin", "/requstSignup", "/requstReset", "/loadcaptcha", "/public"];
+if (server != "local") {
+	noLogin = ["/app", "/app/signin", "/app/signup", "/app/resetpassword", "/app/requstSignin", "/app/requstSignup", "/app/requstReset", "/app/loadcaptcha", "/public"];
 }
 
 export default defineEventHandler((event) => {
