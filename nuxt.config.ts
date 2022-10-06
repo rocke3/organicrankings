@@ -17,4 +17,7 @@ export default defineNuxtConfig({
 		jwtSecret: process.env.jwtSecret,
 		agentSecret: process.env.agentSecret,
 	},
+	public: {
+		baseURL: process.env.baseUrl || "https://www.organicrankings.com/app",
+	},
 });

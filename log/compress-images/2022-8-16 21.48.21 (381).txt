@@ -1,9 +1,0 @@
-File from: [./public/temp/Mahram_Ali_ID_CARD.png]
-
-File to: [./public/compressed/Mahram_Ali_ID_CARD.png]
-
-Compression algorithm: [pngquant]
-
-Description: Error: Command failed: C:\www\organicrankings\node_modules\pngquant-bin\vendor\pngquant.exe --quality=30-70 -o ./public/compressed/Mahram_Ali_ID_CARD.png ./public/temp/Mahram_Ali_ID_CARD.png
-  error: Read error (libpng failed)
-  error: cannot decode image public\temp\Mahram_Ali_ID_CARD.png

@@ -1,7 +1,0 @@
-File from: [./public/temp/Untitled.png]
-
-File to: [./public/compressed/Untitled.png]
-
-Compression algorithm: [-]
-
-Description: File does not exist!
