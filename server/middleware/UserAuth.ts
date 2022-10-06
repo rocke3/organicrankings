@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import md5 from "md5";
 import cookie from "../cookie";
 
-const server = env.server;
+const server = env.server ?? "";
 
 const ignoreAuth = ["/requstLogout"];
 if (server == "local") {
