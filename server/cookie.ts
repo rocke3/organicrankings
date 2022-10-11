@@ -11,7 +11,7 @@ const agent = (req) => {
 };
 
 const set = (req, name: cookieName, value: string) => {
-	setCookie(req, name, value, { maxAge: 3600 * 4, httpOnly: true, sameSite: true });
+	setCookie(req, name, value, { maxAge: 3600 * 4, secure: true, sameSite: true });
 };
 
 const remove = (req, name: cookieName) => {
