@@ -20,21 +20,15 @@ watch(variable, async (newVal) => {
 
 <i class="material-icons opacity-10">code</i>
 
+pm2 start app.js --name "css" -i max
 
-Set up a new Prisma project
-$ prisma init
 
-Generate artifacts (e.g. Prisma Client)
-$ npx prisma generate
+# To customize this VirtualHost use an include file at the following location
+# Include "/etc/apache2/conf.d/userdata/ssl/2_4/organicrankings/app.organicrankings.com/*.conf"
 
-Browse your data
-$ npx prisma studio
+ProxyPass "/app" "http://132.148.77.56:3000/"
+ProxyPassReverse "/app" "http://132.148.77.56:3000/""
 
-Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
-$ prisma migrate dev
-
-Pull the schema from an existing database, updating the Prisma schema
-$ npx prisma db pull
-
-Push the Prisma schema state to the database
-$ prisma db push
+/scripts/ensure_vhost_includes --user=organicrankings
+/scripts/rebuildhttpdconf
+/scripts/restartsrv_httpd

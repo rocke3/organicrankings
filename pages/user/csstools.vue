@@ -16,50 +16,55 @@ const beautify = ref(false)
 const todo = ref('critical')
 const optimize = ref(1)
 let progress = ref(0)
+const websiteInput = ref(null);
 
 
 async function genarateCss() {
 	if (css.value) {
-		showOutputModal.value = true;
-		processing.value = true;
-		progress.value = 1;
-		outputcss.value = "";
-		urlClass.value = "";
-		cssClass.value = "";
 
-		axios.post('http://www.organicrankings.com:3010/csstool', css.value, {
-			headers: {
-				'Content-Type': 'application/octet-stream',
-				website: website.value,
-				todo: todo.value,
-				optimize: optimize.value,
-				output: beautify.value ? 'beautify' : 'minify',
-			},
-			onUploadProgress: function (event) {
-				var uploaded = Math.round((100 * event.loaded) / event.total);
-				if (uploaded > 99) {
-					progress.value = 2;
-					window.setTimeout(() => { if (processing.value) { progress.value = 3; } }, 1000);
+		let requiredWebsite = todo.value == 'critical' ? true : false;
+
+		if (!requiredWebsite || (website.value != '')) {
+
+			showOutputModal.value = true;
+			processing.value = true;
+			progress.value = 1;
+			outputcss.value = "";
+			urlClass.value = "";
+			cssClass.value = "";
+
+			axios.post('https://www.organicrankings.com/api/csstool', css.value, {
+				headers: {
+					'Content-Type': 'application/octet-stream',
+					website: website.value,
+					todo: todo.value,
+					optimize: optimize.value,
+					output: beautify.value ? 'beautify' : 'minify',
+				},
+				onUploadProgress: function (event) {
+					var uploaded = Math.round((100 * event.loaded) / event.total);
+					if (uploaded > 99) {
+						progress.value = 2;
+						window.setTimeout(() => { if (processing.value) { progress.value = 3; } }, 1000);
+					}
 				}
-			}
-		})
-			.then(function (res) {
-				let data = res.data;
-				processing.value = false;
-				progress.value = 0;
-				outputcss.value = data;
 			})
-			.catch(function (error) {
-				processing.value = false;
-				outputcss.value = "Something went wrong please try again";
-			});
-	} else {
-		if (!website.value) {
+				.then(function (res) {
+					let data = res.data;
+					processing.value = false;
+					progress.value = 0;
+					outputcss.value = data;
+				})
+				.catch(function (error) {
+					processing.value = false;
+					outputcss.value = "Something went wrong please try again";
+				});
+		} else {
 			urlClass.value = "is-invalid"
+			websiteInput.value.focus();
 		}
-		if (!css.value) {
-			cssClass.value = "is-invalid"
-		}
+	} else {
+		cssClass.value = "is-invalid"
 	}
 }
 
@@ -103,7 +108,7 @@ watch(css, async (val) => {
 
 						<div class="input-group input-group-outline mt-3" :class="urlClass" v-if="todo == 'critical'">
 							<label class="form-label">Website URL</label>
-							<input type="url" class="form-control" v-model="website" />
+							<input type="url" class="form-control" v-model="website" ref="websiteInput" />
 						</div>
 
 

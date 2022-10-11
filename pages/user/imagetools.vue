@@ -6,7 +6,7 @@ import formData from 'form-data'
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "Image Tools - Organic Rankings" });
 
-const userFolder = await axios('http://organicrankings.com:3010/imagefolder');
+const userFolder = await axios('https://organicrankings.com/api/imagefolder');
 const imageFolder = "https://www.organicrankings.com/api/compressed/" + userFolder.data;
 let images = ref({});
 let imagesPrefix = ref(0);
@@ -43,7 +43,7 @@ async function selectFile(event) {
 function uploadImage(file, id) {
   const imageData = new formData();
   imageData.append(id, file)
-  axios.post('http://www.organicrankings.com:3010/imagetool', imageData, {
+  axios.post('https://www.organicrankings.com/api/imagetool', imageData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       upload: userFolder.data,

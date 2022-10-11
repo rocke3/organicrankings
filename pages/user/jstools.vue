@@ -42,7 +42,7 @@ async function genarateJs() {
   outputJs.value = '';
   progress.value = 1;
 
-  axios.post('http://www.organicrankings.com:3010/jstool', js.value, {
+  axios.post('https://www.organicrankings.com/api/jstool', js.value, {
     headers: {
       output: beautify.value ? 'beautify' : 'minify',
       indent: indent.value ? 4 : 2,

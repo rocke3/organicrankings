@@ -46,7 +46,7 @@ async function optimizeHtml() {
 
 
 
-  axios.post('http://www.organicrankings.com:3010/htmltool', html.value, {
+  axios.post('https://www.organicrankings.com/api/htmltool', html.value, {
     headers: {
       options: JSON.stringify(options),
       output: beautify.value ? 'beautify' : 'minify',
