@@ -14,6 +14,7 @@ let invalids = ref({});
 let showDowload = ref(0);
 let qualiy = ref(false)
 let convert = ref(false)
+let subscError = ref(false)
 let supported = ['jpeg', 'png', 'gif', 'webp'];
 
 async function selectFile(event) {
@@ -26,7 +27,7 @@ async function selectFile(event) {
     let imgID = "img" + imagesPrefix.value + i;
 
     if (supported.includes(type) && size < 6292) {
-      images.value[imgID] = { name: upFiles[i].name, size: size, progress: 0, newSize: 0, download: '', compressed: 0, expire: 1800, timer: '30:00', animate: '' };
+      images.value[imgID] = { name: upFiles[i].name, size: size, progress: 0, newSize: 0, download: '', compressed: 0, expire: 1800, timer: '30:00', animate: '', error: "" };
       uploadImage(upFiles[i], imgID)
 
     } else {
@@ -59,8 +60,9 @@ function uploadImage(file, id) {
   })
     .then(function (response) {
       let data = response.data;
+      console.log(data);
+      let imgID = data.key;
       if (!data.error) {
-        let imgID = data.key;
         images.value[imgID].newSize = data.newSize;
         images.value[imgID].compressed = data.compressed;
         images.value[imgID].download = imageFolder + "/" + data.path;
@@ -75,11 +77,25 @@ function uploadImage(file, id) {
             delete images.value[imgID]
           }
         }, 1000)
+      } else {
+        subscError.value = data.message
+        images.value[imgID].error = data.message;
+        images.value[imgID].newSize = "-";
+        images.value[imgID].compressed = "-";
+        images.value[imgID].download = "";
+        showDowload.value = 1;
+        var x = setInterval(function () {
+          let expire = images.value[imgID].expire;
+          let newTime = expire - 1;
+          images.value[imgID].expire = newTime;
+          images.value[imgID].timer = Math.trunc(newTime / 60) + ":" + (newTime % 60);
+          if (expire <= 0) {
+            clearInterval(x);
+            delete images.value[imgID]
+          }
+        }, 1000)
       }
     })
-    .catch(function (error) {
-      console.log(error);
-    });
 }
 </script>
       
@@ -141,6 +157,15 @@ function uploadImage(file, id) {
         </div>
       </div>
 
+      <div v-if="subscError">
+        <div class="d-flex justify-content-center mb-2 ">
+          <div class="border border-danger px-5 text-center py-4 mb-4 shadow rounded">
+            <p class="pt-0 text-bold text-danger" v-html="subscError"></p>
+            <p class="pt-0 text-bold text-danger">Click below button to Activate / Upgrade subscription</p>
+            <a href="" class="btn btn-primary mb-0">Subscription</a>
+          </div>
+        </div>
+      </div>
 
       <div class="imageFiles mt-4 pt-2">
         <div class="imageItemDiv" v-for="file in images">
@@ -149,7 +174,7 @@ function uploadImage(file, id) {
       </div>
 
       <div class="imageFiles error" v-for="file in invalids">
-        <ElementsImageItem :file="file" :error="true" />
+        <ElementsImageItem :file="file" :invalid="true" />
       </div>
       <div class="text-center" v-if="showDowload && Object.keys(images).length > 0">
         <a class="btn btn-primary mt-3" :href=" imageFolder + '/All_Images.zip'">

@@ -11,6 +11,9 @@ const props = defineProps({
 	body: {
 		required: true,
 	},
+	error: {
+		type: String,
+	},
 	scrollable: {
 		type: Boolean,
 		default: false,
@@ -82,7 +85,14 @@ function copyToClipboard() {
 					</div>
 
 					<!-- Output code -->
-					<pre><code id="outputCode">{{body}}</code></pre>
+					<div v-if="error" class="text-center">
+						<div class="d-flex justify-content-center mb-2">
+							<div class="alert alert-danger text-white text-bold px-5" v-html="error"></div>
+						</div>
+						<p class="text-bold text-danger">Click below button to Activate / Upgrade subscription</p>
+						<a href="" class="btn btn-primary">Subscription</a>
+					</div>
+					<pre v-else><code id="outputCode">{{body}}</code></pre>
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-secondary" @click="showModal = false">

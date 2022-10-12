@@ -30,6 +30,7 @@ const processing = ref(false)
 const htmlLength = ref(0)
 const showOutputModal = ref(false)
 const outputHtml = ref('')
+const outputError = ref('')
 const beautify = ref(false)
 let progress = ref(0)
 
@@ -37,14 +38,13 @@ async function optimizeHtml() {
   showOutputModal.value = true;
   processing.value = true;
   progress.value = 1;
+  outputError.value = '';
 
   outputHtml.value = '';
   var options = { collapseWhitespace: true }
   for (var val of htmlOptions.value) {
     options[val.name] = val.value;
   }
-
-
 
   axios.post('https://www.organicrankings.com/api/htmltool', html.value, {
     headers: {
@@ -65,7 +65,11 @@ async function optimizeHtml() {
       let data = res.data;
       processing.value = false;
       progress.value = 0;
-      outputHtml.value = data;
+      if (typeof data === 'object') {
+        outputError.value = data.message;
+      } else {
+        outputHtml.value = data;
+      }
     })
     .catch(function (error) {
       processing.value = false;
@@ -134,7 +138,7 @@ watch(html, async (val) => {
     </div>
 
     <!-- Modal -->
-    <ElementsCodeModal :showModal="showOutputModal" :body="outputHtml" :progress="progress" />
+    <ElementsCodeModal :showModal="showOutputModal" :body="outputHtml" :error="outputError" :progress="progress" />
 
   </div>
 </template>

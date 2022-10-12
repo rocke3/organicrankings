@@ -4,8 +4,12 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  error: {
+  invalid: {
     type: Boolean,
+    required: false,
+  },
+  error: {
+    type: String,
     required: false,
   }
 });
@@ -13,9 +17,10 @@ const props = defineProps({
 
 <template>
   <div>
-    <div class="imageItem bg-light shadow" v-if="error">
+    <div class="imageItem bg-light shadow" v-if="invalid">
       <div class="name">
-        <i class="material-icons">image</i> {{ file.name }}
+        <div><i class="material-icons">image</i> {{ file.name }}</div>
+
       </div>
       <div class="upSize">{{ file.size }}kb</div>
       <div class="faildError text-danger text-start">
@@ -30,15 +35,18 @@ const props = defineProps({
       </div>
       <div class="upSize inCol">{{ file.size }}kb</div>
       <div class="progres inCol">
-        <div class="progress" v-if="file.progress < 100">
-          <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">Uploading {{file.progress}}%
+        <div v-if="file.error" v-html="file.error" class="text-danger"></div>
+        <div v-else>
+          <div class="progress" v-if="file.progress < 100">
+            <div class="progress-bar" :class="'w-' + file.progress" role="progressbar">Uploading {{file.progress}}%
+            </div>
           </div>
-        </div>
-        <div class="progress" v-if="file.progress > 99 && !file.newSize">
-          <div class="progress-bar progress-bar-striped progress-bar-animated w-100">Processing</div>
-        </div>
-        <div class="progress" v-if="file.newSize">
-          <div class="progress-bar bg-success w-100">{{ file.compressed }}% compressed</div>
+          <div class="progress" v-if="file.progress > 99 && !file.newSize">
+            <div class="progress-bar progress-bar-striped progress-bar-animated w-100">Processing</div>
+          </div>
+          <div class="progress" v-if="file.newSize">
+            <div class="progress-bar bg-success w-100">{{ file.compressed }}% compressed</div>
+          </div>
         </div>
       </div>
       <div class="downSize inCol">
@@ -79,6 +87,10 @@ const props = defineProps({
   }
 }
 
+.progres .text-danger {
+  line-height: 1;
+  font-size: 15px;
+}
 
 
 .imageItem .name,

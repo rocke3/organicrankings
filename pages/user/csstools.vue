@@ -12,6 +12,7 @@ const processing = ref(false)
 const cssLength = ref(0)
 const showOutputModal = ref(false)
 const outputcss = ref('')
+const outputError = ref('')
 const beautify = ref(false)
 const todo = ref('critical')
 const optimize = ref(1)
@@ -20,6 +21,7 @@ const websiteInput = ref(null);
 let progress = ref(0)
 
 async function genarateCss() {
+	outputError.value = '';
 	if (css.value) {
 		let requiredWebsite = todo.value == 'critical' ? true : false;
 		if (!requiredWebsite || (website.value != '')) {
@@ -52,7 +54,11 @@ async function genarateCss() {
 					let data = res.data;
 					processing.value = false;
 					progress.value = 0;
-					outputcss.value = data;
+					if (typeof data === 'object') {
+						outputError.value = data.message;
+					} else {
+						outputcss.value = data;
+					}
 				})
 				.catch(function (error) {
 					processing.value = false;
@@ -167,7 +173,7 @@ watch(css, async (val) => {
 		</div>
 
 		<!-- Modal -->
-		<ElementsCodeModal :showModal="showOutputModal" :body="outputcss" :progress="progress" />
+		<ElementsCodeModal :showModal="showOutputModal" :body="outputcss" :error="outputError" :progress="progress" />
 
 	</div>
 </template>

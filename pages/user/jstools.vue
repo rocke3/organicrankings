@@ -13,8 +13,7 @@ const processing = ref(false)
 const jsLength = ref(0)
 const showOutputModal = ref(false)
 const outputJs = ref('')
-const upload = ref(false)
-const genarate = ref(false)
+const outputError = ref('')
 const beautify = ref(false)
 const indent = ref(false)
 let progress = ref(0)
@@ -40,6 +39,7 @@ async function genarateJs() {
   showOutputModal.value = true;
   processing.value = true;
   outputJs.value = '';
+  outputError.value = '';
   progress.value = 1;
 
   axios.post('https://www.organicrankings.com/api/jstool', js.value, {
@@ -60,8 +60,12 @@ async function genarateJs() {
     .then(function (res) {
       let data = res.data;
       processing.value = false;
-      outputJs.value = data;
       progress.value = 0;
+      if (typeof data === 'object') {
+        outputError.value = data.message;
+      } else {
+        outputJs.value = data;
+      }
     })
     .catch(function (error) {
       processing.value = false;
@@ -138,7 +142,7 @@ watch(js, async (val) => {
     </div>
 
     <!-- Modal -->
-    <ElementsCodeModal :showModal="showOutputModal" :body="outputJs" :progress="progress" />
+    <ElementsCodeModal :showModal="showOutputModal" :body="outputJs" :error="outputError" :progress="progress" />
 
 
   </div>
