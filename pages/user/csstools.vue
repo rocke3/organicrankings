@@ -15,15 +15,13 @@ const outputcss = ref('')
 const beautify = ref(false)
 const todo = ref('critical')
 const optimize = ref(1)
-let progress = ref(0)
 const websiteInput = ref(null);
 
+let progress = ref(0)
 
 async function genarateCss() {
 	if (css.value) {
-
 		let requiredWebsite = todo.value == 'critical' ? true : false;
-
 		if (!requiredWebsite || (website.value != '')) {
 
 			showOutputModal.value = true;
@@ -36,6 +34,7 @@ async function genarateCss() {
 			axios.post('https://www.organicrankings.com/api/csstool', css.value, {
 				headers: {
 					'Content-Type': 'application/octet-stream',
+					authorization: useCookie('org_user').value,
 					website: website.value,
 					todo: todo.value,
 					optimize: optimize.value,

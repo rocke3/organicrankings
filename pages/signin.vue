@@ -20,7 +20,7 @@ async function requstSignin() {
 	if (response.login) {
 		router.push("/user");
 	} else {
-		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
+		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message ?? "Something went wrong please try again later"}</span>`;
 	}
 	checking.value = false;
 	window.setInterval(() => {

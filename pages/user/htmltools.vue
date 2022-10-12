@@ -48,9 +48,10 @@ async function optimizeHtml() {
 
   axios.post('https://www.organicrankings.com/api/htmltool', html.value, {
     headers: {
+      'Content-Type': 'application/octet-stream',
+      authorization: useCookie('org_user').value,
       options: JSON.stringify(options),
-      output: beautify.value ? 'beautify' : 'minify',
-      'Content-Type': 'application/octet-stream'
+      output: beautify.value ? 'beautify' : 'minify'
     },
     onUploadProgress: function (event) {
       var uploaded = Math.round((100 * event.loaded) / event.total);

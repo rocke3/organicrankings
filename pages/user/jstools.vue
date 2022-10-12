@@ -44,9 +44,10 @@ async function genarateJs() {
 
   axios.post('https://www.organicrankings.com/api/jstool', js.value, {
     headers: {
+      'Content-Type': 'application/octet-stream',
+      authorization: useCookie('org_user').value,
       output: beautify.value ? 'beautify' : 'minify',
-      indent: indent.value ? 4 : 2,
-      'Content-Type': 'application/octet-stream'
+      indent: indent.value ? 4 : 2
     },
     onUploadProgress: function (event) {
       var uploaded = Math.round((100 * event.loaded) / event.total);

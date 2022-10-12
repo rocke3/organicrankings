@@ -10,13 +10,15 @@ export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
 
 	if (validateInputs(body)) {
+		let email = body.email;
+		let pass = md5(body.password);
 		const isLogin = await db
 			.promise()
-			.query("SELECT * FROM users WHERE email = ?", [body.email])
+			.query("SELECT * FROM users WHERE user_email = ? AND user_password = ?", [email, pass])
 			.then(([rows, fields]) => {
 				var dbUser = rows[0] ?? false;
-				if (dbUser && dbUser.password == body.password) {
-					const jwtData = { user: body.email };
+				if (dbUser) {
+					const jwtData = { user: email };
 					const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
 
 					cookie.set(req, cookie.name.JWT, jwtToken);
@@ -28,8 +30,6 @@ export default defineEventHandler(async (req) => {
 				}
 			})
 			.catch((error) => {
-				console.log(error);
-
 				return { login: false, message: "Something went wrong please try again later" };
 			});
 
