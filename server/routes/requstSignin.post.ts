@@ -10,8 +10,9 @@ export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
 
 	if (validateInputs(body)) {
-		let email = body.email;
-		let pass = md5(body.password);
+		const email = body.email;
+		const pass = md5(body.password);
+
 		const isLogin = await db
 			.promise()
 			.query("SELECT * FROM users WHERE user_email = ? AND user_password = ?", [email, pass])
@@ -20,11 +21,13 @@ export default defineEventHandler(async (req) => {
 				if (dbUser) {
 					const jwtData = { user: email };
 					const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
+					if (jwtToken) {
+						cookie.set(req, cookie.name.JWT, jwtToken);
+						cookie.set(req, cookie.name.AGENT, userAgent);
 
-					cookie.set(req, cookie.name.JWT, jwtToken);
-					cookie.set(req, cookie.name.AGENT, userAgent);
-
-					return { login: true };
+						return { login: true };
+					}
+					return { login: false };
 				} else {
 					return { login: false, message: "Invalid Email or Password" };
 				}

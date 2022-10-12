@@ -21,7 +21,7 @@ async function requstSignup() {
 			body: { email: email.value, password: password.value, confpass: confpass.value },
 		});
 		if (response.signup) {
-			router.push("/app");
+			router.push("/user");
 		} else {
 			signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
 		}

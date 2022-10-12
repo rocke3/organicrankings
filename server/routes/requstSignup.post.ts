@@ -10,17 +10,20 @@ export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
 
 	if (validateInputs(body)) {
+		const email = body.email;
+		const pass = md5(body.password);
 		const isSignup = await db
 			.promise()
-			.query("INSERT INTO `users` (`email`, `password`) VALUES (?,?)", [body.email, body.password])
-			.then((response) => {
-				const jwtData = { user: body.email };
-
-				jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" }, function (err, token) {
-					cookie.set(req, cookie.name.JWT, token);
-					cookie.set(req, cookie.name.AGENT, md5(userAgent));
+			.query("INSERT INTO `users` (`user_email`, `user_password`) VALUES (?,?)", [email, pass])
+			.then(async (response) => {
+				const jwtData = { user: email };
+				const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
+				if (jwtToken) {
+					cookie.set(req, cookie.name.JWT, jwtToken);
+					cookie.set(req, cookie.name.AGENT, userAgent);
 					return { signup: true };
-				});
+				}
+				return { signup: false };
 			})
 			.catch((error) => {
 				if (error.code == "ER_DUP_ENTRY") {
@@ -29,6 +32,7 @@ export default defineEventHandler(async (req) => {
 					return { signup: false, message: "Something went wrong please try again later" };
 				}
 			});
+		console.log(isSignup);
 
 		if (isSignup.signup) {
 			return { signup: true };
