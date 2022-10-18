@@ -10,7 +10,7 @@ const email = ref('test@gmail.com')
 const password = ref('123456')
 const emailCls = ref('')
 const passCls = ref('')
-process.on('warning', e => console.warn(e.stack));
+
 async function requstSignin() {
 	const router = useRouter();
 	checking.value = true;
