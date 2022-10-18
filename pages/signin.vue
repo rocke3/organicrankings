@@ -1,4 +1,5 @@
 <script setup>
+import axios from 'axios'
 import { ref } from 'vue'
 useHead({ title: "Sign in - Organic Rankings" });
 definePageMeta({ layout: "public-layout" });
@@ -9,19 +10,22 @@ const email = ref('test@gmail.com')
 const password = ref('123456')
 const emailCls = ref('')
 const passCls = ref('')
-
+process.on('warning', e => console.warn(e.stack));
 async function requstSignin() {
 	const router = useRouter();
 	checking.value = true;
-	const response = await $fetch("/requstSignin", {
-		method: "POST",
-		body: { email: email.value, password: password.value },
-	});
-	if (response.login) {
-		navigateTo("/user");
-	} else {
-		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message ?? "Something went wrong please try again later"}</span>`;
-	}
+	axios.post('/requstSignin', { email: email.value, password: password.value })
+		.then(async function (res) {
+			let data = res.data;
+			if (data.login) {
+				navigateTo("/user");
+			} else {
+				loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${data.message ?? "Something went wrong please try again later"}</span>`;
+			}
+		}).catch((error) => {
+			console.log(error);
+		});
+
 	checking.value = false;
 	window.setInterval(() => {
 		loginStatus.value = "";

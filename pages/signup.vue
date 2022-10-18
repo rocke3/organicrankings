@@ -1,4 +1,5 @@
 <script setup>
+import axios from 'axios'
 import { ref } from 'vue'
 useHead({ title: "Sign up - Organic Rankings" });
 definePageMeta({
@@ -16,15 +17,19 @@ async function requstSignup() {
 	if ((email.value && email.value.length > 7) && (password.value && password.value.length > 5) && (password.value === confpass.value)) {
 		const router = useRouter();
 		checking.value = true;
-		const response = await $fetch("/requstSignup", {
-			method: "POST",
-			body: { email: email.value, password: password.value, confpass: confpass.value },
-		});
-		if (response.signup) {
-			router.push("/user");
-		} else {
-			signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
-		}
+
+		axios.post('/requstSignup', { email: email.value, password: password.value, confpass: confpass.value })
+			.then(async function (res) {
+				let data = res.data;
+				if (data.signup) {
+					navigateTo("/user");
+				} else {
+					signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
+				}
+			}).catch((error) => {
+				console.log(error);
+			});
+
 		checking.value = false;
 		window.setInterval(() => {
 			signupStatus.value = "";
