@@ -16,5 +16,7 @@ export default defineNuxtConfig({
 		dbPass: process.env.dbPass,
 		jwtSecret: process.env.jwtSecret,
 		agentSecret: process.env.agentSecret,
+		stripePk: process.env.stripePk,
+		stripeSk: process.env.stripeSk,
 	},
 });

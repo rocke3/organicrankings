@@ -18,7 +18,7 @@ async function requstSignin() {
 		body: { email: email.value, password: password.value },
 	});
 	if (response.login) {
-		router.push("/user");
+		navigateTo("/user");
 	} else {
 		loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message ?? "Something went wrong please try again later"}</span>`;
 	}
