@@ -13,12 +13,12 @@ if (process.client) {
 		});
 }
 
-function subscribe(price) {
-	axios.post('/sendToSubscriptin', { price: price })
+function subscribe(plan_id, price_id) {
+	axios.post('/subscriptin', { plan_id: plan_id, price_id: price_id })
 		.then(async function (res) {
 			let data = res.data;
 			if (data) {
-				window.location.href = data;
+				//window.location.href = data;
 			}
 		}).catch((error) => {
 			console.log(error);
@@ -28,7 +28,7 @@ function subscribe(price) {
 
 
 <template>
-	<div>
+	<div class="subscriptions">
 		<div class="row">
 			<div class="col-xl-3 col-md-6" v-for="plan in plans">
 				<div class="card mb-5 planBox">
@@ -75,13 +75,20 @@ function subscribe(price) {
 							</span>
 						</p>
 						<div class="text-center mt-4">
-							<button class="btn btn-primary" @click="subscribe(plan.plan_price_id)">Subscribe now</button>
+							<button class="btn btn-primary" @click="subscribe(plan.plan_id,plan.plan_price_id)">Subscribe now</button>
 						</div>
 					</div>
 
 				</div>
 			</div>
 
+			<div class="col-12 d-flex justify-content-center">
+				<div class="border rounded bg-white p-4 text-center border-primary shadow-primary">
+					<p class="text-bold text-primary m-0">Try our all tools for free, No card or bank information required</p>
+					<p class="text-bold text-primary">One-click activation</p>
+					<button class="btn btn-primary mb-0">Try For Free</button>
+				</div>
+			</div>
 
 		</div>
 	</div>

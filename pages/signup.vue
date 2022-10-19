@@ -13,12 +13,12 @@ const signupStatus = ref('')
 const password = ref('')
 const confpass = ref('')
 
-async function requstSignup() {
+async function signupRequst() {
 	if ((email.value && email.value.length > 7) && (password.value && password.value.length > 5) && (password.value === confpass.value)) {
 		const router = useRouter();
 		checking.value = true;
 
-		axios.post('/requstSignup', { email: email.value, password: password.value, confpass: confpass.value })
+		axios.post('/signupRequst', { email: email.value, password: password.value, confpass: confpass.value })
 			.then(async function (res) {
 				let data = res.data;
 				if (data.signup) {
@@ -48,7 +48,7 @@ async function requstSignup() {
 <template>
 	<div v-once>
 		<ElementsBsCard formTitle="Sign Up" titleClass="font-weight-bolder text-center text-uppercase h3">
-			<form role="form" class="text-start" @submit.prevent="requstSignup">
+			<form role="form" class="text-start" @submit.prevent="signupRequst">
 				<ElementsInputEmail label="Email" v-model:email="email" :class="emailCls" :required="true" />
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" />
 				<ElementsInputPassword label="Confirm Password" v-model:password="confpass" class="mt-4" />

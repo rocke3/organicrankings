@@ -11,10 +11,10 @@ const password = ref('123456')
 const emailCls = ref('')
 const passCls = ref('')
 
-async function requstSignin() {
+async function signinRequst() {
 	const router = useRouter();
 	checking.value = true;
-	axios.post('/requstSignin', { email: email.value, password: password.value })
+	axios.post('/signinRequst', { email: email.value, password: password.value })
 		.then(async function (res) {
 			let data = res.data;
 			if (data.login) {
@@ -37,7 +37,7 @@ async function requstSignin() {
 <template>
 	<div v-once>
 		<ElementsBsCard formTitle="Sign In" titleClass="font-weight-bolder text-center text-uppercase h3">
-			<form role="form" class="text-start" @submit.prevent="requstSignin">
+			<form role="form" class="text-start" @submit.prevent="signinRequst">
 				<ElementsInputEmail label="Email" v-model:email="email" :class="emailCls" :required="true" />
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" :class="passCls"
 					:required="true" />

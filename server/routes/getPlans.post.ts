@@ -4,7 +4,7 @@ import db from "../connection";
 export default defineEventHandler(async (req) => {
 	const data = await db
 		.promise()
-		.query("SELECT * FROM subscription_plan")
+		.query("SELECT * FROM subscription_plan WHERE plan_id != 0")
 		.then(([rows, fields]) => {
 			return rows;
 		})

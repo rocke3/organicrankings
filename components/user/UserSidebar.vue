@@ -16,8 +16,8 @@ const menuItems = [
 	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
 ]
 
-async function requstLogout() {
-	const response = await $fetch("/requstLogout", {
+async function logoutRequest() {
+	const response = await $fetch("/logoutRequest", {
 		method: "POST"
 	});
 	if (response) {
@@ -49,7 +49,7 @@ async function requstLogout() {
 		</div>
 		<div class="sidenav-footer position-absolute w-100 bottom-1 navbar-nav">
 			<div class="nav-item">
-				<a @click="requstLogout" class="nav-link" type="button"><i class="material-icons opacity-10">logout</i>
+				<a @click="logoutRequest" class="nav-link" type="button"><i class="material-icons opacity-10">logout</i>
 					<span class="nav-link-text ms-1">Sign out</span></a>
 			</div>
 		</div>
