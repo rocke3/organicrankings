@@ -1,12 +1,11 @@
-const env = useRuntimeConfig();
 import { defineEventHandler, getHeader, readBody } from "h3";
-import jwt from "jsonwebtoken";
+import auth from "../auth";
 import md5 from "md5";
 import db from "../connection";
 import cookie from "../cookie";
 
 export default defineEventHandler(async (req) => {
-	const userAgent = processUserAgent(getHeader(req, "user-agent"));
+	const userAgent = auth.userAgent(getHeader(req, "user-agent"));
 	const body = await readBody(req);
 
 	if (validateInputs(body)) {
@@ -16,8 +15,7 @@ export default defineEventHandler(async (req) => {
 			.promise()
 			.query("INSERT INTO `users` (`user_email`, `user_password`) VALUES (?,?)", [email, pass])
 			.then(async (response) => {
-				const jwtData = { user: email };
-				const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
+				const jwtToken = auth.sign({ user: email });
 				if (jwtToken) {
 					cookie.set(req, cookie.name.JWT, jwtToken);
 					cookie.set(req, cookie.name.AGENT, userAgent);
@@ -32,8 +30,6 @@ export default defineEventHandler(async (req) => {
 					return { signup: false, message: "Something went wrong please try again later" };
 				}
 			});
-		console.log(isSignup);
-
 		if (isSignup.signup) {
 			return { signup: true };
 		} else {
@@ -50,8 +46,4 @@ function validateInputs(body) {
 		return false;
 	}
 	return true;
-}
-
-function processUserAgent(text: String) {
-	return md5(text.replace(/\s/g, "").toLowerCase() + env.agentSecret);
 }

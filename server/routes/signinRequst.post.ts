@@ -1,6 +1,6 @@
 const env = useRuntimeConfig();
-import jwt from "jsonwebtoken";
 import md5 from "md5";
+import auth from "../auth";
 import db from "../connection";
 import cookie from "../cookie";
 import { defineEventHandler, readBody } from "h3";
@@ -19,12 +19,10 @@ export default defineEventHandler(async (req) => {
 			.then(([rows, fields]) => {
 				var dbUser = rows[0] ?? false;
 				if (dbUser) {
-					const jwtData = { user: email };
-					const jwtToken = jwt.sign(jwtData, env.jwtSecret, { expiresIn: "3h" });
+					const jwtToken = auth.sign({ user: email });
 					if (jwtToken) {
 						cookie.set(req, cookie.name.JWT, jwtToken);
 						cookie.set(req, cookie.name.AGENT, userAgent);
-
 						return { login: true };
 					}
 					return { login: false };

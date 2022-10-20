@@ -12,6 +12,9 @@ body {
 .sidenav {
 	z-index: 10 !important;
 }
+.pageContent {
+	position: relative;
+}
 
 .input-group.input-group-outline.is-focused .form-label,
 .input-group.input-group-outline.is-filled .form-label,

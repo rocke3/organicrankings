@@ -1,57 +1,84 @@
 import { defineEventHandler, readBody, getCookie } from "h3";
-const env = useRuntimeConfig();
-import Stripe from "stripe";
 import db from "../connection";
-import jwt from "jsonwebtoken";
+import auth from "../auth";
 import cookie from "../cookie";
+import stripe from "../stripe";
 
-const stripe = new Stripe(env.stripeSk, {});
 export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
-	let data = "";
-	if (body.price_id && body.plan_id) {
-		data = await stripe.checkout.sessions
-			.create({
-				success_url: "http://localhost:3000/user",
-				cancel_url: "http://localhost:3000/user",
-				line_items: [{ price: body.price_id, quantity: 1 }],
-				mode: "subscription",
-			})
-			.then(
-				async function (result) {
-					let cookieJwt = getCookie(req, cookie.name.JWT);
-					let verifyed = jwt.verify(cookieJwt, env.jwtSecret, async function (err, decoded) {
-						if (!err) {
-							let userEmail = decoded.user;
-							let insearted = await db
-								.promise()
-								.query("INSERT INTO `subscriptions`(`sub_user`, `sub_stripe_id`, `sub_plan`) VALUES ((SELECT user_id FROM `users` WHERE `user_email` = ?),?,?)", [userEmail, result.id, body.plan_id])
-								.then(([ResultSetHeader]) => {
-									if (ResultSetHeader.affectedRows > 0) {
-										return true;
-									}
-								})
-								.catch((error) => {
-									return false;
-								});
+	let verifyed = await auth.verify(getCookie(req, cookie.name.JWT)); //! verify cookie JWT token
+	if (verifyed) {
+		const user = await getUserInfo(verifyed.user);
 
-							if (insearted) return true;
-							return false;
-						} else {
-							return false;
-						}
-					});
+		if (body.price_id && user) {
+			const price_id = body.price_id;
+			const plan_id = body.plan_id;
+			let response = { status: false, url: "/user", msg: "" };
+			let stripe_id = "",
+				active = 1;
 
-					if (verifyed) return result.url;
-					return "false";
-				},
-				function (err) {
-					return "false";
+			//! If any subscription exist
+			if (user.sub_id != null) {
+				//! Return if same plan alredy active
+				if (plan_id == user.sub_plan && user.sub_active) {
+					response.msg = "You are already subscribed to this plan";
+					return response;
 				}
-			);
-	} else {
-		data = "false";
-	}
 
-	return data;
+				//! Return if trying to downgrade plan
+				if (plan_id < user.sub_plan && user.sub_active) {
+					response.msg = `You alredy have a active plan '${user.plan_name}'`;
+					return response;
+				}
+
+				//! Return if Free trial already used
+				if (price_id == "free" && user.user_free_used > 0) {
+					response.msg = "Your Free trial limit over";
+					return response;
+				}
+
+				//! Remove if have any inactive subscription Or Free subscription
+				deleteUserSubscription(user.user_id);
+			}
+
+			//! If Plan is not free
+			if (price_id != "free") {
+				const striprInfo = await stripe.checkoutSessions(price_id); //! Genarate Stripe subscription session
+				stripe_id = striprInfo.id;
+				response.url = striprInfo.url;
+				active = 0;
+			}
+
+			//! Inseart subscription in database (subscription will active using stripe webhook if plan is not free)
+			await db
+				.promise()
+				.query("INSERT INTO `subscriptions`(`sub_user`, `sub_stripe_id`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
+				.then((res) => {
+					if (price_id == "free") {
+						db.promise().query("UPDATE `users` SET `user_free_used` = 1 WHERE `user_id` = ?", [user.user_id]);
+					}
+					response.status = true;
+				});
+
+			return response;
+		}
+
+		if (body.status) {
+			return user;
+		}
+	}
 });
+
+function getUserInfo(userEmail) {
+	return db
+		.promise()
+		.query("SELECT * FROM `users` LEFT JOIN `subscriptions` ON user_id = sub_user LEFT JOIN `subscription_plan` ON plan_id = sub_plan WHERE `user_email` = ?", [userEmail])
+		.then(([rows]) => {
+			if (rows.length) return rows[0];
+			return false;
+		});
+}
+
+function deleteUserSubscription(user_id) {
+	db.promise().query("DELETE FROM subscriptions WHERE `sub_user` = ? AND (`sub_plan` = 0 OR `sub_active` = 0)", [user_id]);
+}
