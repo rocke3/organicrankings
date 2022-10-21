@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
 let plans = ref({});
+let unserInfo = ref({});
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 
@@ -8,6 +9,13 @@ if (process.client) {
   axios.post('/subscriptionPlans')
     .then(function (res) {
       plans.value = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  axios.post('/userInfo')
+    .then(function (res) {
+      unserInfo.value = res.data;
     }).catch((error) => {
       console.log(error);
     });
@@ -47,7 +55,35 @@ function subscribe(plan_id, price_id) {
 
     <div class="row">
       <div class="col-12 d-flex justify-content-center mb-4">
-        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4">
+        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
+          v-if="unserInfo.plan_id == 0">
+          <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
+            limitation
+          </p>
+          <h5 class="text-bold text-dark">Limit Used</h5>
+          <div class="text-start">
+            <table class="table text-success">
+              <tr>
+                <td>HTML tools</td>
+                <td class="text-end">{{unserInfo.sub_html_used}} out of {{unserInfo.plan_limit}}</td>
+              </tr>
+              <tr>
+                <td>CSS tools</td>
+                <td class="text-end">{{unserInfo.sub_css_used}} out of {{unserInfo.plan_limit}}</td>
+              </tr>
+              <tr>
+                <td>JS tools</td>
+                <td class="text-end">{{unserInfo.sub_js_used}} out of {{unserInfo.plan_limit}}</td>
+              </tr>
+              <tr>
+                <td>Image</td>
+                <td class="text-end">{{unserInfo.sub_img_used}} out of {{unserInfo.plan_limit}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
+          v-if="!unserInfo.user_free_used">
           <p class="text-bold text-primary m-0">Try our all tools for free, No card or bank information required</p>
           <p class="text-bold text-primary">One-click activation</p>
           <button class="btn btn-primary mb-0" @click="subscribe(free.id,free.name); free.processing = true;">
@@ -60,7 +96,7 @@ function subscribe(plan_id, price_id) {
       </div>
 
       <div class="col-xl-3 col-md-6" v-for="plan in plans">
-        <div class="card mb-5 planBox">
+        <div class="card mb-5 planBox" :class="unserInfo.plan_id == plan.plan_id ? 'active' : ''">
           <div class="card-header p-3 pt-2 pb-2 bg-transparent">
             <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
               <h3 class="m-0 py-1 px-4 text-white">{{ plan.plan_name }}</h3>
@@ -79,32 +115,37 @@ function subscribe(plan_id, price_id) {
               :class="plan.plan_extra != 0 ? 'text-primary' : ''">
               {{plan.plan_extra == 0 ? "No extra benefits" : `Free ${plan.plan_extra} extra requst` }}
             </p>
-            <p class="mb-1 text-success text-sm font-weight-bolder">
-              HTML tools
-              <span class="float-end">{{plan.plan_html}}
-                <span class="text-primary" v-if="plan.plan_extra">+{{plan.plan_extra}}</span>
-              </span>
-            </p>
-            <p class="mb-1 text-success text-sm font-weight-bolder">
-              CSS tools
-              <span class="float-end">{{plan.plan_css}}
-                <span class="text-primary" v-if="plan.plan_extra">+{{plan.plan_extra}}</span>
-              </span>
-            </p>
-            <p class="mb-1 text-success text-sm font-weight-bolder">
-              JS tools
-              <span class="float-end">{{plan.plan_js}}
-                <span class="text-primary" v-if="plan.plan_extra">+{{plan.plan_extra}}</span>
-              </span>
-            </p>
-            <p class="mb-1 text-success text-sm font-weight-bolder">
-              Image
-              <span class="float-end">{{plan.plan_image}}
-                <span class="text-primary" v-if="plan.plan_extra">+{{plan.plan_extra}}</span>
-              </span>
-            </p>
+            <table class="table text-success font-weight-bolder text-sm">
+              <tr>
+                <td>HTML tools</td>
+                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
+                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+              </tr>
+              <tr>
+                <td>CSS tools</td>
+                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
+                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+              </tr>
+              <tr>
+                <td>JS tools</td>
+                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
+                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+              </tr>
+              <tr>
+                <td>Image</td>
+                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
+                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+              </tr>
+            </table>
+
+
             <div class="text-center mt-4">
-              <button class="btn btn-primary" @click="subscribe(plan.plan_id,plan.plan_price_id); plan.processing = 1">
+              <button v-if="unserInfo.plan_id == plan.plan_id"
+                class="text-bold btn btn-outline-primary font-weight-bolder" disabled>
+                Currently Using
+              </button>
+              <button class="btn btn-primary" @click="subscribe(plan.plan_id,plan.plan_price_id); plan.processing = 1"
+                :disabled="plan.plan_id < unserInfo.plan_id ? true : false" v-else>
                 <div v-if="plan.processing">Loading
                   <ElementsSpinner class="ms-2" />
                 </div>
@@ -142,8 +183,20 @@ function subscribe(plan_id, price_id) {
   left: 50%;
 }
 
+.table> :not(:first-child) {
+  border-style: ridge;
+}
+
 .planBox {
   max-width: 320px;
   margin: auto;
+}
+
+.planBox.active {
+  outline: 1px solid #e91e63;
+}
+
+.btn-outline-primary {
+  padding: 9px 24px !important;
 }
 </style>
