@@ -29,7 +29,7 @@ async function signinRequst() {
 	checking.value = false;
 	window.setInterval(() => {
 		loginStatus.value = "";
-	}, 3500);
+	}, 5000);
 }
 </script>
 

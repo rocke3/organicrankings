@@ -56,7 +56,7 @@ function subscribe(plan_id, price_id) {
     <div class="row">
       <div class="col-12 d-flex justify-content-center mb-4">
         <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-          v-if="unserInfo.plan_id == 0">
+          v-if="unserInfo.plan_id == 0 && unserInfo">
           <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
             limitation
           </p>
@@ -83,7 +83,7 @@ function subscribe(plan_id, price_id) {
           </div>
         </div>
         <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-          v-if="!unserInfo.user_free_used">
+          v-if="!unserInfo.user_free_used && unserInfo.length">
           <p class="text-bold text-primary m-0">Try our all tools for free, No card or bank information required</p>
           <p class="text-bold text-primary">One-click activation</p>
           <button class="btn btn-primary mb-0" @click="subscribe(free.id,free.name); free.processing = true;">
