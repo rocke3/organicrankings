@@ -34,10 +34,7 @@ export default defineEventHandler(async (req) => {
 			break;
 		case "customer.subscription.updated":
 			const updated = event.data.object;
-			const timestampObj = moment.unix(updated.current_period_end + 1000);
-			const period_end = timestampObj.format("YYYY:MM:DD HH:mm:ss");
-			console.log(period_end);
-
+			const period_end = formatTimestamp(updated.current_period_end);
 			return await db
 				.promise()
 				.query("UPDATE `subscriptions` SET `sub_end`= ? WHERE `sub_subscription` = ?", [period_end, updated.id])
@@ -58,3 +55,8 @@ export default defineEventHandler(async (req) => {
 			return `Unhandled event type ${event.type}`;
 	}
 });
+
+function formatTimestamp(time: number) {
+	var dateTime = new Date(time * 1000).toISOString().split("T");
+	return dateTime[0] + " " + dateTime[1].split(".")[0];
+}
