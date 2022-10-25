@@ -1,5 +1,5 @@
 const env = useRuntimeConfig();
-import { defineEventHandler, getHeader, readRawBody, setResponseHeader } from "h3";
+import { createError, defineEventHandler, getHeader, readRawBody } from "h3";
 import db from "../connection";
 import Stripe from "stripe";
 const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
@@ -25,16 +25,13 @@ export default defineEventHandler(async (req) => {
 				.promise()
 				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1 WHERE `sub_session` = ?", [session.subscription, session.id])
 				.then(([rows, fields]) => {
-					return true;
+					return "Activated";
 				})
 				.catch((error) => {
-					return false;
+					return error;
 				});
 
-			if (activated) return { status: "Activated" };
-			setResponseHeader(req, "Status", 401);
-
-			return { status: "Faild. Database entry not updated" };
+			return activated;
 			break;
 		case "customer.subscription.updated":
 			const subscription = event.data.object;
