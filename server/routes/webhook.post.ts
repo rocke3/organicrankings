@@ -20,8 +20,8 @@ export default defineEventHandler(async (req) => {
 	switch (event.type) {
 		case "checkout.session.completed":
 			const session = event.data.object;
-
-			const activated = await db
+			return { as: session.subscription, asda: session.id };
+			return await db
 				.promise()
 				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1 WHERE `sub_session` = ?", [session.subscription, session.id])
 				.then(([rows, fields]) => {
@@ -31,7 +31,6 @@ export default defineEventHandler(async (req) => {
 					return error;
 				});
 
-			return activated;
 			break;
 		case "customer.subscription.updated":
 			const subscription = event.data.object;
