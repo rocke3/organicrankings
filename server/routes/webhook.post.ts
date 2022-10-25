@@ -36,7 +36,7 @@ export default defineEventHandler(async (req) => {
 			const plan = updated.plan.id;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_plan` = (SELECT `plan_id` FROM `subscription_plan` WHERE `plan_price_id` = ? LIMIT 1) `sub_active`= ? WHERE `sub_subscription` = ?", [plan, status, updated.id])
+				.query("UPDATE `subscriptions` SET `sub_plan` = (SELECT `plan_id` FROM `subscription_plan` WHERE `plan_price_id` = ? LIMIT 1), `sub_active`= ? WHERE `sub_subscription` = ?", [plan, status, updated.id])
 				.then(([rows, fields]) => {
 					return "Updated";
 				})
