@@ -13,7 +13,7 @@ export default defineEventHandler(async (req) => {
 	try {
 		event = stripe.webhooks.constructEvent(body, sig, env.stripeSs);
 	} catch (err) {
-		return `Webhook Error: ${err.message}`;
+		return `Webhook Error: ${err.message} -- -- Sig: ${sig} ------ SS: ${env.stripeSs}`;
 	}
 
 	// Handle the event
