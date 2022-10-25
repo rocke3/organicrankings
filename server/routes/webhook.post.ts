@@ -20,7 +20,6 @@ export default defineEventHandler(async (req) => {
 	switch (event.type) {
 		case "checkout.session.completed":
 			const session = event.data.object;
-			return { as: session.subscription, asda: session.id };
 			return await db
 				.promise()
 				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1 WHERE `sub_session` = ?", [session.subscription, session.id])
