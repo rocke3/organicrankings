@@ -22,10 +22,9 @@ export default defineEventHandler(async (req) => {
 	switch (event.type) {
 		case "checkout.session.completed":
 			const payment = event.data.object;
-			const period_end = formatTimestamp(payment.current_period_end);
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1, `sub_end` = ? WHERE `sub_session` = ?", [payment.subscription, period_end, payment.id])
+				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1, `sub_end` = ? WHERE `sub_session` = ?", [payment.subscription, payment.id])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
@@ -35,10 +34,10 @@ export default defineEventHandler(async (req) => {
 			break;
 		case "customer.subscription.updated":
 			const updated = event.data.object;
-			const period_end = formatTimestamp(updated.current_period_end);
+			const sub_end = formatTimestamp(updated.current_period_end);
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_end`= ? WHERE `sub_subscription` = ?", [period_end, updated.id])
+				.query("UPDATE `subscriptions` SET `sub_end`= ? WHERE `sub_subscription` = ?", [sub_end, updated.id])
 				.then(([rows, fields]) => {
 					return "Updated";
 				})
