@@ -4,8 +4,6 @@ import db from "../connection";
 import Stripe from "stripe";
 const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
 
-import * as moment from "moment";
-
 export default defineEventHandler(async (req) => {
 	const body = await readRawBody(req);
 	const sig = getHeader(req, "stripe-signature");
@@ -24,7 +22,7 @@ export default defineEventHandler(async (req) => {
 			const payment = event.data.object;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1, `sub_end` = ? WHERE `sub_session` = ?", [payment.subscription, payment.id])
+				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1 WHERE `sub_session` = ?", [payment.subscription, payment.id])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
