@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import md5 from "md5";
 import cookie from "../cookie";
 
-const ignoreAuth = ["/logoutRequest", "/public", "/webhook", "/paymentSuccessful"];
+const ignoreAuth = ["/logoutRequest", "/public", "/webhook"];
 const noLogin = ["/signin", "/signup", "/resetpassword", "/signinRequst", "/signupRequst", "/resetRequst", "/loadcaptcha"];
 
 export default defineEventHandler((event) => {
