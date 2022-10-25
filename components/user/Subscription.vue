@@ -54,9 +54,7 @@ function subscribe(plan_id, price_id, subActive) {
 <template>
   <div class="subscriptions">
 
-    <div v-if="unserInfo.sub_active && unserInfo.sub_plan == 1">
-      111
-    </div>
+
     <!-- Aleart Message -->
     <div class="d-flex justify-content-center msgAlert" v-if="alertMsg.msg">
       <div class=" alert text-white fade show px-5 shadow-danger" :class="alertMsg.class">
@@ -109,7 +107,65 @@ function subscribe(plan_id, price_id, subActive) {
       </div>
 
       <div class="col-xl-3 col-md-6" v-for="plan in plans">
-        <div class="card mb-5 planBox" :class="(unserInfo.plan_id == plan.plan_id && subActive) ? 'active' : ''">
+        <div class="card mb-5 planBox active" v-if="(unserInfo.plan_id == plan.plan_id && subActive)">
+          <div class="card-header p-3 pt-2 pb-2 bg-transparent">
+            <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+              <h3 class="m-0 py-1 px-4 text-white">{{ plan.plan_name }}</h3>
+            </div>
+            <div class="text-end pt-2">
+              <div class="mb-0 mt-4">
+                <small class="float-start mt-2">Monthly</small>
+                <h4>${{ plan.plan_price }} USD</h4>
+              </div>
+            </div>
+          </div>
+          <hr class="horizontal my-0 dark">
+          <div class="card-footer p-3">
+            <h5 class="text-center">Requst used</h5>
+            <p class="mb-2 text-secondery text-sm font-weight-bolder text-center"
+              :class="plan.plan_extra != 0 ? 'text-primary' : ''">
+              {{ plan.plan_extra == 0 ? "No extra benefits" : `Free ${plan.plan_extra} extra requst` }}
+            </p>
+            <table class="table text-success font-weight-bolder text-sm">
+              <tr>
+                <td>HTML tools</td>
+                <td class="text-end"><span class="text-dark p-0">{{ unserInfo.sub_html_used }}</span> of {{
+                    plan.plan_limit +
+                    plan.plan_extra
+                }}</td>
+              </tr>
+              <tr>
+                <td>CSS tools</td>
+                <td class="text-end"><span class="text-dark p-0">{{ unserInfo.sub_css_used }}</span> of {{
+                    plan.plan_limit +
+                    plan.plan_extra
+                }}</td>
+              </tr>
+              <tr>
+                <td>JS tools</td>
+                <td class="text-end"><span class="text-dark p-0">{{ unserInfo.sub_js_used }}</span> of {{
+                    plan.plan_limit +
+                    plan.plan_extra
+                }}</td>
+              </tr>
+              <tr>
+                <td>Image</td>
+                <td class="text-end"><span class="text-dark p-0">{{ unserInfo.sub_img_used }}</span> of {{
+                    plan.plan_limit +
+                    plan.plan_extra
+                }}</td>
+              </tr>
+            </table>
+
+            <div class="text-center mt-4">
+              <button class="text-bold btn btn-outline-primary font-weight-bolder" disabled>
+                Currently Using
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <div class="card mb-5 planBox" v-else>
           <div class="card-header p-3 pt-2 pb-2 bg-transparent">
             <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
               <h3 class="m-0 py-1 px-4 text-white">{{ plan.plan_name }}</h3>
