@@ -22,9 +22,10 @@ export default defineEventHandler(async (req) => {
 	switch (event.type) {
 		case "checkout.session.completed":
 			const payment = event.data.object;
+			const period_end = formatTimestamp(payment.current_period_end);
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1, `sub_end` = ? WHERE `sub_session` = ?", [payment.subscription, payment.id, payment.id])
+				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1, `sub_end` = ? WHERE `sub_session` = ?", [payment.subscription, period_end, payment.id])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
