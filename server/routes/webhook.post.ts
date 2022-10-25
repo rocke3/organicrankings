@@ -4,6 +4,8 @@ import db from "../connection";
 import Stripe from "stripe";
 const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
 
+import * as moment from "moment";
+
 export default defineEventHandler(async (req) => {
 	const body = await readRawBody(req);
 	const sig = getHeader(req, "stripe-signature");
@@ -32,16 +34,17 @@ export default defineEventHandler(async (req) => {
 			break;
 		case "customer.subscription.updated":
 			const updated = event.data.object;
+			const timestampObj = moment.unix(updated.current_period_end * 1000);
+			const period_end = timestampObj.format("YYYY:MM:DD HH:mm:ss");
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_end`= ? WHERE `sub_subscription` = ?", [updated.current_period_end, updated.id])
+				.query("UPDATE `subscriptions` SET `sub_end`= ? WHERE `sub_subscription` = ?", [period_end, updated.id])
 				.then(([rows, fields]) => {
-					return "Activated";
+					return "Updated";
 				})
 				.catch((error) => {
 					return error;
 				});
-			return updated;
 			break;
 		case "customer.subscription.deleted":
 			const deleted = event.data.object;
