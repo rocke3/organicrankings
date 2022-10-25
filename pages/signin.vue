@@ -31,6 +31,16 @@ async function signinRequst() {
 		loginStatus.value = "";
 	}, 5000);
 }
+
+function getOrgCookie(name) {
+	var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+	return match ? match[1] : null;
+}
+if (process.client) {
+	if (getOrgCookie("org_user") != null) {
+		navigateTo("/user");
+	}
+}
 </script>
 
 
