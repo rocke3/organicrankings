@@ -48,7 +48,7 @@ function subscribe(plan_id, price_id) {
     <!-- Aleart Message -->
     <div class="d-flex justify-content-center msgAlert" v-if="alertMsg.msg">
       <div class=" alert text-white fade show px-5 shadow-danger" :class="alertMsg.class">
-        <i class="material-icons closeBtn" @click="alertMsg.msg =''">close</i>
+        <i class="material-icons closeBtn" @click="alertMsg.msg = ''">close</i>
         {{ alertMsg.msg }}
       </div>
     </div>
@@ -65,19 +65,19 @@ function subscribe(plan_id, price_id) {
             <table class="table text-success">
               <tr>
                 <td>HTML tools</td>
-                <td class="text-end">{{unserInfo.sub_html_used}} out of {{unserInfo.plan_limit}}</td>
+                <td class="text-end">{{ unserInfo.sub_html_used }} out of {{ unserInfo.plan_limit }}</td>
               </tr>
               <tr>
                 <td>CSS tools</td>
-                <td class="text-end">{{unserInfo.sub_css_used}} out of {{unserInfo.plan_limit}}</td>
+                <td class="text-end">{{ unserInfo.sub_css_used }} out of {{ unserInfo.plan_limit }}</td>
               </tr>
               <tr>
                 <td>JS tools</td>
-                <td class="text-end">{{unserInfo.sub_js_used}} out of {{unserInfo.plan_limit}}</td>
+                <td class="text-end">{{ unserInfo.sub_js_used }} out of {{ unserInfo.plan_limit }}</td>
               </tr>
               <tr>
                 <td>Image</td>
-                <td class="text-end">{{unserInfo.sub_img_used}} out of {{unserInfo.plan_limit}}</td>
+                <td class="text-end">{{ unserInfo.sub_img_used }} out of {{ unserInfo.plan_limit }}</td>
               </tr>
             </table>
           </div>
@@ -86,7 +86,7 @@ function subscribe(plan_id, price_id) {
           v-if="!unserInfo.user_free_used && unserInfo.length">
           <p class="text-bold text-primary m-0">Try our all tools for free, No card or bank information required</p>
           <p class="text-bold text-primary">One-click activation</p>
-          <button class="btn btn-primary mb-0" @click="subscribe(free.id,free.name); free.processing = true;">
+          <button class="btn btn-primary mb-0" @click="subscribe(free.id, free.name); free.processing = true;">
             <div v-if="free.processing">Loading
               <ElementsSpinner class="ms-2" />
             </div>
@@ -104,7 +104,7 @@ function subscribe(plan_id, price_id) {
             <div class="text-end pt-2">
               <div class="mb-0 mt-4">
                 <small class="float-start mt-2">Monthly</small>
-                <h4>${{plan.plan_price}} USD</h4>
+                <h4>${{ plan.plan_price }} USD</h4>
               </div>
             </div>
           </div>
@@ -113,28 +113,32 @@ function subscribe(plan_id, price_id) {
             <h5 class="text-center">Requst can use</h5>
             <p class="mb-2 text-secondery text-sm font-weight-bolder text-center"
               :class="plan.plan_extra != 0 ? 'text-primary' : ''">
-              {{plan.plan_extra == 0 ? "No extra benefits" : `Free ${plan.plan_extra} extra requst` }}
+              {{ plan.plan_extra == 0 ? "No extra benefits" : `Free ${plan.plan_extra} extra requst` }}
             </p>
             <table class="table text-success font-weight-bolder text-sm">
               <tr>
                 <td>HTML tools</td>
-                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
-                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+                <td class="text-end">{{ plan.plan_limit }}<span class="text-primary" v-if="plan.plan_extra">+{{
+                    plan.plan_extra
+                }}</span></td>
               </tr>
               <tr>
                 <td>CSS tools</td>
-                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
-                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+                <td class="text-end">{{ plan.plan_limit }}<span class="text-primary" v-if="plan.plan_extra">+{{
+                    plan.plan_extra
+                }}</span></td>
               </tr>
               <tr>
                 <td>JS tools</td>
-                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
-                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+                <td class="text-end">{{ plan.plan_limit }}<span class="text-primary" v-if="plan.plan_extra">+{{
+                    plan.plan_extra
+                }}</span></td>
               </tr>
               <tr>
                 <td>Image</td>
-                <td class="text-end">{{plan.plan_limit}}<span class="text-primary"
-                    v-if="plan.plan_extra">+{{plan.plan_extra}}</span></td>
+                <td class="text-end">{{ plan.plan_limit }}<span class="text-primary" v-if="plan.plan_extra">+{{
+                    plan.plan_extra
+                }}</span></td>
               </tr>
             </table>
 
@@ -144,7 +148,7 @@ function subscribe(plan_id, price_id) {
                 class="text-bold btn btn-outline-primary font-weight-bolder" disabled>
                 Currently Using
               </button>
-              <button class="btn btn-primary" @click="subscribe(plan.plan_id,plan.plan_price_id); plan.processing = 1"
+              <button class="btn btn-primary" @click="subscribe(plan.plan_id, plan.plan_price_id); plan.processing = 1"
                 :disabled="plan.plan_id < unserInfo.plan_id ? true : false" v-else>
                 <div v-if="plan.processing">Loading
                   <ElementsSpinner class="ms-2" />

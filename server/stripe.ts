@@ -9,9 +9,11 @@ const checkoutSessions = (price_id: string) => {
 			cancel_url: "http://localhost:3000/user",
 			line_items: [{ price: price_id, quantity: 1 }],
 			mode: "subscription",
+			metadata: { order_id: "6735" },
 		})
 		.then(
 			async function (result) {
+				console.log(result);
 				return { status: true, id: result.id, url: result.url };
 			},
 			function (err) {

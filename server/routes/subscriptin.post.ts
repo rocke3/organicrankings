@@ -44,6 +44,7 @@ export default defineEventHandler(async (req) => {
 			//! If Plan is not free
 			if (price_id != "free") {
 				const striprInfo = await stripe.checkoutSessions(price_id); //! Genarate Stripe subscription session
+
 				stripe_id = striprInfo.id;
 				response.url = striprInfo.url;
 				active = 0;

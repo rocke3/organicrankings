@@ -18,5 +18,6 @@ export default defineNuxtConfig({
 		agentSecret: process.env.agentSecret,
 		stripePk: process.env.stripePk,
 		stripeSk: process.env.stripeSk,
+		stripeSs: process.env.stripeSs,
 	},
 });
