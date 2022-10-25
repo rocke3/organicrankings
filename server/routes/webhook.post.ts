@@ -32,10 +32,11 @@ export default defineEventHandler(async (req) => {
 			break;
 		case "customer.subscription.updated":
 			const updated = event.data.object;
-			const sub_end = formatTimestamp(updated.current_period_end);
+			const status = updated.status == "active" ? 1 : 0;
+			const plan = updated.plan.id;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_end`= ? WHERE `sub_subscription` = ?", [sub_end, updated.id])
+				.query("UPDATE `subscriptions` SET `sub_plan` = (SELECT `plan_id` FROM `subscription_plan` WHERE `plan_price_id` = ?) `sub_active`= ? WHERE `sub_subscription` = ?", [plan, status, updated.id])
 				.then(([rows, fields]) => {
 					return "Updated";
 				})
@@ -45,7 +46,15 @@ export default defineEventHandler(async (req) => {
 			break;
 		case "customer.subscription.deleted":
 			const deleted = event.data.object;
-			return deleted;
+			return await db
+				.promise()
+				.query("UPDATE `subscriptions` SET `sub_active`= 0 WHERE `sub_subscription` = ?", [deleted.id])
+				.then(([rows, fields]) => {
+					return "Deactivated";
+				})
+				.catch((error) => {
+					return error;
+				});
 			break;
 
 		// ... handle other event types
@@ -53,8 +62,3 @@ export default defineEventHandler(async (req) => {
 			return `Unhandled event type ${event.type}`;
 	}
 });
-
-function formatTimestamp(time: number) {
-	var dateTime = new Date(time * 1000).toISOString().split("T");
-	return dateTime[0] + " " + dateTime[1].split(".")[0];
-}
