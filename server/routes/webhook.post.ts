@@ -1,5 +1,5 @@
 const env = useRuntimeConfig();
-import { defineEventHandler, getHeader, readRawBody } from "h3";
+import { defineEventHandler, getHeader, readRawBody, setResponseHeader } from "h3";
 import db from "../connection";
 import Stripe from "stripe";
 const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
@@ -13,14 +13,28 @@ export default defineEventHandler(async (req) => {
 	try {
 		event = stripe.webhooks.constructEvent(body, sig, env.stripeSs);
 	} catch (err) {
-		return `Webhook Error: ${err.message} -- -- Sig: ${sig} ------ SS: ${env.stripeSs}`;
+		return `Webhook Error: ${err.message}`;
 	}
 
 	// Handle the event
 	switch (event.type) {
 		case "checkout.session.completed":
 			const session = event.data.object;
-			return session;
+
+			const activated = await db
+				.promise()
+				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1 WHERE `sub_session` = ?", [session.subscription, session.id])
+				.then(([rows, fields]) => {
+					return true;
+				})
+				.catch((error) => {
+					return false;
+				});
+
+			if (activated) return { status: "Activated" };
+			setResponseHeader(req, "Status", 401);
+
+			return { status: "Faild. Database entry not updated" };
 			break;
 		case "customer.subscription.updated":
 			const subscription = event.data.object;

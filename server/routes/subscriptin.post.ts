@@ -53,7 +53,7 @@ export default defineEventHandler(async (req) => {
 			//! Inseart subscription in database (subscription will active using stripe webhook if plan is not free)
 			await db
 				.promise()
-				.query("INSERT INTO `subscriptions`(`sub_user`, `sub_stripe_id`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
+				.query("INSERT INTO `subscriptions`(`sub_user`, `sub_session`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
 				.then((res) => {
 					if (price_id == "free") {
 						db.promise().query("UPDATE `users` SET `user_free_used` = 1 WHERE `user_id` = ?", [user.user_id]);
