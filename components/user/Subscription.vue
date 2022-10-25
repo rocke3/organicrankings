@@ -7,13 +7,6 @@ let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 
 if (process.client) {
-  axios.post('/subscriptionPlans')
-    .then(function (res) {
-      plans.value = res.data;
-    }).catch((error) => {
-      console.log(error);
-    });
-
   axios.post('/userInfo')
     .then(function (res) {
       unserInfo.value = res.data;
@@ -21,6 +14,14 @@ if (process.client) {
     }).catch((error) => {
       console.log(error);
     });
+  axios.post('/subscriptionPlans')
+    .then(function (res) {
+      plans.value = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+
+
 }
 
 function subscribe(plan_id, price_id, subActive) {
@@ -63,7 +64,7 @@ function subscribe(plan_id, price_id, subActive) {
     </div>
 
     <div class="row">
-      <div class="col-12 d-flex justify-content-center mb-4">
+      <div class="col-12 d-flex justify-content-center mb-4" v-if="unserInfo.user_id">
         <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
           v-if="unserInfo.plan_id == 0 && subActive">
           <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
