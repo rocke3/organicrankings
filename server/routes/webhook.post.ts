@@ -8,8 +8,6 @@ export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
 	const sig = getHeader(req, "stripe-signature");
 
-	return { body: body, sig: sig };
-
 	let event;
 
 	try {
