@@ -2,6 +2,7 @@
 import axios from 'axios'
 let plans = ref({});
 let unserInfo = ref({});
+let subActive = ref(0);
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 
@@ -16,13 +17,14 @@ if (process.client) {
   axios.post('/userInfo')
     .then(function (res) {
       unserInfo.value = res.data;
+      subActive.value = res.data.sub_active
     }).catch((error) => {
       console.log(error);
     });
 }
 
-function subscribe(plan_id, price_id) {
-  axios.post('/subscriptin', { plan_id: plan_id, price_id: price_id })
+function subscribe(plan_id, price_id, subActive) {
+  axios.post('/subscriptin', { plan_id: plan_id, price_id: price_id, upgrade: subActive })
     .then(async function (res) {
       free.value.processing = false
       for (let key in plans.value) {
@@ -30,7 +32,13 @@ function subscribe(plan_id, price_id) {
       }
       let data = res.data;
       if (data.status) {
-        window.location.href = data.url;
+        if (subActive) {
+          alertMsg.value.class = "alert-success"
+          alertMsg.value.msg = data.msg
+          setTimeout(function () { window.location.href = data.url; }, 1500);
+        } else {
+          window.location.href = data.url;
+        }
       } else {
         alertMsg.value.class = "alert-danger"
         alertMsg.value.msg = data.msg
@@ -45,6 +53,10 @@ function subscribe(plan_id, price_id) {
 
 <template>
   <div class="subscriptions">
+
+    <div v-if="unserInfo.sub_active && unserInfo.sub_plan == 1">
+      111
+    </div>
     <!-- Aleart Message -->
     <div class="d-flex justify-content-center msgAlert" v-if="alertMsg.msg">
       <div class=" alert text-white fade show px-5 shadow-danger" :class="alertMsg.class">
@@ -56,7 +68,7 @@ function subscribe(plan_id, price_id) {
     <div class="row">
       <div class="col-12 d-flex justify-content-center mb-4">
         <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-          v-if="unserInfo.plan_id == 0 && unserInfo">
+          v-if="unserInfo.plan_id == 0 && subActive">
           <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
             limitation
           </p>
@@ -86,7 +98,8 @@ function subscribe(plan_id, price_id) {
           v-if="!unserInfo.user_free_used && unserInfo.length">
           <p class="text-bold text-primary m-0">Try our all tools for free, No card or bank information required</p>
           <p class="text-bold text-primary">One-click activation</p>
-          <button class="btn btn-primary mb-0" @click="subscribe(free.id, free.name); free.processing = true;">
+          <button class="btn btn-primary mb-0"
+            @click="subscribe(free.id, free.name, subActive); free.processing = true;">
             <div v-if="free.processing">Loading
               <ElementsSpinner class="ms-2" />
             </div>
@@ -96,7 +109,7 @@ function subscribe(plan_id, price_id) {
       </div>
 
       <div class="col-xl-3 col-md-6" v-for="plan in plans">
-        <div class="card mb-5 planBox" :class="unserInfo.plan_id == plan.plan_id ? 'active' : ''">
+        <div class="card mb-5 planBox" :class="(unserInfo.plan_id == plan.plan_id && subActive) ? 'active' : ''">
           <div class="card-header p-3 pt-2 pb-2 bg-transparent">
             <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
               <h3 class="m-0 py-1 px-4 text-white">{{ plan.plan_name }}</h3>
@@ -142,18 +155,21 @@ function subscribe(plan_id, price_id) {
               </tr>
             </table>
 
-
             <div class="text-center mt-4">
-              <button v-if="unserInfo.plan_id == plan.plan_id"
+              <button v-if="unserInfo.plan_id == plan.plan_id && subActive"
                 class="text-bold btn btn-outline-primary font-weight-bolder" disabled>
                 Currently Using
               </button>
-              <button class="btn btn-primary" @click="subscribe(plan.plan_id, plan.plan_price_id); plan.processing = 1"
-                :disabled="plan.plan_id < unserInfo.plan_id ? true : false" v-else>
+              <button class="btn btn-primary"
+                @click="subscribe(plan.plan_id, plan.plan_price_id, subActive); plan.processing = 1"
+                :disabled="(plan.plan_id < unserInfo.plan_id && subActive) ? true : false" v-else>
                 <div v-if="plan.processing">Loading
                   <ElementsSpinner class="ms-2" />
                 </div>
-                <span v-else>Subscribe now</span>
+                <span v-else>
+                  <span v-if="subActive">Upgrade Now</span>
+                  <span v-else>Subscribe now</span>
+                </span>
               </button>
             </div>
           </div>

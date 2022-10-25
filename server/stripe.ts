@@ -21,6 +21,30 @@ const checkoutSessions = (price_id: string) => {
 		);
 };
 
+const upgradePlan = async (subscriptionId: string, newPrice: string) => {
+	const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+	return stripe.subscriptions
+		.update(subscriptionId, {
+			cancel_at_period_end: false,
+			proration_behavior: "create_prorations",
+			items: [
+				{
+					id: subscription.items.data[0].id,
+					price: newPrice,
+				},
+			],
+		})
+		.then(
+			async function (result) {
+				return true;
+			},
+			function (err) {
+				return false;
+			}
+		);
+};
+
 export default {
 	checkoutSessions: checkoutSessions,
+	upgradePlan: upgradePlan,
 };

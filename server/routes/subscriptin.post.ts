@@ -13,6 +13,7 @@ export default defineEventHandler(async (req) => {
 		if (body.price_id && user) {
 			const price_id = body.price_id;
 			const plan_id = body.plan_id;
+			const upgrade = body.upgrade;
 			let response = { status: false, url: "/user", msg: "" };
 			let stripe_id = "",
 				active = 1;
@@ -41,25 +42,33 @@ export default defineEventHandler(async (req) => {
 				deleteUserSubscription(user.user_id);
 			}
 
-			//! If Plan is not free
-			if (price_id != "free") {
-				const striprInfo = await stripe.checkoutSessions(price_id); //! Genarate Stripe subscription session
+			if (!upgrade) {
+				//! If Plan is not free
+				if (price_id != "free") {
+					const striprInfo = await stripe.checkoutSessions(price_id); //! Genarate Stripe subscription session
+					stripe_id = striprInfo.id;
+					response.url = striprInfo.url;
+					active = 0;
+				}
 
-				stripe_id = striprInfo.id;
-				response.url = striprInfo.url;
-				active = 0;
-			}
-
-			//! Inseart subscription in database (subscription will active using stripe webhook if plan is not free)
-			await db
-				.promise()
-				.query("INSERT INTO `subscriptions`(`sub_user`, `sub_session`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
-				.then((res) => {
-					if (price_id == "free") {
-						db.promise().query("UPDATE `users` SET `user_free_used` = 1 WHERE `user_id` = ?", [user.user_id]);
+				//! Inseart subscription in database (subscription will active using stripe webhook if plan is not free)
+				await db
+					.promise()
+					.query("INSERT INTO `subscriptions`(`sub_user`, `sub_session`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
+					.then((res) => {
+						response.status = true;
+					});
+			} else {
+				if (user.sub_id != null) {
+					const striprInfo = await stripe.upgradePlan(user.sub_subscription, price_id); //! Update subscription session
+					if (striprInfo) {
+						response.status = true;
+						response.msg = "Upgrade in progress. Please wait";
+						return response;
 					}
-					response.status = true;
-				});
+				}
+				response.msg = "Something went wrong. Please refresh the page and try again";
+			}
 
 			return response;
 		}
