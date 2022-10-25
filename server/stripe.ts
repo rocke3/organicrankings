@@ -5,7 +5,7 @@ const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
 const checkoutSessions = (price_id: string) => {
 	return stripe.checkout.sessions
 		.create({
-			success_url: "https://www.app.organicrankings.com/paymentSuccess",
+			success_url: "https://www.app.organicrankings.com/paymentSuccessful",
 			cancel_url: "https://www.app.organicrankings.com/paymentRejected",
 			line_items: [{ price: price_id, quantity: 1 }],
 			mode: "subscription",
@@ -13,7 +13,6 @@ const checkoutSessions = (price_id: string) => {
 		})
 		.then(
 			async function (result) {
-				console.log(result);
 				return { status: true, id: result.id, url: result.url };
 			},
 			function (err) {
