@@ -19,7 +19,7 @@ export default defineEventHandler(async (req) => {
 				active = 1;
 
 			//! If any subscription exist
-			if (user.sub_id != null) {
+			if (user.user_id != null) {
 				//! Return if same plan alredy active
 				if (plan_id == user.sub_plan && user.sub_active) {
 					response.msg = "You are already subscribed to this plan";
@@ -31,7 +31,6 @@ export default defineEventHandler(async (req) => {
 					response.msg = `You alredy have a active plan '${user.plan_name}'`;
 					return response;
 				}
-
 				//! Return if Free trial already used
 				if (price_id == "free" && user.user_free_used > 0) {
 					response.msg = "Your Free trial limit over";
@@ -56,6 +55,9 @@ export default defineEventHandler(async (req) => {
 					.promise()
 					.query("INSERT INTO `subscriptions`(`sub_user`, `sub_session`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
 					.then((res) => {
+						if (price_id == "free") {
+							db.promise().query("UPDATE `users` SET `user_free_used` = 1 WHERE user_id = ?", [user.user_id]);
+						}
 						response.status = true;
 					});
 			} else {

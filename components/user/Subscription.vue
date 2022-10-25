@@ -91,7 +91,8 @@ function subscribe(plan_id, price_id, subActive) {
             </table>
           </div>
         </div>
-        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4" v-else>
+        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
+          v-if="!unserInfo.user_free_used">
           <p class="text-bold text-primary m-0">Try our all tools for free, No card or bank information required</p>
           <p class="text-bold text-primary">One-click activation</p>
           <button class="btn btn-primary mb-0"
