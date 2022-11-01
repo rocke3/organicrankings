@@ -8,7 +8,7 @@ definePageMeta({
 	<div>
 		<PublicNavbar v-once />
 		<main class="main-content mt-0">
-			<div class="page-header align-items-start min-vh-100" style="background-image: url('/assets/images/bg.jpg')">
+			<div class="page-header align-items-start min-vh-100" style="background-image: url('/assets/images/org-bg')">
 				<span class="mask bg-gradient-dark opacity-6"></span>
 				<div class="container my-auto">
 					<div class="row">
