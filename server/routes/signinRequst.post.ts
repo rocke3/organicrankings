@@ -31,7 +31,7 @@ export default defineEventHandler(async (req) => {
 				}
 			})
 			.catch((error) => {
-				return { login: false, message: "Something went wrong please try again later" };
+				return { login: false, message: "Something went wrong please try again later", error: error };
 			});
 
 		if (isLogin.login) {
