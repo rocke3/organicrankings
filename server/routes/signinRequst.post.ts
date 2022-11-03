@@ -34,11 +34,7 @@ export default defineEventHandler(async (req) => {
 				return { login: false, message: "Something went wrong please try again later", error: error };
 			});
 
-		if (isLogin.login) {
-			return { login: true };
-		} else {
-			return { login: false, message: isLogin.message };
-		}
+		return isLogin;
 	}
 });
 
