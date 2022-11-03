@@ -27,7 +27,7 @@ export default defineEventHandler(async (req) => {
 					}
 					return { login: false };
 				} else {
-					return { login: false, message: "Invalid Email or Password" };
+					return { login: false, message: "Invalid Email or Password." };
 				}
 			})
 			.catch((error) => {
