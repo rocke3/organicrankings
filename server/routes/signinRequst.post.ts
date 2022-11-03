@@ -13,7 +13,7 @@ export default defineEventHandler(async (req) => {
 		const email = body.email;
 		const pass = md5(body.password);
 
-		const isLogin = await db
+		const login = await db
 			.promise()
 			.query("SELECT * FROM users WHERE user_email = ? AND user_password = ?", [email, pass])
 			.then(([rows, fields]) => {
@@ -34,7 +34,7 @@ export default defineEventHandler(async (req) => {
 				return { login: false, message: "Something went wrong please try again later", error: error };
 			});
 
-		return isLogin;
+		return login;
 	}
 });
 
