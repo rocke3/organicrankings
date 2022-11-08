@@ -1,6 +1,11 @@
 import { defineEventHandler } from "h3";
 
 export default defineEventHandler((event) => {
-	const captchaTxt = Math.random().toString(10).slice(2, 6).toUpperCase();
-	return captchaTxt;
+	var result = "";
+	var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
 });

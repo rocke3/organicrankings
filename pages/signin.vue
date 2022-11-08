@@ -8,11 +8,13 @@ const checking = ref(false)
 const loginStatus = ref('')
 const email = ref('test@gmail.com')
 const password = ref('123456')
+const captcha = ref(false)
 const emailCls = ref('')
 const passCls = ref('')
 
 async function signinRequst() {
 	const router = useRouter();
+	//if (captcha.value) {
 	checking.value = true;
 	axios.post('/signinRequst', { email: email.value, password: password.value })
 		.then(async function (res) {
@@ -30,6 +32,7 @@ async function signinRequst() {
 	window.setInterval(() => {
 		loginStatus.value = "";
 	}, 5000);
+	//}
 }
 
 function getOrgCookie(name) {
@@ -46,11 +49,14 @@ if (process.client) {
 
 <template>
 	<div v-once>
-		<ElementsBsCard formTitle="Sign In" titleClass="font-weight-bolder text-center text-uppercase h3">
+		<ElementsSingCard formTitle="Sign In" titleClass="font-weight-bolder text-center text-uppercase h3">
 			<form role="form" class="text-start" @submit.prevent="signinRequst">
 				<ElementsInputEmail label="Email" v-model:email="email" :class="emailCls" :required="true" />
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" :class="passCls"
 					:required="true" />
+				<div class="mt-3">
+					<ElementsInputCaptcha v-model:captchaValid="captcha" />
+				</div>
 				<div class="form-check form-switch d-flex align-items-center mb-3 mt-4">
 					<input class="form-check-input" type="checkbox" id="rememberMe" />
 					<label class="form-check-label mb-0 ms-3" for="rememberMe">
@@ -69,7 +75,7 @@ if (process.client) {
 				<div class="text-center" v-bind:innerHTML="loginStatus"></div>
 				<SsrLinks :signin="false" />
 			</form>
-		</ElementsBsCard>
+		</ElementsSingCard>
 	</div>
 </template>
 

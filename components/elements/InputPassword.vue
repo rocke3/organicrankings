@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  props: {label:String, password:String,required: {type: Boolean,default: false}},
+  props: { label: String, password: String, required: { type: Boolean, default: false } },
   emits: ['update:password'],
   data() {
     return {
@@ -25,12 +25,15 @@ export default {
   <div class="passGrpup">
     <div class="input-group input-group-outline mt-3" :class="inputClass">
       <label class="form-label">{{ label }}</label>
-      <input :value="password" @input="$emit('update:password', $event.target.value)" class="form-control" type="password" :required="required"  />
+      <input :value="password" @input="$emit('update:password', $event.target.value)" class="form-control"
+        type="password" :required="required" />
     </div>
   </div>
 </template>
 
 
 <style scoped>
-
+input {
+  transition: 0s all !important;
+}
 </style>

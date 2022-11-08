@@ -24,7 +24,7 @@ async function signupRequst() {
 				if (data.signup) {
 					navigateTo("/user");
 				} else {
-					signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${response.message}</span>`;
+					signupStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${data.message}</span>`;
 				}
 			}).catch((error) => {
 				console.log(error);
@@ -47,13 +47,16 @@ async function signupRequst() {
 
 <template>
 	<div v-once>
-		<ElementsBsCard formTitle="Sign Up" titleClass="font-weight-bolder text-center text-uppercase h3">
+		<ElementsSingCard formTitle="Sign Up" titleClass="font-weight-bolder text-center text-uppercase h3">
 			<form role="form" class="text-start" @submit.prevent="signupRequst">
 				<ElementsInputEmail label="Email" v-model:email="email" :class="emailCls" :required="true" />
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" />
 				<ElementsInputPassword label="Confirm Password" v-model:password="confpass" class="mt-4" />
+				<div class="mt-3">
+					<ElementsInputCaptcha v-model:captchaValid="captcha" />
+				</div>
 				<div class="text-center">
-					<button type="submit" class="btn bg-gradient-primary w-100 mt-2">
+					<button type="submit" class="btn bg-gradient-primary w-100 mt-4">
 						<span v-if="!checking">Sign up</span>
 						<div v-if="checking">
 							<ElementsSpinner /> Checking
@@ -64,7 +67,7 @@ async function signupRequst() {
 				<div class="text-center" v-bind:innerHTML="signupStatus"></div>
 				<SsrLinks :signup="false" />
 			</form>
-		</ElementsBsCard>
+		</ElementsSingCard>
 	</div>
 </template>
 

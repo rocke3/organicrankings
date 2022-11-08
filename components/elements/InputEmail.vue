@@ -1,6 +1,6 @@
 <script>
 export default {
-  props: {label:String, email:String,required: {type: Boolean,default: false}},
+  props: { label: String, email: String, required: { type: Boolean, default: false } },
   emits: ['update:email'],
   data() {
     return {
@@ -25,12 +25,14 @@ export default {
 <template>
   <div class="input-group input-group-outline mt-3" :class="inputClass">
     <label class="form-label">{{ label }}</label>
-    <input :value="email" @input="$emit('update:email', $event.target.value)" class="form-control" type="email" :required="required" />
+    <input :value="email" @input="$emit('update:email', $event.target.value)" class="form-control" type="email"
+      :required="required" />
   </div>
 </template>
 
 
 <style scoped>
-
+input {
+  transition: 0s all !important;
+}
 </style>
-

@@ -1,9 +1,3 @@
-<script setup>
-definePageMeta({
-	middleware: 'UserMiddleware'
-})
-
-</script>
 <template>
 	<div>
 		<PublicNavbar v-once />
@@ -12,7 +6,7 @@ definePageMeta({
 				<span class="mask bg-gradient-dark opacity-6"></span>
 				<div class="container my-auto">
 					<div class="row">
-						<div class="col-lg-4 col-md-8 col-12 mx-auto">
+						<div class="col-12 mx-auto">
 							<slot />
 						</div>
 					</div>
@@ -23,12 +17,6 @@ definePageMeta({
 	</div>
 </template>
 
-<style scoped>
-@media only screen and (min-width: 500px) {
-	.card {
-		min-width: 350px;
-		max-width: 380px;
-		margin: auto;
-	}
-}
+<style>
+
 </style>

@@ -6,7 +6,7 @@ useHead({
 });
 definePageMeta({ layout: "public-layout" });
 
-const form = ref({ email: 'asd', confemail: '', captchaValid: false, })
+const form = ref({ email: '', confemail: '', captchaValid: false, })
 
 async function passwordResetRequst(form) {
 	if (form.email && form.confemail && form.captchaValid && form.email == form.confemail) {
@@ -26,11 +26,11 @@ async function passwordResetRequst(form) {
 
 <template>
 	<div v-once>
-		<ElementsBsCard formTitle="Reset Password" titleClass="font-weight-bolder text-center text-uppercase h3">
+		<ElementsSingCard formTitle="Reset Password" titleClass="font-weight-bolder text-center text-uppercase h3">
 			<form role="form" class="text-start" @submit.prevent="passwordResetRequst(form)">
 				<ElementsInputEmail label="Email" v-model:email="form.email" :required="true" />
 				<ElementsInputEmail label="Confirm Email" v-model:email="form.confemail" class="mt-4" :required="true" />
-				<div class="mt-4">
+				<div class="mt-3">
 					<ElementsInputCaptcha v-model:captchaValid="form.captchaValid" />
 				</div>
 				<div class="text-center mt-2">
@@ -38,7 +38,7 @@ async function passwordResetRequst(form) {
 				</div>
 				<SsrLinks :reset="false" />
 			</form>
-		</ElementsBsCard>
+		</ElementsSingCard>
 	</div>
 </template>
 
