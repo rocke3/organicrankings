@@ -14,25 +14,25 @@ const passCls = ref('')
 
 async function signinRequst() {
 	const router = useRouter();
-	//if (captcha.value) {
-	checking.value = true;
-	axios.post('/signinRequst', { email: email.value, password: password.value })
-		.then(async function (res) {
-			let data = res.data;
-			if (data.login) {
-				navigateTo("/user");
-			} else {
-				loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${data.message ?? "Something went wrong please try again later"}</span>`;
-			}
-		}).catch((error) => {
-			console.log(error);
-		});
+	if (captcha.value) {
+		checking.value = true;
+		axios.post('/signinRequst', { email: email.value, password: password.value })
+			.then(async function (res) {
+				let data = res.data;
+				if (data.login) {
+					navigateTo("/user");
+				} else {
+					loginStatus.value = `<span class='text-danger'><i class='material-icons statusIcon'>warning</i>${data.message ?? "Something went wrong please try again later"}</span>`;
+				}
+			}).catch((error) => {
+				console.log(error);
+			});
 
-	checking.value = false;
-	window.setInterval(() => {
-		loginStatus.value = "";
-	}, 5000);
-	//}
+		checking.value = false;
+		window.setInterval(() => {
+			loginStatus.value = "";
+		}, 5000);
+	}
 }
 
 function getOrgCookie(name) {
