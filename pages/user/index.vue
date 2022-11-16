@@ -9,7 +9,7 @@ let processing = ref(false)
 
 function genarateReport() {
 	processing.value = true;
-	axios.post('http://132.148.77.56:3020/', website.value, {
+	axios.post('https://www.organicrankings.com/api/report', website.value, {
 		headers: {
 			'Content-Type': 'application/octet-stream'
 		}
