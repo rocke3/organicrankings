@@ -11,7 +11,8 @@ function genarateReport() {
 	processing.value = true;
 	axios.post('https://www.organicrankings.com/api/report', website.value, {
 		headers: {
-			'Content-Type': 'application/octet-stream'
+			'Content-Type': 'application/octet-stream',
+			authorization: useCookie('org_user').value,
 		}
 	})
 		.then(function (response) {
@@ -52,11 +53,16 @@ function resultView($device) {
 						@click="resultView('desktop')">Desktop</a>
 				</li>
 			</ul>
-			<div v-if="processing" class="genarating">
-				<ElementsSpinner color="#e91e63" /> Generating report
+			<div v-if="processing" class="text-center">
+				<ElementsSpinner color="#e91e63" />
+				<div class="genarating text-primary pt-0">Generating report. <br /> Please wait.</div>
+				<p class="text-info">it will take a while. Depending on your website Speed and Content</p>
 			</div>
 			<div v-html="result">
 
+			</div>
+			<div class="text-warning text-center mt-2" v-if="result">
+				Report genarated by Google lighthouse
 			</div>
 		</ElementsBsCard>
 	</div>
@@ -64,10 +70,21 @@ function resultView($device) {
 		
 		
 <style>
+.lh-report {
+	max-width: 100% !important;
+	display: contents !important;
+}
+
 .genarating {
 	text-align: center;
 	padding: 15px;
 	font-size: 25px;
+}
+
+.RtY7Qc {
+	text-align: center;
+	padding: 10px;
+	color: #e91e63;
 }
 
 .form-control.website {
@@ -78,8 +95,6 @@ function resultView($device) {
 }
 
 .lh-vars {
-	/* Palette using Material Design Colors
-   * https://www.materialui.co/colors */
 	--color-amber-50: #FFF8E1;
 	--color-blue-200: #90CAF9;
 	--color-blue-900: #0D47A1;
@@ -108,7 +123,6 @@ function resultView($device) {
 	--color-teal-600: #00897B;
 	--color-white: #FFFFFF;
 
-	/* Context-specific colors */
 	--color-average-secondary: var(--color-orange-700);
 	--color-average: var(--color-orange);
 	--color-fail-secondary: var(--color-red-700);
@@ -119,7 +133,6 @@ function resultView($device) {
 	--color-pass: var(--color-green);
 	--color-not-applicable: var(--color-gray-600);
 
-	/* Component variables */
 	--audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
 	--audit-explanation-line-height: 16px;
 	--audit-group-margin-bottom: calc(var(--default-padding) * 6);
@@ -175,7 +188,6 @@ function resultView($device) {
 	--report-text-color-secondary: var(--color-gray-800);
 	--report-text-color: var(--color-gray-900);
 	--report-content-max-width: calc(60 * var(--report-font-size));
-	/* defaults to 840px */
 	--report-content-min-width: 360px;
 	--report-content-max-width-minus-edge-gap: calc(var(--report-content-max-width) - var(--edge-gap-padding) * 2);
 	--score-container-padding: 8px;
@@ -225,7 +237,6 @@ function resultView($device) {
 
 @media not print {
 	.lh-dark {
-		/* Pallete */
 		--color-gray-200: var(--color-gray-800);
 		--color-gray-300: #616161;
 		--color-gray-400: var(--color-gray-600);
@@ -236,12 +247,8 @@ function resultView($device) {
 		--color-orange-700: var(--color-orange);
 		--color-red-700: var(--color-red);
 		--color-teal-600: var(--color-cyan-500);
-
-		/* Context-specific colors */
 		--color-hover: rgba(0, 0, 0, 0.2);
 		--color-informative: var(--color-blue-200);
-
-		/* Component variables */
 		--env-item-background-color: #393535;
 		--link-color: var(--color-blue-200);
 		--locale-selector-background-color: var(--color-gray-200);
@@ -255,8 +262,6 @@ function resultView($device) {
 		--toplevel-warning-background-color: hsl(33deg 14% 18%);
 		--toplevel-warning-message-text-color: var(--color-orange-700);
 		--toplevel-warning-text-color: var(--color-gray-100);
-
-		/* SVGs */
 		--plugin-icon-url: var(--plugin-icon-url-dark);
 		--pwa-installable-gray-url: var(--pwa-installable-gray-url-dark);
 		--pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark);
@@ -289,7 +294,6 @@ function resultView($device) {
 		--topbar-logo-size: 20px;
 	}
 
-	/* Not enough space to adequately show the relative savings bars. */
 	.lh-sparkline {
 		display: none;
 	}
@@ -332,7 +336,6 @@ function resultView($device) {
 }
 
 .lh-devtools.lh-root img {
-	/* Override devtools default 'min-width: 0' so svg without size in a flexbox isn't collapsed. */
 	min-width: auto;
 }
 
@@ -348,7 +351,6 @@ function resultView($device) {
 }
 
 .lh-devtools .lh-sticky-header {
-	/* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-container` */
 	top: 0;
 }
 
@@ -407,23 +409,6 @@ function resultView($device) {
 }
 
 .lh-container {
-	/*
-  Text wrapping in the report is so much FUN!
-  We have a `word-break: break-word;` globally here to prevent a few common scenarios, namely
-  long non-breakable text (usually URLs) found in:
-    1. The footer
-    2. .lh-node (outerHTML)
-    3. .lh-code
-
-  With that sorted, the next challenge is appropriate column sizing and text wrapping inside our
-  .lh-details tables. Even more fun.
-    * We don't want table headers ("Potential Savings (ms)") to wrap or their column values, but
-    we'd be happy for the URL column to wrap if the URLs are particularly long.
-    * We want the narrow columns to remain narrow, providing the most column width for URL
-    * We don't want the table to extend past 100% width.
-    * Long URLs in the URL column can wrap. Util.getURLDisplayName maxes them out at 64 characters,
-      but they do not get any overflow:ellipsis treatment.
-  */
 	word-break: break-word;
 }
 
@@ -573,15 +558,12 @@ function resultView($device) {
 	margin-left: 0;
 }
 
-/* Node */
 .lh-node__snippet {
 	font-family: var(--report-font-family-monospace);
 	color: var(--snippet-color);
 	font-size: var(--report-monospace-font-size);
 	line-height: 20px;
 }
-
-/* Score */
 
 .lh-audit__score-icon {
 	width: var(--score-icon-size);
@@ -685,7 +667,6 @@ function resultView($device) {
 	font-size: var(--report-monospace-font-size);
 }
 
-/* Prepend display text with em dash separator. But not in Opportunities. */
 .lh-audit__display-text:not(:empty):before {
 	content: '—';
 	margin-right: var(--audit-margin-horizontal);
@@ -695,7 +676,6 @@ function resultView($device) {
 	display: none;
 }
 
-/* Expandable Details (Audit Groups, Audits) */
 .lh-audit__header {
 	display: flex;
 	align-items: center;
@@ -752,7 +732,6 @@ function resultView($device) {
 	margin-right: 8px;
 }
 
-/* If audits are filtered, hide the itemcount for Passed Audits… */
 .lh-category--filtered .lh-audit-group .lh-audit-group__itemcount {
 	display: none;
 }
@@ -762,18 +741,14 @@ function resultView($device) {
 	background-color: var(--color-hover);
 }
 
-/* We want to hide the browser's default arrow marker on summary elements. Admittedly, it's complicated. */
 .lh-root details>summary {
-	/* Blink 89+ and Firefox will hide the arrow when display is changed from (new) default of `list-item` to block.  https://chromestatus.com/feature/6730096436051968*/
 	display: block;
 }
 
-/* Safari and Blink <=88 require using the -webkit-details-marker selector */
 .lh-root details>summary::-webkit-details-marker {
 	display: none;
 }
 
-/* Perf Metric */
 
 .lh-metrics-container {
 	display: grid;
@@ -794,10 +769,6 @@ function resultView($device) {
 
 .lh-metric__innerwrap {
 	display: grid;
-	/**
-   * Icon -- Metric Name
-   *      -- Metric Value
-   */
 	grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
 	align-items: center;
 	padding: var(--default-padding);
@@ -826,7 +797,6 @@ function resultView($device) {
 	font-size: var(--metric-value-font-size);
 	margin: calc(var(--default-padding) / 2) 0;
 	white-space: nowrap;
-	/* No wrapping between metric value and the icon */
 	grid-column-start: 2;
 }
 
@@ -844,11 +814,7 @@ function resultView($device) {
 		border-bottom: 1px solid var(--report-border-color-secondary) !important;
 	}
 
-	/* Change the grid to 3 columns for narrow viewport. */
 	.lh-metric__innerwrap {
-		/**
-   * Icon -- Metric Name -- Metric Value
-   */
 		grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 2fr 1fr;
 	}
 
@@ -858,13 +824,10 @@ function resultView($device) {
 	}
 }
 
-/* No-JS toggle switch */
-/* Keep this selector sync'd w/ `magicSelector` in report-ui-features-test.js */
 .lh-metrics-toggle__input:checked~.lh-metrics-container .lh-metric__description {
 	display: block;
 }
 
-/* TODO get rid of the SVGS and clean up these some more */
 .lh-metrics-toggle__input {
 	opacity: 0;
 	position: absolute;
@@ -892,7 +855,6 @@ function resultView($device) {
 	color: var(--color-gray-700);
 }
 
-/* Pushes the metric description toggle button to the right. */
 .lh-audit-group--metrics .lh-audit-group__header {
 	display: flex;
 	justify-content: space-between;
@@ -976,8 +938,6 @@ function resultView($device) {
 }
 
 
-/* Sparkline */
-
 .lh-load-opportunity__sparkline {
 	flex: 1;
 	margin-top: calc((var(--report-line-height) - var(--sparkline-height)) / 2);
@@ -1005,10 +965,7 @@ function resultView($device) {
 	background: var(--color-fail);
 }
 
-/* Filmstrip */
-
 .lh-filmstrip-container {
-	/* smaller gap between metrics and filmstrip */
 	margin: -8px auto 0 auto;
 }
 
@@ -1031,13 +988,10 @@ function resultView($device) {
 	max-width: 60px;
 }
 
-/* Audit */
-
 .lh-audit {
 	border-bottom: 1px solid var(--report-border-color-secondary);
 }
 
-/* Apply border-top to just the first audit. */
 .lh-audit {
 	border-top: 1px solid var(--report-border-color-secondary);
 }
@@ -1051,7 +1005,6 @@ function resultView($device) {
 	color: var(--color-fail-secondary);
 }
 
-/* Audit Group */
 
 .lh-audit-group {
 	margin-bottom: var(--audit-group-margin-bottom);
@@ -1063,7 +1016,6 @@ function resultView($device) {
 }
 
 .lh-audit-group__header::before {
-	/* By default, groups don't get an icon */
 	content: none;
 	width: var(--pwa-icon-size);
 	height: var(--pwa-icon-size);
@@ -1079,7 +1031,6 @@ function resultView($device) {
 	color: var(--color-red-700);
 }
 
-/* Align the "over budget request count" text to be close to the "over budget bytes" column. */
 .lh-audit-group--budgets .lh-table tbody tr td:nth-child(4) {
 	text-align: right;
 }
@@ -1168,7 +1119,6 @@ function resultView($device) {
 	color: var(--color-fail-secondary);
 }
 
-/* Report */
 .lh-list> :not(:last-child) {
 	margin-bottom: calc(var(--default-padding) * 2);
 }
@@ -1248,8 +1198,6 @@ function resultView($device) {
 	padding: 0;
 	border: 0;
 }
-
-/* Gauge */
 
 .lh-gauge__wrapper--pass {
 	color: var(--color-pass-secondary);
@@ -1392,7 +1340,7 @@ function resultView($device) {
 	--gauge-circle-size: var(--gauge-circle-size-big);
 }
 
-/* The plugin badge overlay */
+
 .lh-gauge__wrapper--plugin .lh-gauge__svg-wrapper::before {
 	width: var(--plugin-badge-size);
 	height: var(--plugin-badge-size);
@@ -1446,13 +1394,9 @@ function resultView($device) {
 	flex-direction: column;
 	text-decoration: none;
 	padding: var(--score-container-padding);
-
 	--transition-length: 1s;
-
-	/* Contain the layout style paint & layers during animation*/
 	contain: content;
 	will-change: opacity;
-	/* Only using for layer promotion */
 }
 
 .lh-gauge__label,
@@ -1466,7 +1410,7 @@ function resultView($device) {
 	word-break: keep-all;
 }
 
-/* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
+
 .lh-category .lh-gauge__label,
 .lh-category .lh-fraction__label {
 	--gauge-label-font-size: var(--gauge-label-font-size-big);
@@ -1515,7 +1459,7 @@ function resultView($device) {
 	display: contents;
 }
 
-/* Hide category score gauages if it's a single category report */
+
 .lh-header--solo-category .lh-scores-wrapper {
 	display: none;
 }
@@ -1530,12 +1474,9 @@ function resultView($device) {
 	padding: var(--category-padding);
 	max-width: var(--report-content-max-width);
 	margin: 0 auto;
-
 	--sticky-header-height: calc(var(--gauge-circle-size-sm) + var(--score-container-padding) * 2);
 	--topbar-plus-sticky-header: calc(var(--topbar-height) + var(--sticky-header-height));
 	scroll-margin-top: var(--topbar-plus-sticky-header);
-
-	/* Faster recalc style & layout of the report. https://web.dev/content-visibility/ */
 	content-visibility: auto;
 	contain-intrinsic-size: 1000px;
 }
@@ -1565,7 +1506,6 @@ function resultView($device) {
 }
 
 .lh-final-ss-image {
-	/* constrain the size of the image to not be too large */
 	max-height: calc(var(--gauge-circle-size-big) * 2.8);
 	max-width: calc(var(--gauge-circle-size-big) * 3.5);
 	border: 1px solid var(--color-gray-200);
@@ -1591,7 +1531,6 @@ function resultView($device) {
 }
 
 
-/* 964 fits the min-width of the filmstrip */
 @media screen and (max-width: 964px) {
 	.lh-report {
 		margin-left: 0;
@@ -1602,7 +1541,6 @@ function resultView($device) {
 @media print {
 	body {
 		-webkit-print-color-adjust: exact;
-		/* print background colors */
 	}
 
 	.lh-container {
@@ -1621,7 +1559,6 @@ function resultView($device) {
 
 .lh-table {
 	border-collapse: collapse;
-	/* Can't assign padding to table, so shorten the width instead. */
 	width: calc(100% - var(--audit-description-padding-left) - var(--stackpack-padding-horizontal));
 	border: 1px solid var(--report-border-color-secondary);
 
@@ -1630,7 +1567,6 @@ function resultView($device) {
 .lh-table thead th {
 	font-weight: normal;
 	color: var(--color-gray-600);
-	/* See text-wrapping comment on .lh-container. */
 	word-break: normal;
 }
 
@@ -1651,12 +1587,9 @@ function resultView($device) {
 	vertical-align: middle;
 }
 
-/* Looks unnecessary, but mostly for keeping the <th>s left-aligned */
 .lh-table-column--text,
 .lh-table-column--source-location,
 .lh-table-column--url,
-/* .lh-table-column--thumbnail, */
-/* .lh-table-column--empty,*/
 .lh-table-column--code,
 .lh-table-column--node {
 	text-align: left;
@@ -1674,8 +1607,6 @@ function resultView($device) {
 	word-break: normal;
 }
 
-
-
 .lh-table .lh-table-column--thumbnail {
 	width: var(--image-preview-size);
 }
@@ -1688,8 +1619,6 @@ function resultView($device) {
 	min-width: 80px;
 }
 
-/* Keep columns narrow if they follow the URL column */
-/* 12% was determined to be a decent narrow width, but wide enough for column headings */
 .lh-table-column--url+th.lh-table-column--bytes,
 .lh-table-column--url+.lh-table-column--bytes+th.lh-table-column--bytes,
 .lh-table-column--url+.lh-table-column--ms,
@@ -1741,12 +1670,8 @@ function resultView($device) {
 	padding-left: 20px;
 }
 
-/* Chevron
-   https://codepen.io/paulirish/pen/LmzEmK
- */
 .lh-chevron {
 	--chevron-angle: 42deg;
-	/* Edge doesn't support transform: rotate(calc(...)), so we define it here */
 	--chevron-angle-right: -42deg;
 	width: var(--chevron-size);
 	height: var(--chevron-size);
@@ -1798,8 +1723,6 @@ function resultView($device) {
 }
 
 @media screen and (max-width: 780px) {
-
-	/* no black outline if we're not confident the entire table can be displayed within bounds */
 	.lh-expandable-details[open] {
 		animation: none;
 	}
@@ -1834,7 +1757,6 @@ details[open] .lh-clump-toggletext--hide {
 .lh-tooltip {
 	position: absolute;
 	display: none;
-	/* Don't retain these layers when not needed */
 	opacity: 0;
 	background: #ffffff;
 	white-space: pre-line;
@@ -1847,9 +1769,6 @@ details[open] .lh-clump-toggletext--hide {
 	line-height: 1.4;
 }
 
-/* shrink tooltips to not be cutoff on left edge of narrow viewports
-   45vw is chosen to be ~= width of the left column of metrics
-*/
 @media screen and (max-width: 535px) {
 	.lh-tooltip {
 		min-width: 45vw;
@@ -1897,7 +1816,6 @@ details[open] .lh-clump-toggletext--hide {
 	}
 }
 
-/* Element screenshot */
 .lh-element-screenshot {
 	position: relative;
 	overflow: hidden;
@@ -1910,7 +1828,6 @@ details[open] .lh-clump-toggletext--hide {
 }
 
 .lh-element-screenshot__image {
-	/* Set by ElementScreenshotRenderer.installFullPageScreenshotCssVariable */
 	background-image: var(--element-screenshot-url);
 	outline: 2px solid #777;
 	background-color: white;
@@ -1935,7 +1852,6 @@ details[open] .lh-clump-toggletext--hide {
 	right: 0;
 	bottom: 0;
 	z-index: 2000;
-	/* .lh-topbar is 1000 */
 	background: var(--screenshot-overlay-background);
 	display: flex;
 	align-items: center;
@@ -1945,7 +1861,6 @@ details[open] .lh-clump-toggletext--hide {
 
 .lh-element-screenshot__overlay .lh-element-screenshot {
 	margin-right: 0;
-	/* clearing margin used in thumbnail case */
 	outline: 1px solid var(--color-gray-700);
 }
 
@@ -1977,7 +1892,6 @@ details[open] .lh-clump-toggletext--hide {
 	position: relative;
 	padding: 0 0 0 calc(var(--meta-icon-size) + var(--default-padding) * 2);
 	cursor: unset;
-	/* disable pointer cursor from report-icon */
 }
 
 .lh-meta__item.lh-tooltip-boundary {
@@ -2002,11 +1916,9 @@ details[open] .lh-clump-toggletext--hide {
 
 .lh-meta__item .lh-tooltip::before {
 	right: auto;
-	/* Set the tooltip arrow to the leftside */
 	left: 6px;
 }
 
-/* Change the grid for narrow viewport. */
 @media screen and (max-width: 640px) {
 	.lh-meta__items {
 		grid-template-columns: 1fr 1fr;
