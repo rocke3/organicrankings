@@ -70,6 +70,43 @@ function resultView($device) {
 		
 		
 <style>
+/* Dark Mode */
+
+.dark-version .lh-root {
+	background-color: #202940 !important;
+}
+
+.dark-version .lh-root th,
+.dark-version .lh-root .lh-metric__title {
+	color: #fff !important;
+}
+
+.dark-version .lh-root div,
+.dark-version .lh-root td,
+.dark-version .lh-root .lh-metric__description,
+.dark-version .lh-root .lh-metrics__disclaimer,
+.dark-version .lh-root .lh-gauge__label,
+.dark-version .lh-root .lh-scorescale-range,
+.dark-version .lh-root .lh-audit-group__header,
+.dark-version .lh-root .lh-audit__description,
+.dark-version .lh-root .lh-audit__display-text,
+.dark-version .lh-root .lh-category-header__description,
+.dark-version .lh-root .lh-audit-group__description {
+	color: #ddd !important;
+}
+
+.dark-version .lh-root .lh-audit__title,
+.dark-version .lh-root .lh-node__snippet,
+.dark-version .lh-root a {
+	color: #e53471 !important;
+}
+
+.dark-version .lh-crc__longest_duration_label {
+	color: #ccc !important;
+}
+
+/* Dark mode End */
+
 .lh-report {
 	max-width: 100% !important;
 	display: contents !important;
