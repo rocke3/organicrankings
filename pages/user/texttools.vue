@@ -106,7 +106,7 @@ watch(text, async (string) => {
                           {{ key }}
                         </div>
                       </td>
-                      <td class="value">{{ value }}</td>
+                      <td class="value">{{ value }} ({{ (value / totalWords * 100).toFixed(0) }}%)</td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-center" v-if="uniqueWords > 5">
@@ -122,7 +122,6 @@ watch(text, async (string) => {
         </div>
 
         <small class="text-info"></small>
-
 
         <!-- <div class="mb-1 text-end mt-4">
           <button class="btn btn-primary">
