@@ -14,6 +14,7 @@ const menuItems = [
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
 	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },
 	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
+	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields' },
 ]
 
 async function logoutRequest() {
