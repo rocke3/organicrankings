@@ -124,7 +124,7 @@ watch(text, async (string) => {
         <small class="text-info"></small>
 
 
-        <div class="mb-1 text-end mt-4">
+        <!-- <div class="mb-1 text-end mt-4">
           <button class="btn btn-primary">
             <span v-if="!processing">Generate</span>
             <div v-if="processing">
@@ -132,7 +132,7 @@ watch(text, async (string) => {
               <ElementsProcessing />
             </div>
           </button>
-        </div>
+        </div> -->
       </form>
     </ElementsBsCard>
 
