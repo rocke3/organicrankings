@@ -2,14 +2,14 @@
 const props = defineProps({
 	showModal: {
 		type: Boolean,
-		required: false,
+		default: false,
 	},
 	title: {
 		type: String,
 		default: "Output Code",
 	},
 	body: {
-		required: true,
+		type: String
 	},
 	error: {
 		type: String,
@@ -20,9 +20,9 @@ const props = defineProps({
 	},
 	size: {
 		type: String,
-		default: "",
+		default: "modal-xl",
 		validator(value) {
-			return ["", "modal-lg", "modal-xl"].includes(value);
+			return ["modal-sm", "modal-lg", "modal-xl"].includes(value);
 		},
 	},
 	copyBtnTxt: {
@@ -35,10 +35,10 @@ const props = defineProps({
 	},
 	progress: {
 		type: Number,
-		required: true,
+		default: 0,
 	},
 });
-
+defineEmits(['update:showModal'])
 const copyBtnTxt = ref(props.copyBtnTxt)
 
 function copyToClipboard() {
@@ -58,11 +58,11 @@ function copyToClipboard() {
 
 <template>
 	<div class="modal fade show" aria-modal="true" role="dialog" v-if="showModal">
-		<div class="modal-dialog modal-dialog-scrollable modal-xl">
+		<div class="modal-dialog modal-dialog-scrollable" :class="size">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">{{title}}</h5>
-					<button type="button" class="btn-close" @click="showModal = false">
+					<h5 class="modal-title">{{ title }}</h5>
+					<button type="button" class="btn-close" @click="$emit('update:showModal', false);">
 						<i class="material-icons">close</i>
 					</button>
 				</div>
@@ -84,6 +84,8 @@ function copyToClipboard() {
 						</p>
 					</div>
 
+					<slot></slot>
+
 					<!-- Output code -->
 					<div v-if="error" class="text-center">
 						<div class="d-flex justify-content-center mb-2">
@@ -92,10 +94,10 @@ function copyToClipboard() {
 						<p class="text-bold text-danger">Click below button to Activate / Upgrade subscription</p>
 						<a href="" class="btn btn-primary">Subscription</a>
 					</div>
-					<pre v-else><code id="outputCode">{{body}}</code></pre>
+					<pre v-else><code id="outputCode">{{ body }}</code></pre>
 				</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" @click="showModal = false">
+				<div class="modal-footer" v-if="footer">
+					<button class="btn btn-secondary" @click="$emit('update:showModal', false);">
 						Close
 					</button>
 					<button class="btn btn-primary" @click="copyToClipboard" v-html="copyBtnTxt"></button>

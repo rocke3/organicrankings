@@ -6,22 +6,15 @@ definePageMeta({ layout: "user-layout" });
 useHead({ title: "Text Tools - Organic Rankings" });
 
 const text = ref('')
-const cssClass = ref('')
-const processing = ref(false)
 const characters = ref(0)
 const totalWords = ref(0)
 const sentences = ref(0)
-
+const lines = ref(0)
 const uniqueWords = ref(0)
 const density = ref({})
 const densityAll = ref({})
-const showOutputModal = ref(false)
-const outputcss = ref('')
-const outputError = ref('')
+const showModal = ref(false)
 const todo = ref('critical')
-
-let progress = ref(0)
-
 
 watch(text, async (string) => {
   characters.value = string.length;
@@ -32,7 +25,7 @@ watch(text, async (string) => {
   let uniqueCount = _(_.countBy(wordArr)).toPairs().orderBy([1], ['desc']).value()
   densityAll.value = Object.fromEntries(new Map(uniqueCount));
   density.value = Object.fromEntries(new Map(_.chunk(uniqueCount, 5)[0]));
-
+  lines.value = string.length > 0 ? string.split("\n").length : 0
 })
 
 </script>
@@ -56,72 +49,74 @@ watch(text, async (string) => {
 
         <div class="row">
           <div class="col-md-6 col-xl-7 col-xxl-8">
-            <div class="input-group input-group-outline mt-4" :class="cssClass">
+            <div class="input-group input-group-outline mt-4">
               <label class="form-label">Text </label>
               <textarea class="form-control" rows="10" v-model="text"></textarea>
             </div>
           </div>
+          <client-only>
+            <div class="col-md-6 col-xl-5 col-xxl-4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="pe-2 mt-3">
+                    <p class="text-bold mb-1">Details</p>
+                    <table class="table table-bordered">
+                      <tr>
+                        <td>Characters</td>
+                        <td class="value">{{ characters }}</td>
+                      </tr>
+                      <tr>
+                        <td>Words</td>
+                        <td class="value">{{ totalWords }}</td>
+                      </tr>
+                      <tr>
+                        <td>Unique Words</td>
+                        <td class="value">{{ uniqueWords }}</td>
+                      </tr>
+                      <tr>
+                        <td>Repeated Words</td>
+                        <td class="value">{{ totalWords - uniqueWords }}</td>
+                      </tr>
+                      <tr>
+                        <td>Sentences</td>
+                        <td class="value">{{ sentences }}</td>
+                      </tr>
+                      <tr>
+                        <td>Lines</td>
+                        <td class="value">{{ lines }}</td>
+                      </tr>
+                    </table>
 
-          <div class="col-md-6 col-xl-5 col-xxl-4">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="pe-2 mt-3">
-                  <p class="text-bold mb-1">Details</p>
-                  <table class="table table-bordered">
-                    <tr>
-                      <td>Characters</td>
-                      <td class="value">{{ characters }}</td>
-                    </tr>
-                    <tr>
-                      <td>Words</td>
-                      <td class="value">{{ totalWords }}</td>
-                    </tr>
-                    <tr>
-                      <td>Unique Words</td>
-                      <td class="value">{{ uniqueWords }}</td>
-                    </tr>
-                    <tr>
-                      <td>Repeated Words</td>
-                      <td class="value">{{ totalWords - uniqueWords }}</td>
-                    </tr>
-                    <tr>
-                      <td>Sentences</td>
-                      <td class="value">{{ sentences }}</td>
-                    </tr>
-                    <tr>
-                      <td>Word length</td>
-                      <td class="value">{{ sentences }}</td>
-                    </tr>
-                  </table>
-
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="pe-2  mt-3">
-                  <p class="text-bold mb-1">Keyword Density</p>
-                  <table class="table table-bordered">
-                    <tr v-for="(value, key) in density">
-                      <td style="max-width:50px">
-                        <div class="word">
-                          {{ key }}
-                        </div>
-                      </td>
-                      <td class="value">{{ value }} <small class="p-0">({{ (value / totalWords *
-                          100).toFixed(1)
-                      }}%)</small> </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="text-center" v-if="uniqueWords > 5">
-                        <a href="#" class="text-primary" @click.prevent="showOutputModal = true">See All ({{ uniqueWords
-                        }})</a>
-                      </td>
-                    </tr>
-                  </table>
+                <div class="col-sm-6">
+                  <div class="pe-2  mt-3">
+                    <p class="text-bold mb-1">Keyword Density</p>
+                    <table class="table table-bordered">
+                      <tr v-for="(value, key) in density">
+                        <td style="max-width:50px">
+                          <div class="word">
+                            {{ key }}
+                          </div>
+                        </td>
+                        <td class="value">{{ value }} <small class="p-0">({{ (value / totalWords *
+                            100).toFixed(1)
+                        }}%)</small> </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="text-center" v-if="uniqueWords > 5">
+                          <button class="btn btn-link text-primary m-0 p-0" @click.prevent="showModal = true">See All
+                            ({{
+                                uniqueWords
+                            }})</button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
-
               </div>
             </div>
-          </div>
+          </client-only>
         </div>
 
         <small class="text-info"></small>
@@ -139,7 +134,20 @@ watch(text, async (string) => {
     </ElementsBsCard>
 
     <!-- Modal -->
-    <ElementsCodeModal :showModal="showOutputModal" :body="densityAll" :error="outputError" :progress="progress" />
+    <ElementsCodeModal title="Keyword Density" v-model:showModal="showModal" size="modal-lg" :footer=false>
+      <table class="table table-bordered">
+        <tr v-for="(value, key) in densityAll">
+          <td style="max-width:50px">
+            <div class="word">
+              {{ key }}
+            </div>
+          </td>
+          <td class="value">{{ value }} <small class="p-0">({{ (value / totalWords *
+              100).toFixed(1)
+          }}%)</small> </td>
+        </tr>
+      </table>
+    </ElementsCodeModal>
 
   </div>
 </template>

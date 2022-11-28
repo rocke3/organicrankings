@@ -18,22 +18,7 @@ const beautify = ref(false)
 const indent = ref(false)
 let progress = ref(0)
 
-
-
 const htmlOptions = ref(htmlOptionsArr)
-
-function copyToClipboard() {
-  var range = document.createRange();
-  range.selectNode(document.getElementById("outputJs"));
-  window.getSelection().removeAllRanges();
-  window.getSelection().addRange(range);
-  document.execCommand("copy");
-  window.getSelection().removeAllRanges();
-  copyBtnTxt.value = "&#10004; Copied"
-  setTimeout(function () {
-    copyBtnTxt.value = "Copy Script"
-  }, 500)
-}
 
 async function genarateJs() {
   showOutputModal.value = true;
@@ -112,7 +97,7 @@ watch(js, async (val) => {
                     <input class="form-check-input me-1" type="checkbox" v-model="item.value"
                       @click="minify = (item.name == 'collapseWhitespace') ? true : false;">
                     <ElementsTooltip :tooltip="item.toltip">
-                      {{item.label}}
+                      {{ item.label }}
                     </ElementsTooltip>
                   </label>
                 </div>
