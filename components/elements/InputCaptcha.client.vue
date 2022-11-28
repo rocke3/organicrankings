@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
 useHead({
   link: [{ body: true, rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap" }],
 });
