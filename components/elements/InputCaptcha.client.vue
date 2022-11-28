@@ -34,6 +34,17 @@ watch(captchaInput, (newVal, oldVAl) => {
     captchaError.value = true
   }
 });
+function InvalidMsg(textbox) {
+  if (textbox.value === '') {
+    textbox.setCustomValidity('Required email address');
+  } else if (textbox.validity.typeMismatch) {
+    textbox.setCustomValidity('please enter a valid email address');
+  } else {
+    textbox.setCustomValidity('');
+  }
+
+  return true;
+}
 </script>
 
 <template>
@@ -51,7 +62,9 @@ watch(captchaInput, (newVal, oldVAl) => {
       <div class="input-group input-group-outline" :class="captchaError ? 'captchaError' : ''">
         <label class="form-label">Captcha</label>
         <input @input="$emit('update:captchaValid', ($event.target.value == captchaCode) ? true : false)" type="text"
-          class="form-control" v-model="captchaInput" ref="captha" required />
+          class="form-control" v-model="captchaInput" :pattern="captchaCode"
+          oninvalid="this.setCustomValidity(this.value == '' ? 'Captcha cannot be empty' : 'Invalid Captcha')"
+          oninput="this.setCustomValidity('')" required />
       </div>
     </div>
   </div>

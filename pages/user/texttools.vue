@@ -48,7 +48,7 @@ watch(text, async (string) => {
             :class="todo == 'critical' ? 'active' : ''">
             <label class="form-check-label m-0 px-3 py-2">
               <input class="form-check-input me-1" type="radio" name="option" value="critical" v-model="todo" checked>
-              Text
+              Word Counter
             </label>
           </div>
 
@@ -112,7 +112,8 @@ watch(text, async (string) => {
                     </tr>
                     <tr>
                       <td colspan="2" class="text-center" v-if="uniqueWords > 5">
-                        <a href="#" class="text-primary" @click.prevent>See All ({{ uniqueWords }})</a>
+                        <a href="#" class="text-primary" @click.prevent="showOutputModal = true">See All ({{ uniqueWords
+                        }})</a>
                       </td>
                     </tr>
                   </table>
@@ -138,7 +139,7 @@ watch(text, async (string) => {
     </ElementsBsCard>
 
     <!-- Modal -->
-    <ElementsCodeModal :showModal="showOutputModal" :body="outputcss" :error="outputError" :progress="progress" />
+    <ElementsCodeModal :showModal="showOutputModal" :body="densityAll" :error="outputError" :progress="progress" />
 
   </div>
 </template>

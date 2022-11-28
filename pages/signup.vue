@@ -12,6 +12,7 @@ const emailCls = ref('')
 const signupStatus = ref('')
 const password = ref('')
 const confpass = ref('')
+const captcha = ref(false)
 
 async function signupRequst() {
 	if ((email.value && email.value.length > 7) && (password.value && password.value.length > 5) && (password.value === confpass.value)) {
