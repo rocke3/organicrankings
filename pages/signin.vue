@@ -46,11 +46,11 @@ if (process.client) {
 }
 </script>
 
-
+document.getElementById('formId').reportValidity();
 <template>
 	<div v-once>
 		<ElementsSingCard formTitle="Sign In" titleClass="font-weight-bolder text-center text-uppercase h3">
-			<form role="form" class="text-start" @submit.prevent="signinRequst">
+			<form role="form" class="text-start" @submit.prevent="signinRequst" id="formId">
 				<ElementsInputEmail label="Email" v-model:email="email" :class="emailCls" :required="true" />
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" :class="passCls"
 					:required="true" />
