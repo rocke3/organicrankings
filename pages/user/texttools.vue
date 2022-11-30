@@ -18,6 +18,7 @@ const todo = ref('word')
 const website = ref('http://')
 const keywords = ref('')
 const totalKeywords = ref('')
+const keywordError = ref('')
 const loadingKeywords = ref(false)
 
 
@@ -38,6 +39,7 @@ watch(text, async (string) => {
 
 function analizeKeyword() {
   loadingKeywords.value = true;
+  keywordError.value = ""
   axios.post('https://www.organicrankings.com/api/keyword', website.value, {
     headers: {
       'Content-Type': 'application/octet-stream',
@@ -46,9 +48,14 @@ function analizeKeyword() {
   })
     .then(function (res) {
       loadingKeywords.value = false;
-      let wordArr = _.words(res.data);
-      totalKeywords.value = wordArr.length
-      keywords.value = _(_.countBy(wordArr)).toPairs().orderBy([1], ['desc']).value()
+      let data = res.data;
+      if (data.error) {
+        keywordError.value = data.error
+      } else {
+        let wordArr = _.words(res.data);
+        totalKeywords.value = wordArr.length
+        keywords.value = _(_.countBy(wordArr)).toPairs().orderBy([1], ['desc']).value()
+      }
     })
 }
 
@@ -154,10 +161,16 @@ function analizeKeyword() {
 
         <form @submit.prevent="analizeKeyword">
           <div class="input-group mb-3 max-width-500 m-auto">
-            <input type="text" class="form-control website" placeholder="Website URL" v-model="website" required>
+            <input type="url" class="form-control website" placeholder="Website URL" v-model="website"
+              oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter valid URL' : 'Enter valid URL incluiding http: / https:')"
+              oninput="this.setCustomValidity(this.validity.patternMismatch ? 'Enter valid URL incluiding http: / https:' : '')"
+              required>
             <button class="btn btn-primary" type="submit">Analyze keyword</button>
           </div>
         </form>
+        <div class="alert alert-danger text-white max-width-500 m-auto text-center" v-if="keywordError">
+          {{ keywordError }}
+        </div>
         <div class="keywords" v-if="(keywords || loadingKeywords)">
           <div v-if="loadingKeywords" class="text-center pt-3">
             <ElementsSpinner color="#e91e63" />
