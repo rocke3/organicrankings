@@ -6,8 +6,9 @@ import formData from 'form-data'
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "Image Tools - Organic Rankings" });
 
-const userFolder = await axios('https://organicrankings.com/api/imagefolder');
-const imageFolder = "https://www.organicrankings.com/api/compressed/" + userFolder.data;
+
+const { data, pending } = useFetch('https://organicrankings.com/api/imagefolder')
+const imageFolder = "https://www.organicrankings.com/api/compressed/" + data;
 let images = ref({});
 let imagesPrefix = ref(0);
 let invalids = ref({});
@@ -177,7 +178,7 @@ function uploadImage(file, id) {
         <ElementsImageItem :file="file" :invalid="true" />
       </div>
       <div class="text-center" v-if="showDowload && Object.keys(images).length > 0">
-        <a class="btn btn-primary mt-3" :href=" imageFolder + '/All_Images.zip'">
+        <a class="btn btn-primary mt-3" :href="imageFolder + '/All_Images.zip'">
           <i class="material-icons">file_download</i>
           Download All (ZIP)
         </a>

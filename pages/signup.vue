@@ -54,7 +54,7 @@ async function signupRequst() {
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" />
 				<ElementsInputPassword label="Confirm Password" v-model:password="confpass" class="mt-4" />
 				<div class="mt-3">
-					<ElementsInputCaptcha v-model:captchaValid="captcha" />
+					<ElementsCaptchaInput v-model:captchaValid="captcha" />
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn bg-gradient-primary w-100 mt-4">
