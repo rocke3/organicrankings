@@ -15,7 +15,7 @@ const density = ref({})
 const densityAll = ref({})
 const showModal = ref(false)
 const todo = ref('word')
-const website = ref('')
+const website = ref('http://')
 const keywords = ref('')
 const totalKeywords = ref('')
 const loadingKeywords = ref(false)
@@ -38,7 +38,7 @@ watch(text, async (string) => {
 
 function analizeKeyword() {
   loadingKeywords.value = true;
-  axios.post('http://132.148.77.56:3010/keyword', website.value, {
+  axios.post('https://www.organicrankings.com/api/keyword', website.value, {
     headers: {
       'Content-Type': 'application/octet-stream',
       authorization: useCookie('org_user').value,
