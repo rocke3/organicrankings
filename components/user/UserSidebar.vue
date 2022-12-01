@@ -89,6 +89,6 @@ async function logoutRequest() {
 }
 
 .router-link-active {
-	background: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+	background: linear-gradient(195deg, #007c9d 0%, #0088ad 100%);
 }
 </style>
