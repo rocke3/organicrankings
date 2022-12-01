@@ -6,35 +6,30 @@ definePageMeta({ layout: "user-layout" });
 useHead({ title: "Text Tools - Organic Rankings" });
 
 const text = ref('')
-const characters = ref(0)
-const totalWords = ref(0)
-const sentences = ref(0)
-const lines = ref(0)
-const uniqueWords = ref(0)
-const density = ref({})
-const densityAll = ref({})
+
 const showModal = ref(false)
-const todo = ref('word')
+const todo = ref('counter')
 const website = ref('http://')
 const keywords = ref('')
+const keywordsOrder = ref('')
 const totalKeywords = ref('')
 const keywordError = ref('')
 const loadingKeywords = ref(false)
 
-
+const counter = ref({ characters: 0, words: 0, uniqueWords: 0, sentences: 0, lines: 0, density: {}, densityAll: {} })
+const checker = ref({ characters: 0, words: 0, uniqueWords: 0, densityAll: {} })
 
 watch(text, async (string) => {
-  let trimdString = _.trim(string.replace(/\n/g, " ").replace('.', " ").toLowerCase())
-  characters.value = string.length;
-  let wordArr = _.words(trimdString, /[^, ]+/g);
-
-  totalWords.value = wordArr.length
-  uniqueWords.value = _.uniq(wordArr).length
-  sentences.value = _.compact(_.split(_.trim(string), ".")).length;
+  let trimdString = _.trim(string.replace(/\n/g, " ").replace('.', " ").replace('(', " ").replace(')', " ").toLowerCase())
+  counter.value.characters = string.length;
+  let wordArr = _.words(trimdString);
+  counter.value.words = wordArr.length
+  counter.value.uniqueWords = _.uniq(wordArr).length
+  counter.value.sentences = _.compact(_.split(_.trim(string), ".")).length;
   let uniqueCount = _(_.countBy(wordArr)).toPairs().orderBy([1], ['desc']).value()
-  densityAll.value = uniqueCount
-  density.value = _.chunk(uniqueCount, 5)[0];
-  lines.value = string.length > 0 ? string.split("\n").length : 0
+  counter.value.densityAll = uniqueCount
+  counter.value.density = _.chunk(uniqueCount, 5)[0];
+  counter.value.lines = string.length > 0 ? string.split("\n").length : 0
 })
 
 function analizeKeyword() {
@@ -52,9 +47,15 @@ function analizeKeyword() {
       if (data.error) {
         keywordError.value = data.error
       } else {
-        let wordArr = _.words(res.data);
-        totalKeywords.value = wordArr.length
-        keywords.value = _(_.countBy(wordArr)).toPairs().orderBy([1], ['desc']).value()
+
+
+        let trimdString = _.trim(data.replace(/\n/g, " ").replace('.', " ").replace('(', " ").replace(')', " ").toLowerCase())
+        checker.value.characters = trimdString.length;
+        let wordArr = _.words(trimdString);
+        checker.value.words = wordArr.length
+        checker.value.uniqueWords = _.uniq(wordArr).length
+        let uniqueCount = _(_.countBy(wordArr)).toPairs().orderBy([1], ['desc']).value()
+        checker.value.densityAll = uniqueCount
       }
     })
 }
@@ -64,28 +65,27 @@ function analizeKeyword() {
 
 <template>
   <div>
-
     <ElementsBsCard formTitle="Text Tools" titleClass="ps-3">
 
       <div class="todo">
         <div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"
-          :class="todo == 'word' ? 'active' : ''">
+          :class="todo == 'counter' ? 'active' : ''">
           <label class="form-check-label m-0 px-3 py-2">
-            <input class="form-check-input me-1" type="radio" name="option" value="word" v-model="todo" checked>
+            <input class="form-check-input me-1" type="radio" name="option" value="counter" v-model="todo" checked>
             Word Counter
           </label>
         </div>
         <div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"
-          :class="todo == 'keyword' ? 'active' : ''">
+          :class="todo == 'checker' ? 'active' : ''">
           <label class="form-check-label m-0 px-3 py-2">
-            <input class="form-check-input me-1" type="radio" name="option" value="keyword" v-model="todo">
+            <input class="form-check-input me-1" type="radio" name="option" value="checker" v-model="todo">
             Keyword Density Checker
           </label>
         </div>
 
       </div>
 
-      <div class="row" v-if="todo == 'word'">
+      <div class="row" v-if="todo == 'counter'">
         <div class="col-md-6 col-xl-7 col-xxl-8">
           <div class="input-group input-group-outline mt-4">
             <label class="form-label">Text </label>
@@ -102,27 +102,27 @@ function analizeKeyword() {
                   <table class="table table-bordered">
                     <tr>
                       <td>Characters</td>
-                      <td class="value">{{ characters }}</td>
+                      <td class="value">{{ counter.characters }}</td>
                     </tr>
                     <tr>
                       <td>Words</td>
-                      <td class="value">{{ totalWords }}</td>
+                      <td class="value">{{ counter.words }}</td>
                     </tr>
                     <tr>
                       <td>Unique Words</td>
-                      <td class="value">{{ uniqueWords }}</td>
+                      <td class="value">{{ counter.uniqueWords }}</td>
                     </tr>
                     <tr>
                       <td>Repeated Words</td>
-                      <td class="value">{{ totalWords - uniqueWords }}</td>
+                      <td class="value">{{ counter.words - counter.uniqueWords }}</td>
                     </tr>
                     <tr>
                       <td>Sentences</td>
-                      <td class="value">{{ sentences }}</td>
+                      <td class="value">{{ counter.sentences }}</td>
                     </tr>
                     <tr>
                       <td>Lines</td>
-                      <td class="value">{{ lines }}</td>
+                      <td class="value">{{ counter.lines }}</td>
                     </tr>
                   </table>
 
@@ -132,21 +132,21 @@ function analizeKeyword() {
                 <div class="pe-2  mt-3">
                   <p class="text-bold mb-1">Keyword Density</p>
                   <table class="table table-bordered">
-                    <tr v-for="(value, key) in density">
+                    <tr v-for="(value, key) in counter.density">
                       <td style="max-width:50px">
                         <div class="word">
                           {{ value[0] }}
                         </div>
                       </td>
-                      <td class="value">{{ value[1] }} <small class="p-0">({{ (value[1] / totalWords *
+                      <td class="value">{{ value[1] }} <small class="p-0">({{ (value[1] / counter.words *
                           100).toFixed(1)
                       }}%)</small> </td>
                     </tr>
                     <tr>
-                      <td colspan="2" class="text-center" v-if="uniqueWords > 5">
+                      <td colspan="2" class="text-center" v-if="counter.uniqueWords > 5">
                         <button class="btn btn-link text-primary m-0 p-0" @click.prevent="showModal = true">See All
                           ({{
-                              uniqueWords
+                              counter.uniqueWords
                           }})</button>
                       </td>
                     </tr>
@@ -157,13 +157,13 @@ function analizeKeyword() {
           </div>
         </client-only>
       </div>
-      <div v-if="todo == 'keyword'">
+      <div v-if="todo == 'checker'">
 
         <form @submit.prevent="analizeKeyword">
           <div class="input-group mb-3 max-width-500 m-auto">
             <input type="url" class="form-control website" placeholder="Website URL" v-model="website"
-              oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter valid URL' : 'Enter valid URL incluiding http: / https:')"
-              oninput="this.setCustomValidity(this.validity.patternMismatch ? 'Enter valid URL incluiding http: / https:' : '')"
+              oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter valid URL' : 'Enter URL incluiding http: / https:')"
+              oninput="this.setCustomValidity(this.validity.patternMismatch ? 'Enter URL incluiding http: / https:' : '')"
               required>
             <button class="btn btn-primary" type="submit">Analyze keyword</button>
           </div>
@@ -171,60 +171,96 @@ function analizeKeyword() {
         <div class="alert alert-danger text-white max-width-500 m-auto text-center" v-if="keywordError">
           {{ keywordError }}
         </div>
-        <div class="keywords" v-if="(keywords || loadingKeywords)">
+        <div>
           <div v-if="loadingKeywords" class="text-center pt-3">
             <ElementsSpinner color="#e91e63" />
             <div class="genarating text-primary pt-0"> Analizeing keywords <br /> Please wait.</div>
           </div>
-          <table class="table table table-hover" v-else>
-            <thead>
-              <tr>
-                <th>Keyword</th>
-                <th>Count</th>
-                <th>Density</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(value, key) in keywords">
-                <td>{{ value[0] }}</td>
-                <td>{{ value[1] }}</td>
-                <td>{{ (value[1] / totalKeywords *
-                    100).toFixed(1)
-                }}%</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="row" v-if="checker.words">
+            <div class="col-md-6">
+              <div class="pe-2 mt-3">
+                <p class="text-bold mb-1">Details</p>
+                <table class="table table-bordered">
+                  <tr>
+                    <td>Characters</td>
+                    <td class="value">{{ checker.characters }}</td>
+                  </tr>
+                  <tr>
+                    <td>Words</td>
+                    <td class="value">{{ checker.words }}</td>
+                  </tr>
+                  <tr>
+                    <td>Unique Words</td>
+                    <td class="value">{{ checker.uniqueWords }}</td>
+                  </tr>
+                  <tr>
+                    <td>Repeated Words</td>
+                    <td class="value">{{ checker.words - checker.uniqueWords }}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="keywordCloud">
+                <p class="text-bold mb-1">Keyword Cloud</p>
+                <span v-for="(value, key) in checker.densityAll">
+                  <span class="badge bg-secondary d-inline-block me-1" :title="value[1] + ' (' + (value[1] / checker.words *
+                  100).toFixed(1) + '%)'">
+                    {{ value[0] }}
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="keywords">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Keyword</th>
+                      <th>Count</th>
+                      <th>Density</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(value, key) in checker.densityAll">
+                      <td>{{ value[0] }}</td>
+                      <td>{{ value[1] }}</td>
+                      <td>{{ (value[1] / checker.words *
+                          100).toFixed(1)
+                      }}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
 
-
-
-      <!-- <div class="mb-1 text-end mt-4">
-          <button class="btn btn-primary">
-            <span v-if="!processing">Generate</span>
-            <div v-if="processing">
-              <ElementsSpinner /> Generating
-              <ElementsProcessing />
-            </div>
-          </button>
-        </div> -->
 
     </ElementsBsCard>
 
     <!-- Modal -->
     <ElementsCodeModal title="Keyword Density" v-model:showModal="showModal" size="modal-lg" :footer=false>
-      <ul class="list-group list-inline">
-        <li v-for="(value, key) in densityAll" class="list-group-item d-flex">
-          <div class="ms-2 me-auto word">
-            {{ value[0] }}
-          </div>
-          <span class="badge rounded-pill value">{{ value[1] }} ({{ (value[1] /
-              totalWords *
-              100).toFixed(1)
-          }}%)</span>
+      <table class="table table table-hover keywords">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Count</th>
+            <th>Density</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(value, key) in counter.densityAll">
+            <td>{{ value[0] }}</td>
+            <td>{{ value[1] }}</td>
+            <td>{{ (value[1] / counter.words *
+                100).toFixed(1)
+            }}%</td>
+          </tr>
+        </tbody>
+      </table>
 
-        </li>
-      </ul>
     </ElementsCodeModal>
 
   </div>
@@ -242,6 +278,15 @@ function analizeKeyword() {
 .keywords td,
 .keywords th {
   padding: 5px 15px;
+}
+
+.keywords td:not(:first-child),
+.keywords th:not(:first-child) {
+  text-align: center;
+}
+
+.keywordCloud .badge {
+  cursor: pointer;
 }
 
 .word {

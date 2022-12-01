@@ -10,6 +10,7 @@ function signout() {
 
 const menuItems = [
 	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
+	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
