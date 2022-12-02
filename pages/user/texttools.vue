@@ -20,7 +20,7 @@ const counter = ref({ characters: 0, words: 0, uniqueWords: 0, sentences: 0, lin
 const checker = ref({ characters: 0, words: 0, uniqueWords: 0, densityAll: {} })
 
 watch(text, async (string) => {
-  let trimdString = _.trim(string.replace(/\n/g, " ").replace('.', " ").replace('(', " ").replace(')', " ").toLowerCase())
+  let trimdString = _.trim(string.replace(/\n/g, " ").replace('(', " ").replace(')', " ").toLowerCase())
   counter.value.characters = string.length;
   let wordArr = _.words(trimdString);
   counter.value.words = wordArr.length
@@ -49,8 +49,8 @@ function analizeKeyword() {
       } else {
 
 
-        let trimdString = _.trim(data.replace(/\n/g, " ").replace('.', " ").replace('(', " ").replace(')', " ").toLowerCase())
-        checker.value.characters = trimdString.length;
+        let trimdString = _.trim(data.replace(/\n/g, " ").replace('(', " ").replace(')', " ").toLowerCase())
+        checker.value.characters = trimdString.replace(' ', " ").length;
         let wordArr = _.words(trimdString);
         checker.value.words = wordArr.length
         checker.value.uniqueWords = _.uniq(wordArr).length
@@ -59,8 +59,6 @@ function analizeKeyword() {
       }
     })
 }
-
-
 </script>
 
 <template>
