@@ -40,15 +40,18 @@ watch(captchaInput, (newVal, oldVAl) => {
   <div class="row pt-2">
     <div class="col-7">
       <div class="captcha w-100">
-        {{ captchaCode == '' ? '. . . . .' : captchaCode }}
+        <ClientOnly fallback-tag="span" fallback=". . . . .">
+          {{ captchaCode == '' ? '. . . . .' : captchaCode }}
+        </ClientOnly>
+
         <button type="button" class="btn btn-outline-primary refresh" @click="refresh($emit)">
-          <i class="material-icons" id="refresh">sync</i>
+          <i class="material-icons">sync</i>
         </button>
         <div class="layar"></div>
       </div>
     </div>
     <div class="col-5">
-      <div class="input-group input-group-outline" :class="captchaError ? 'captchaError' : ''">
+      <div class="input-group input-group-outline captchaInput" :class="captchaError ? 'captchaError' : ''">
         <label class="form-label">Captcha</label>
         <input @input="$emit('update:captchaValid', ($event.target.value == captchaCode) ? true : false)" type="text"
           class="form-control" v-model="captchaInput" :pattern="captchaCode"
@@ -61,77 +64,5 @@ watch(captchaInput, (newVal, oldVAl) => {
 
 
 <style scoped>
-input {
-  transition: 0s all !important;
-}
 
-.captcha {
-  position: relative;
-  font-family: 'Rubik Iso', cursive;
-  font-size: 33px;
-  line-height: 1.2;
-  padding-right: 40px;
-  text-align: center;
-  color: #007c9d;
-  border: 1px solid #2fbdae;
-  border-radius: 10px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-image: linear-gradient(45deg, transparent 20%, brown 25%, transparent 25%),
-    linear-gradient(-45deg, transparent 20%, brown 25%, transparent 25%),
-    linear-gradient(-45deg, transparent 75%, brown 80%, transparent 0);
-  background-size: 20px 20px, 20px 20px;
-
-}
-
-.captcha button {
-  position: absolute;
-  top: -1px;
-  right: 0;
-  padding: 7px !important;
-  border-right: 0;
-  height: calc(100% + 2px);
-  z-index: 5;
-  background: #fff;
-  color: #2fbdae;
-}
-
-.captcha .layar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.btn-outline-primary .material-icons {
-  font-size: 25px;
-  transition: 0.3s transform;
-}
-
-.btn-outline-primary {
-  margin: 0;
-}
-
-.refresh:focus,
-.refresh.btn-outline-primary:hover:not(.active) {
-  background: #fff !important;
-  color: #007c9d;
-  box-shadow: none !important;
-  opacity: 1;
-}
-
-.captchaError input {
-  border-color: red !important;
-}
-
-@media only screen and (max-width: 400px) {
-  .captcha {
-    font-size: 30px
-  }
-}
 </style>
