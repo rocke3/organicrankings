@@ -134,6 +134,9 @@ body {
 .form-check:not(.form-switch) .form-check-input[type="radio"]:after {
 	background-image: linear-gradient(195deg, #2fbdae 0%, #2fbdae 100%), var(--bs-gradient);
 }
+.nav-item:hover * {
+	color: #007c9d !important;
+}
 /* Primary #007c9d */
 /* Hover #0088ad */
 /* #6D67E4 */

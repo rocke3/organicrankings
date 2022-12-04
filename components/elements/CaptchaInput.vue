@@ -67,6 +67,29 @@ input {
   transition: 0s all !important;
 }
 
+.captcha {
+  position: relative;
+  font-family: 'Rubik Iso', cursive;
+  font-size: 33px;
+  line-height: 1.2;
+  padding-right: 40px;
+  text-align: center;
+  color: #007c9d;
+  border: 1px solid #2fbdae;
+  border-radius: 10px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: linear-gradient(45deg, transparent 20%, brown 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, brown 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 75%, brown 80%, transparent 0);
+  background-size: 20px 20px, 20px 20px;
+
+}
+
 .captcha button {
   position: absolute;
   top: -1px;
@@ -92,28 +115,7 @@ input {
   transition: 0.3s transform;
 }
 
-.captcha {
-  position: relative;
-  font-family: 'Rubik Iso', cursive;
-  font-size: 33px;
-  line-height: 1.2;
-  padding-right: 40px;
-  text-align: center;
-  color: #007c9d;
-  border: 1px solid #2fbdae;
-  border-radius: 10px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-image: linear-gradient(45deg, transparent 20%, brown 25%, transparent 25%),
-    linear-gradient(-45deg, transparent 20%, brown 25%, transparent 25%),
-    linear-gradient(-45deg, transparent 75%, brown 80%, transparent 0);
-  background-size: 20px 20px, 20px 20px;
 
-}
 
 .btn-outline-primary {
   margin: 0;
