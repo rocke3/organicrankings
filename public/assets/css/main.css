@@ -80,26 +80,60 @@ body {
 
 /* Color Change */
 .bg-gradient-primary {
-	background-image: linear-gradient(195deg, #007c9d 0%, #0088ad 100%);
-}
-.shadow-primary {
-	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 124, 157, 0.4) !important;
+	background-image: linear-gradient(195deg, #007c9d 0%, #007c9d 100%);
 }
 .btn-primary,
-.btn.bg-gradient-primary {
-	box-shadow: 0 3px 3px 0 rgba(0, 124, 157, 0.15), 0 3px 1px -2px rgba(0, 124, 157, 0.2), 0 1px 5px 0 rgba(0, 124, 157, 0.15);
+.btn.bg-gradient-primary,
+.bg-gradient-primary {
+	box-shadow: 0 4px 6px -1px rgb(109 103 228 / 10%), 0 2px 4px -1px rgb(109 103 228 / 6%) !important;
 }
+.shadow-primary {
+	box-shadow: 0 4px 6px -1px rgb(109 103 228 / 10%), 0 2px 4px -1px rgb(109 103 228 / 6%) !important;
+}
+
+.btn-primary,
+.btn-gradient-primary {
+	background: #2fbdae;
+	box-shadow: 0 3px 3px 0 rgba(109, 103, 228, 0.15), 0 3px 1px -2px rgba(109, 103, 228, 0.2), 0 1px 5px 0 rgba(109, 103, 228, 0.15);
+	color: #fff;
+	transition: 0.3s background;
+}
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle,
+.btn.bg-gradient-primary:not(:disabled):not(.disabled).active,
+.btn.bg-gradient-primary:not(:disabled):not(.disabled):active,
+.show > .btn.bg-gradient-primary.dropdown-toggle,
+.btn-primary:hover,
+.btn-gradient-primary :hover {
+	background: #007c9d;
+}
+
 .btn-check:checked + .btn,
 .btn-check:active + .btn,
 .btn:active,
 .btn.active,
 .btn.show {
 	color: #fff;
-	background-color: #0088ad;
-	border-color: #0088ad;
+	background-color: #2fbdae;
+	border-color: #2fbdae;
 }
 .text-primary {
-	color: #007c9d !important;
+	color: #2fbdae !important;
+}
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked,
+.form-check:not(.form-switch) .form-check-input[type="radio"]:checked,
+.border-primary,
+.btn-outline-primary,
+.outline-primary {
+	border-color: #2fbdae !important;
+}
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+	background: #2fbdae !important;
+}
+.form-check:not(.form-switch) .form-check-input[type="radio"]:after {
+	background-image: linear-gradient(195deg, #2fbdae 0%, #2fbdae 100%), var(--bs-gradient);
 }
 /* Primary #007c9d */
 /* Hover #0088ad */
+/* #6D67E4 */

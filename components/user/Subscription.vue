@@ -167,7 +167,7 @@ function subscribe(plan_id, price_id, subActive) {
         </div>
         <div class="card mb-5 planBox" v-else>
           <div class="card-header p-3 pt-2 pb-2 bg-transparent">
-            <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+            <div class="bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
               <h3 class="m-0 py-1 px-4 text-white">{{ plan.plan_name }}</h3>
             </div>
             <div class="text-end pt-2">

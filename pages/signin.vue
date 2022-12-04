@@ -55,7 +55,9 @@ if (process.client) {
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" :class="passCls"
 					:required="true" />
 				<div class="mt-3">
+
 					<ElementsCaptchaInput v-model:captchaValid="captcha" />
+
 				</div>
 				<div class="form-check form-switch d-flex align-items-center mb-3 mt-4">
 					<input class="form-check-input" type="checkbox" id="rememberMe" />
@@ -64,7 +66,8 @@ if (process.client) {
 					</label>
 				</div>
 				<div class="text-center">
-					<button type="submit" class="btn bg-gradient-primary w-100 mt-2">
+
+					<button type="submit" class="btn btn-primary w-100 mt-2">
 						<span v-if="!checking">Sign in</span>
 						<div v-if="checking">
 							<ElementsSpinner /> Checking

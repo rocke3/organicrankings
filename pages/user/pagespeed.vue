@@ -126,7 +126,7 @@ function resultView($device) {
 
 .form-control.website {
   height: 40px;
-  border: 1px solid #e91e63;
+  border: 1px solid #2fbdae;
   border-right: 0;
   padding-left: 10px !important;
 }

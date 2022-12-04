@@ -40,7 +40,9 @@ watch(captchaInput, (newVal, oldVAl) => {
   <div class="row pt-2">
     <div class="col-7">
       <div class="captcha outline-primary w-100">
-        {{ captchaCode == '' ? '. . . . .' : captchaCode }}
+        <ClientOnly fallback-tag="span" fallback=". . . . .">
+          {{ captchaCode == '' ? '. . . . .' : captchaCode }}
+        </ClientOnly>
         <button type="button" class="btn btn-outline-primary refresh" @click="refresh($emit)">
           <i class="material-icons" id="refresh">sync</i>
         </button>
@@ -74,6 +76,7 @@ input {
   height: calc(100% + 2px);
   z-index: 5;
   background: #fff;
+  color: #2fbdae;
 }
 
 .captcha .layar {
@@ -96,8 +99,7 @@ input {
   line-height: 1.2;
   padding-right: 40px;
   text-align: center;
-  border: 1px solid #e91e63;
-  color: #e91e63;
+  color: #007c9d;
   border-radius: 10px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -119,7 +121,7 @@ input {
 .refresh:focus,
 .refresh.btn-outline-primary:hover:not(.active) {
   background: #fff !important;
-  color: #e91e63;
+  color: #007c9d;
   box-shadow: none !important;
   opacity: 1;
 }

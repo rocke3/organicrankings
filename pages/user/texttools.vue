@@ -301,7 +301,7 @@ tr td {
 
 .value {
   text-align: center;
-  color: #e91e63;
+  color: #007c9d;
 }
 
 .todo input {
