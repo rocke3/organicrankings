@@ -40,9 +40,7 @@ watch(captchaInput, (newVal, oldVAl) => {
   <div class="row pt-2">
     <div class="col-7">
       <div class="captcha w-100">
-        <ClientOnly fallback-tag="span" fallback=". . . . .">
-          {{ captchaCode == '' ? '. . . . .' : captchaCode }}
-        </ClientOnly>
+        {{ captchaCode == '' ? '. . . . .' : captchaCode }}
         <button type="button" class="btn btn-outline-primary refresh" @click="refresh($emit)">
           <i class="material-icons" id="refresh">sync</i>
         </button>
@@ -114,8 +112,6 @@ input {
   font-size: 25px;
   transition: 0.3s transform;
 }
-
-
 
 .btn-outline-primary {
   margin: 0;
