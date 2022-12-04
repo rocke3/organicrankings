@@ -58,6 +58,6 @@
 }
 
 .nav-item:hover * {
-	color: #e91e63;
+	color: #007c9d;
 }
 </style>
