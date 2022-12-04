@@ -199,13 +199,15 @@ function analizeKeyword() {
               </div>
               <div class="keywordCloud">
                 <p class="text-bold mb-1">Keyword Cloud</p>
-                <span v-for="(value, key) in checker.densityAll">
-                  <ElementsTooltip :tooltip="value[1] + ' (' + (value[1] / checker.words *
-                  100).toFixed(1) + '%)'" class="item">
-                    {{ value[0] }}
-                  </ElementsTooltip>
+                <div class=" ">
+                  <div v-for="(value, key) in checker.densityAll" class="d-inline-block">
+                    <ElementsTooltip :tooltip="value[1] + ' (' + (value[1] / checker.words *
+                    100).toFixed(1) + '%)'" class="item">
+                      {{ value[0] }}
+                    </ElementsTooltip>
 
-                </span>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
