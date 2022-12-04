@@ -177,6 +177,7 @@ body {
 .btn.bg-gradient-primary:not(:disabled):not(.disabled):active,
 .show > .btn.bg-gradient-primary.dropdown-toggle,
 .btn-primary:hover,
+button:focus:not(:focus-visible),
 .btn-gradient-primary :hover {
 	background: #007c9d;
 }
