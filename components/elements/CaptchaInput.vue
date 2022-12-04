@@ -45,7 +45,7 @@ watch(captchaInput, (newVal, oldVAl) => {
         </ClientOnly>
 
         <button type="button" class="btn btn-outline-primary refresh" @click="refresh($emit)">
-          <i class="material-icons">sync</i>
+          <i class="material-icons" id="refresh">sync</i>
         </button>
         <div class="layar"></div>
       </div>
