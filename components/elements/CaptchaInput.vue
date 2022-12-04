@@ -39,7 +39,7 @@ watch(captchaInput, (newVal, oldVAl) => {
 <template>
   <div class="row pt-2">
     <div class="col-7">
-      <div class="captcha outline-primary w-100">
+      <div class="captcha w-100">
         <ClientOnly fallback-tag="span" fallback=". . . . .">
           {{ captchaCode == '' ? '. . . . .' : captchaCode }}
         </ClientOnly>
@@ -100,6 +100,7 @@ input {
   padding-right: 40px;
   text-align: center;
   color: #007c9d;
+  border: 1px solid #2fbdae;
   border-radius: 10px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
