@@ -15,6 +15,7 @@ const keywordsOrder = ref('')
 const totalKeywords = ref('')
 const keywordError = ref('')
 const loadingKeywords = ref(false)
+const showAll = ref(false)
 
 const counter = ref({ characters: 0, words: 0, uniqueWords: 0, sentences: 0, lines: 0, density: {}, densityAll: {} })
 const checker = ref({ characters: 0, words: 0, uniqueWords: 0, densityAll: {} })
@@ -47,8 +48,6 @@ function analizeKeyword() {
       if (data.error) {
         keywordError.value = data.error
       } else {
-
-
         let trimdString = _.trim(data.replace(/\n/g, " ").replace('(', " ").replace(')', " ").toLowerCase())
         checker.value.characters = trimdString.replace(' ', " ").length;
         let wordArr = _.words(trimdString);
@@ -59,6 +58,7 @@ function analizeKeyword() {
       }
     })
 }
+
 </script>
 
 <template>
@@ -137,14 +137,14 @@ function analizeKeyword() {
                         </div>
                       </td>
                       <td class="value">{{ value[1] }} <small class="p-0">({{ (value[1] / counter.words *
-                          100).toFixed(1)
+                      100).toFixed(1)
                       }}%)</small> </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-center" v-if="counter.uniqueWords > 5">
                         <button class="btn btn-link text-primary m-0 p-0" @click.prevent="showModal = true">See All
                           ({{
-                              counter.uniqueWords
+                          counter.uniqueWords
                           }})</button>
                       </td>
                     </tr>
@@ -212,7 +212,7 @@ function analizeKeyword() {
             </div>
             <div class="col-md-6">
               <div class="keywords">
-                <table class="table table table-hover">
+                <table class="table table table-hover mb-0">
                   <thead>
                     <tr>
                       <th>Keyword</th>
@@ -221,15 +221,24 @@ function analizeKeyword() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(value, key) in checker.densityAll">
+                    <tr v-for="(value, key) in checker.densityAll"
+                      :class="(key > (checker.uniqueWords / 100) * 10 && checker.uniqueWords > 30 && !showAll ? 'hiddenItem' : '')">
                       <td>{{ value[0] }}</td>
                       <td>{{ value[1] }}</td>
                       <td>{{ (value[1] / checker.words *
-                          100).toFixed(1)
+                      100).toFixed(1)
                       }}%</td>
                     </tr>
                   </tbody>
                 </table>
+
+                <div v-if="((((checker.uniqueWords / 100) * 10) < checker.uniqueWords))" class="text-center showAll">
+                  <button class="btn btn-link text-primary mt-4" @click="(showAll = true)" v-if="!showAll">Show
+                    All</button>
+                  <button class="btn btn-link text-primary mt-4" @click="(showAll = false)" v-if="showAll">Show
+                    Less</button>
+
+                </div>
               </div>
 
             </div>
@@ -256,7 +265,7 @@ function analizeKeyword() {
             <td>{{ value[0] }}</td>
             <td>{{ value[1] }}</td>
             <td>{{ (value[1] / counter.words *
-                100).toFixed(1)
+            100).toFixed(1)
             }}%</td>
           </tr>
         </tbody>
@@ -274,6 +283,10 @@ function analizeKeyword() {
   border-radius: 5px;
   max-width: 600px;
   margin: auto;
+}
+
+.hiddenItem {
+  display: none;
 }
 
 .keywords td,
