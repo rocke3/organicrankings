@@ -1,3 +1,8 @@
+<script setup>
+useHead({
+	link: [{ body: true, rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap" }],
+});
+</script>
 <template>
 	<div>
 		<PublicNavbar v-once />

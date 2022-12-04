@@ -31,7 +31,9 @@ async function passwordResetRequst(form) {
 				<ElementsInputEmail label="Email" v-model:email="form.email" :required="true" />
 				<ElementsInputEmail label="Confirm Email" v-model:email="form.confemail" class="mt-4" :required="true" />
 				<div class="mt-3">
-					<ElementsCaptchaInput v-model:captchaValid="form.captchaValid" />
+					<ClientOnly fallback-tag="span" fallback="Loading Captcha . . . . .">
+						<ElementsCaptchaInput v-model:captchaValid="form.captchaValid" />
+					</ClientOnly>
 				</div>
 				<div class="text-center mt-2">
 					<button type="submit" class="btn btn-primary w-100 mt-3">Reset</button>

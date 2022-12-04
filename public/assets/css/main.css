@@ -180,6 +180,7 @@ body {
 button:focus:not(:focus-visible),
 .btn-gradient-primary :hover {
 	background: #007c9d;
+	color: #fff;
 }
 
 .btn-check:checked + .btn,

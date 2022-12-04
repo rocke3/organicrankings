@@ -1,8 +1,5 @@
 <script setup>
-import { ref } from 'vue'
-useHead({
-  link: [{ body: true, rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap" }],
-});
+
 defineProps(['captchaValid'])
 defineEmits(['update:captchaValid'])
 
@@ -19,10 +16,10 @@ function refresh($emit) {
 }
 
 function makeCaptcha(length) {
-  var result = '';
-  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
@@ -40,10 +37,7 @@ watch(captchaInput, (newVal, oldVAl) => {
   <div class="row pt-2">
     <div class="col-7">
       <div class="captcha w-100">
-        <ClientOnly fallback-tag="span" fallback=". . . . .">
-          {{ captchaCode == '' ? '. . . . .' : captchaCode }}
-        </ClientOnly>
-
+        {{ captchaCode == '' ? '. . . . .' : captchaCode }}
         <button type="button" class="btn btn-outline-primary refresh" @click="refresh($emit)">
           <i class="material-icons" id="refresh">sync</i>
         </button>

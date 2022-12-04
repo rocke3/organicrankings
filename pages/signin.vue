@@ -55,9 +55,9 @@ if (process.client) {
 				<ElementsInputPassword label="Password" v-model:password="password" class="mt-4" :class="passCls"
 					:required="true" />
 				<div class="mt-3">
-
-					<ElementsCaptchaInput v-model:captchaValid="captcha" />
-
+					<ClientOnly fallback-tag="span" fallback="Loading Captcha . . . . .">
+						<ElementsCaptchaInput v-model:captchaValid="captcha" />
+					</ClientOnly>
 				</div>
 				<div class="form-check form-switch d-flex align-items-center mb-3 mt-4">
 					<input class="form-check-input" type="checkbox" id="rememberMe" />
