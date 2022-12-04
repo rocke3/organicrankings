@@ -1,25 +1,35 @@
 <script setup>
- defineProps({
-		tooltip: "",
+defineProps({
+  tooltip: "",
 });
 </script>
 
 <template>
   <div class="cus-tooltip">
-    <slot />
-    <span class="cus-tooltiptext">{{tooltip}}</span>
+    <div class="toltipHolder">
+      <slot />
+      <span class="cus-tooltiptext">{{ tooltip }}</span>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.toltipHolder {
+  position: relative;
+}
+
 .cus-tooltip {
   position: relative;
   display: inline-block;
 }
 
 .cus-tooltip .cus-tooltiptext {
+
+
   visibility: hidden;
-  width: 220px;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 220px;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -27,12 +37,12 @@
   padding: 5px;
   position: absolute;
   z-index: 10;
-  bottom: 150%;
+  bottom: 30px;
   left: 50%;
-  margin-left: -60px;
+  /* margin-left: -60px; */
   opacity: 0;
   transition: opacity 0.3s;
-  transform: translate(-25%);
+  transform: translate(-50%);
 }
 
 .cus-tooltip .cus-tooltiptext::after {

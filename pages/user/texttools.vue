@@ -9,7 +9,7 @@ const text = ref('')
 
 const showModal = ref(false)
 const todo = ref('counter')
-const website = ref('http://')
+const website = ref('https://organicrankings.com')
 const keywords = ref('')
 const keywordsOrder = ref('')
 const totalKeywords = ref('')
@@ -200,10 +200,11 @@ function analizeKeyword() {
               <div class="keywordCloud">
                 <p class="text-bold mb-1">Keyword Cloud</p>
                 <span v-for="(value, key) in checker.densityAll">
-                  <span class="badge bg-secondary d-inline-block me-1" :title="value[1] + ' (' + (value[1] / checker.words *
-                  100).toFixed(1) + '%)'">
+                  <ElementsTooltip :tooltip="value[1] + ' (' + (value[1] / checker.words *
+                  100).toFixed(1) + '%)'" class="item">
                     {{ value[0] }}
-                  </span>
+                  </ElementsTooltip>
+
                 </span>
               </div>
             </div>
@@ -283,8 +284,13 @@ function analizeKeyword() {
   text-align: center;
 }
 
-.keywordCloud .badge {
+.keywordCloud .item {
   cursor: pointer;
+  padding: 4px 6px;
+  margin: 0 5px 5px 0;
+  border: 1px solid #007c9d;
+  border-radius: 5px;
+  line-height: 1;
 }
 
 .word {
