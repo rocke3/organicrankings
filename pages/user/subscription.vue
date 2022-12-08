@@ -9,7 +9,6 @@ useHead({ title: "Subscription - Organic Rankings" });
 
 <template>
   <div>
-
     <UserSubscription />
   </div>
 </template>

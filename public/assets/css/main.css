@@ -8,7 +8,9 @@ body {
 	color: rgb(226 234 241) !important;
 	text-shadow: rgb(255 255 255 / 66%) 0px 0px 15px;
 }
-
+hr {
+	border-bottom: 1px solid #333;
+}
 .sidenav {
 	z-index: 10 !important;
 }
@@ -149,14 +151,19 @@ body {
 		font-size: 30px;
 	}
 }
+.dark-version img {
+	opacity: 0.85;
+}
 
 /* Color Change */
+a {
+	color: #2fbdae;
+}
+a:hover {
+	color: #007c9d;
+}
 .bg-gradient-primary {
 	background-image: linear-gradient(195deg, #007c9d 0%, #007c9d 100%);
-}
-.btn-primary,
-.btn.bg-gradient-primary,
-.bg-gradient-primary {
 	box-shadow: 0 4px 6px -1px rgb(109 103 228 / 10%), 0 2px 4px -1px rgb(109 103 228 / 6%) !important;
 }
 .shadow-primary {
@@ -168,19 +175,20 @@ body {
 	background: #2fbdae;
 	box-shadow: 0 3px 3px 0 rgba(109, 103, 228, 0.15), 0 3px 1px -2px rgba(109, 103, 228, 0.2), 0 1px 5px 0 rgba(109, 103, 228, 0.15);
 	color: #fff;
-	transition: 0.3s background;
+	transition: 0.3s;
 }
 .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle,
-.btn.bg-gradient-primary:not(:disabled):not(.disabled).active,
-.btn.bg-gradient-primary:not(:disabled):not(.disabled):active,
-.show > .btn.bg-gradient-primary.dropdown-toggle,
-.btn-primary:hover,
-button:focus:not(:focus-visible),
-.btn-gradient-primary :hover {
+.btn-primary:focus:not(:focus-visible) {
 	background: #007c9d;
 	color: #fff;
+}
+.bg-primary,
+.btn-primary:hover,
+.btn-gradient-primary:hover {
+	background: #007c9d;
+	color: #fff;
+	box-shadow: 0 10px 16px -12px rgba(109, 103, 228, 0.4), 0 4px 23px 0 rgba(109, 103, 228, 0.15), 0 8px 10px -5px rgba(109, 103, 228, 0.2) !important;
 }
 
 .btn-check:checked + .btn,
@@ -194,6 +202,11 @@ button:focus:not(:focus-visible),
 }
 .text-primary {
 	color: #2fbdae !important;
+	transition: 0.3s all;
+}
+
+.color-primary {
+	color: #007c9d !important;
 }
 .form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked,
 .form-check:not(.form-switch) .form-check-input[type="radio"]:checked,
@@ -209,6 +222,35 @@ button:focus:not(:focus-visible),
 	background-image: linear-gradient(195deg, #2fbdae 0%, #2fbdae 100%), var(--bs-gradient);
 }
 
-/* Primary #007c9d */
-/* Hover #0088ad */
-/* #6D67E4 */
+/* Scrollbar */
+body::-webkit-scrollbar {
+	width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+	background-color: #394241;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #007c9d;
+	border-radius: 5px;
+}
+
+.navbar-collapse::-webkit-scrollbar {
+	width: 6px;
+}
+
+.navbar-collapse::-webkit-scrollbar-track {
+	border: 1px solid #007c9d;
+	border-radius: 5px;
+}
+
+.navbar-collapse::-webkit-scrollbar-thumb {
+	background-color: #007c9d;
+	border-radius: 5px;
+}
+
+.timeline-step svg,
+.timeline-step i {
+	font-size: 25px;
+}

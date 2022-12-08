@@ -108,7 +108,7 @@ watch(html, async (val) => {
                     <input class="form-check-input me-1" type="checkbox" v-model="item.value"
                       @click="minify = (item.name == 'collapseWhitespace') ? true : false;">
                     <ElementsTooltip :tooltip="item.toltip">
-                      {{item.label}}
+                      {{ item.label }}
                     </ElementsTooltip>
                   </label>
                 </div>

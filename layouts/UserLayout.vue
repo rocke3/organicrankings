@@ -1,7 +1,5 @@
 <script setup>
-import UserSidebar from "../components/user/UserSidebar.vue";
-import UserFooter from "../components/user/UserFooter.vue";
-import UserNavbar from "../components/user/UserNavbar.vue";
+
 
 </script>
 

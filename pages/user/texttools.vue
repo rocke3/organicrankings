@@ -137,14 +137,14 @@ function analizeKeyword() {
                         </div>
                       </td>
                       <td class="value">{{ value[1] }} <small class="p-0">({{ (value[1] / counter.words *
-                      100).toFixed(1)
+                          100).toFixed(1)
                       }}%)</small> </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-center" v-if="counter.uniqueWords > 5">
                         <button class="btn btn-link text-primary m-0 p-0" @click.prevent="showModal = true">See All
                           ({{
-                          counter.uniqueWords
+                              counter.uniqueWords
                           }})</button>
                       </td>
                     </tr>
@@ -226,7 +226,7 @@ function analizeKeyword() {
                       <td>{{ value[0] }}</td>
                       <td>{{ value[1] }}</td>
                       <td>{{ (value[1] / checker.words *
-                      100).toFixed(1)
+                          100).toFixed(1)
                       }}%</td>
                     </tr>
                   </tbody>
@@ -265,7 +265,7 @@ function analizeKeyword() {
             <td>{{ value[0] }}</td>
             <td>{{ value[1] }}</td>
             <td>{{ (value[1] / counter.words *
-            100).toFixed(1)
+                100).toFixed(1)
             }}%</td>
           </tr>
         </tbody>

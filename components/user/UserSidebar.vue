@@ -10,6 +10,24 @@ function signout() {
 
 const menuItems = [
 	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
+	{
+		name: 'SEO Improve', path: '/user/seoimprove/', icon: 'speed', dropdown:
+			[
+				{ name: 'SEO Practices', path: '/user/seoimprove/seopractices' },
+				{ name: 'SEO Guides', path: '/user/seoimprove/seoguides' },
+				{ name: 'Step 1', path: '/user/seoimprove/step1' },
+				{ name: 'Step 2', path: '/user/seoimprove/step2' },
+				{ name: 'Step 3', path: '/user/seoimprove/step3' },
+				{ name: 'Step 4', path: '/user/seoimprove/step4' },
+				{ name: 'Step 5', path: '/user/seoimprove/step5' },
+				{ name: 'Step 6', path: '/user/seoimprove/step6' },
+				{ name: 'Step 7', path: '/user/seoimprove/step7' },
+				{ name: 'Step 8', path: '/user/seoimprove/step8' },
+				{ name: 'Step 9', path: '/user/seoimprove/step9' },
+				{ name: 'Step 10', path: '/user/seoimprove/step10' },
+				{ name: 'Step 11', path: '/user/seoimprove/step11' },
+			]
+	},
 	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
@@ -27,6 +45,17 @@ async function logoutRequest() {
 		router.push("/signin");
 	}
 }
+function dropdown($event) {
+	let showed = document.querySelector('.hasChild.show'),
+		hasChaild = $event.target.closest('.hasChild')
+	if (showed)
+		showed.classList.remove("show")
+	if (hasChaild)
+		$event.target.closest('.hasChild').classList.add("show")
+}
+onMounted(() => {
+	document.querySelector('.router-link-exact-active').closest('.hasChild').classList.add("show")
+});
 </script>
 
 <template>
@@ -43,11 +72,22 @@ async function logoutRequest() {
 		<hr class="horizontal light mt-0 mb-2" />
 		<div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
 			<ul class="navbar-nav">
-				<li class="nav-item" v-for="menuItem in menuItems">
-					<NuxtLink :to="menuItem.path" class="nav-link text-white">
+				<li class="nav-item " v-for="menuItem in menuItems" :class="menuItem.dropdown ? 'hasChild' : ''"
+					@click="dropdown($event)">
+					<NuxtLink :to="menuItem.path" class="nav-link text-white main">
 						<i class="material-icons opacity-10">{{ menuItem.icon }}</i> {{ menuItem.name }}
 					</NuxtLink>
+					<div class="dropdown collapse" v-if="menuItem.dropdown">
+						<ul class="nav ">
+							<li class="nav-item" v-for="dropdownItem in menuItem.dropdown">
+								<NuxtLink :to="dropdownItem.path" class="nav-link text-white">
+									<i class="material-icons opacity-10">forward</i> {{ dropdownItem.name }}
+								</NuxtLink>
+							</li>
+						</ul>
+					</div>
 				</li>
+
 			</ul>
 		</div>
 		<div class="sidenav-footer position-absolute w-100 bottom-1 navbar-nav">
@@ -63,8 +103,32 @@ async function logoutRequest() {
 #sidenav-main {
 	margin: 0 !important;
 	border-radius: 0;
-	/* background-image: url("../../assets/images/sidebarbg.jpg");
-	background-size: cover; */
+}
+
+.dropdown {
+	height: 0 !important;
+	display: block;
+	overflow: hidden;
+}
+
+.show .dropdown {
+	height: max-content !important;
+}
+
+.hasChild .nav-link {
+	position: relative;
+}
+
+.hasChild .main:after {
+	content: "\276F";
+	right: 10px;
+	position: absolute;
+	transform: rotate(90deg);
+	transition: .3s all;
+}
+
+.show .main:after {
+	transform: rotate(-90deg);
 }
 
 .nav-item .material-icons {
@@ -90,5 +154,14 @@ async function logoutRequest() {
 
 .router-link-active {
 	background: linear-gradient(195deg, #007c9d 0%, #0088ad 100%);
+}
+
+.nav-item .dropdown {
+	margin-left: 18px;
+	border-left: 2px solid #344767;
+}
+
+.dropdown .nav-link {
+	margin-left: 0;
 }
 </style>
