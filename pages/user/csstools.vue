@@ -173,7 +173,8 @@ watch(css, async (val) => {
 		</div>
 
 		<!-- Modal -->
-		<ElementsCodeModal :showModal="showOutputModal" :body="outputcss" :error="outputError" :progress="progress" />
+		<ElementsCodeModal v-model:showModal="showOutputModal" :body="outputcss" :error="outputError"
+			:progress="progress" />
 
 	</div>
 </template>
