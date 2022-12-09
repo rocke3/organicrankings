@@ -50,12 +50,15 @@ async function logoutRequest() {
 	}
 }
 function dropdown($event) {
-	let showed = document.querySelector('.hasChild.show'),
-		hasChaild = $event.target.closest('.hasChild')
-	if (showed)
-		showed.classList.remove("show")
-	if (hasChaild)
-		$event.target.closest('.hasChild').classList.add("show")
+	let target = $event.target;
+	if (!!target.classList.contains('main')) {
+		let hasChaild = target.closest('.hasChild'),
+			wasShow = hasChaild && hasChaild.classList.contains('show') ? true : false;
+		let showed = document.querySelector('.hasChild.show')
+		showed && showed.classList.remove("show")
+		if (!wasShow && hasChaild)
+			hasChaild.classList.add("show")
+	}
 }
 onMounted(() => {
 	const active = document.querySelector('.router-link-exact-active').closest('.hasChild');
