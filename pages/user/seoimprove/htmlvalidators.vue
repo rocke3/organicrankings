@@ -2,6 +2,10 @@
 import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -22,8 +26,8 @@ useHead({ title: "SEO - Organic Rankings" });
           <div class="col-sm-8 col-md-9">
             <h6>Using HTML Validator</h6>
             <p>Using the HTML Validator in our Developer Tools can help you to remove any HTML errors you may have
-              lurking around from your webpage. This is a great resource for <a
-                href="https://www.organicrankings.com/websitespeed.php">improving website speed</a> while reducing
+              lurking around from your webpage. This is a great resource for <NuxtLink
+                to="/user/seoimprove/websitespeed">improving website speed</NuxtLink> while reducing
               errors. Our software has many useful ways to improve the validation of your html. If you’re looking for a
               web-based tool I recommend using our HTML Validator to remove any errors.</p>
           </div>

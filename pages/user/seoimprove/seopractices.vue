@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -22,12 +25,15 @@ useHead({ title: "SEO - Organic Rankings" });
           <div class="col-sm-8 col-md-9">
             <h6>4 SEO Practices You Should Focus On</h6>
             <p>One of the most important factors in marketing your website is gaining organic rankings since it affects
-              every aspect of your digital marketing, including paid Google and Bing ads. While most people talk about
-              Organic Marketing, they do not always take the time to fully understand how to rank your website properly.
+              every aspect of your digital marketing, including <NuxtLink to="/user/seoimprove/paidads" class="">paid
+                Google and Bing ads</NuxtLink>. While most people talk
+              about Organic Marketing, they do not always take the time to fully understand how to rank your website
+              properly.
               The first step is understanding four factors. The first and most important of these factors by far is
               Relevancy. The second one is coding your website properly for Speed, Performance, Accessibility, Best
-              Practices, and SEO through Lighthouse to measure the quality of the web pages. The third is on-page SEO
-              and the fourth is off-page SEO.</p>
+              Practices, and SEO through Lighthouse to <NuxtLink to="/user/seoimprove/lighthouse" class="">measure the
+                quality of the web pages</NuxtLink>. The third is on-page SEO and the fourth is off-page SEO.
+            </p>
           </div>
         </div>
         <div class="mt-3 px-xl-5">
@@ -47,10 +53,14 @@ useHead({ title: "SEO - Organic Rankings" });
                   website is really about. It also means that everything you put on your website must be information
                   that your users are looking for, find interesting, and want to engage with. Remember, search engines
                   are in the business of serving the best and most relevant content to their users so that they will
-                  keep coming back to them. Give them what they’re looking for and you’ll be rewarded with higher
-                  rankings. Once your website has been deemed relevant by the search engines, new content you put up
-                  will enjoy a boost in the SERPs and improve your overall ROI (Return On Investment). In other words,
-                  create a user experience that you yourself would want to have when searching the web and it’ll pay off
+                  keep coming back to them. Give them what they’re looking for and you’ll be <NuxtLink
+                    to="/user/seoimprove/">rewarded with higher rankings</NuxtLink>. Once your
+                  website has been deemed relevant by the search engines, new content you put up
+                  will enjoy a <NuxtLink to="/user/seoimprove/maintainingrankings">boost in the
+                    SERPs</NuxtLink>
+                  and improve your overall ROI (Return On Investment). In other words,
+                  create a user experience that you yourself would want to have when searching the web and it’ll pay
+                  off
                   every time with higher rankings and happier users.
                 </p>
               </div>
@@ -64,9 +74,11 @@ useHead({ title: "SEO - Organic Rankings" });
                   Why Update Your Code
                 </h6>
                 <p class=" text-justify">
-                  Updating your code with improvements for Lighthouse and correcting errors in your HTML are a perfect
+                  Updating your code with improvements for Lighthouse and <NuxtLink to="/user/seoimprove/codingerrors">
+                    correcting errors in your HTML</NuxtLink> are a perfect
                   way to improve your user experience and prevent some users' inability to use your website. Updates can
-                  include serving images in next-gen formats, avoiding chaining critical requests, adding Critical CSS,
+                  include serving images in next-gen formats, avoiding chaining critical requests, <NuxtLink
+                    to="/user/seoimprove/criticalcss">adding Critical CSS</NuxtLink>,
                   removing duplicate content, displaying elements of the page being hidden between devices through your
                   responsive website designs, etc. Correcting coding issues such as these and following Lighthouse
                   guidelines will dramatically improve your rankings in the SERPs (Search Engine Results Page).
@@ -85,9 +97,11 @@ useHead({ title: "SEO - Organic Rankings" });
                   On-page SEO or often called onpage optimization are the actions you take on your website to improve
                   your webpages for ranking in the search engines. For example, if you want to improve the individual
                   pages on your website, then creating unique and relevant content will give you a big boost. Another
-                  option is improving your image optimization with modern formats such as next-gen formats such as AVIF
+                  option is improving your <NuxtLink to="/user/seoimprove/improvingcontent">image optimization
+                  </NuxtLink> with modern formats such as next-gen formats such as AVIF
                   or WebP, creating relevant and proper length of your title tag and meta descriptions, adding
-                  structured data with well organized pages and inserting rich snippets are some examples.
+                  structured data with well organized pages and inserting <NuxtLink to="/user/seoimprove/richresults">
+                    rich snippets</NuxtLink> are some examples.
                 </p>
               </div>
             </div>
@@ -105,7 +119,8 @@ useHead({ title: "SEO - Organic Rankings" });
                   traffic greater than utilizing just the homepage like many programmers and website owners do. By
                   utilizing off-page SEO you will improve your domain authority if you focus on high quality and
                   relevant backlinks that you obtain from similar websites in your industry, build a strong social media
-                  marketing strategy, quality link building and well designed content with strong external linking.
+                  marketing strategy, quality link building and <NuxtLink to="/user/seoimprove/websitecontent">well
+                    designed content</NuxtLink> with strong external linking.
                   Other types of off-page SEO includes podcasting and video marketing your product or services.
                 </p>
               </div>
@@ -117,7 +132,8 @@ useHead({ title: "SEO - Organic Rankings" });
         <div>
           <h6>Improving your SEO Step by Step</h6>
           <p>The following pages are the step by step processes from our experience from the past 23 years. The advice
-            we give are suggestions for you to implement to help improve your website organically to receive free
+            we give are suggestions for you to implement to help <NuxtLink to="/user/seoimprove/">improve your website
+              organically</NuxtLink> to receive free
             traffic and improve the cost of your paid ads and social media ads. While these suggestions are our based on
             our opinion from years of experience you should understand that this is only a small portion of SEO to help
             you rank but will improve your rankings very quickly This guide is intended to be followed in the exact
@@ -130,7 +146,8 @@ useHead({ title: "SEO - Organic Rankings" });
           </p>
           <p>
             <i class="material-icons color-primary align-text-bottom me-1">login</i>
-            To better understand how to begin basic SEO for your website you can view Guides to SEO Marketing.
+            To better understand how to begin basic SEO for your website you can view<NuxtLink
+              to="/user/seoimprove/seoguides">Guides to SEO Marketing</NuxtLink>.
           </p>
           <div class="my-4">
             <div class="border rounded shadow p-3 text-primary text-bold text-center"

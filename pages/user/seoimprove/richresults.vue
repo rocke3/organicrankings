@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -15,16 +18,17 @@ useHead({ title: "SEO - Organic Rankings" });
       <div class="card-body pb-2">
         <div class="row">
           <div class="col-sm-4 col-md-3 text-center">
-            <img class="img-fluid mb-3" src="https://www.organicrankings.com/assets/improvingcontent.jpg"
-              alt="Improving Website Content" />
+            <img class="img-fluid mb-3" src="https://www.organicrankings.com/assets/richsnippets.jpg"
+              alt="Implementing rich snippets" />
           </div>
           <div class="col-sm-8 col-md-9">
             <h6>Rich Results</h6>
             <p>Rich Results display elements of your website which can include items such as carousels, images, and
-              non-textual elements. Your <a href="https://www.organicrankings.com/userexperience.php">user
-                experience</a> will improve because when you implement rich snippets they tend to have a much higher
+              non-textual elements. Your <NuxtLink to="/user/seoimprove/userexperience">user
+                experience</NuxtLink> will improve because when you implement rich snippets they tend to have a much
+              higher
               click-through rate. Below I will break down and explain the different Rich Results that you should focus
-              on for <a href="https://www.organicrankings.com/websitecontent.php">improving your rankings</a>.</p>
+              on for <NuxtLink to="/user/seoimprove/websitecontent">improving your rankings</NuxtLink>.</p>
             <p>While there are many types of formats for a Programmable Search Engine to recognize you will need to know
               which ones area used when you generate a rich snippet. It has its own algorithm and policies and decides
               on which ones will be displayed to its users. So if you use the incorrect element for your structured data
@@ -43,8 +47,8 @@ useHead({ title: "SEO - Organic Rankings" });
           <h6>Setting Up Reviews</h6>
           <p>When it comes to reviews, I rarely see many companies set this up correctly. When you collect reviews you
             should not combine them all into one file and then display them on each page. By doing this you not only
-            change the relevancy of the page but you create <a
-              href="https://www.organicrankings.com/improvingcontent.php">duplicate content on each web page</a>. So,
+            change the relevancy of the page but you create <NuxtLink to="/user/seoimprove/improvingcontent">duplicate
+              content on each web page</NuxtLink>. So,
             for example, if you have a list of reviews from customers from previous hotel reservations that they made
             with you then you will want to separate them according to each city they booked it in. You would not want
             “Walt Disney World Dolphin Resort” reviews showing up on a page about hotels in Anchorage, Alaska, right?
@@ -145,8 +149,8 @@ useHead({ title: "SEO - Organic Rankings" });
               src="https://www.organicrankings.com/assets/homepagemarkup.jpg" alt="Schema for Homepage" />
           </div>
           <p>Here is an example of a Homepage Markup you can use. Just make sure you modify the content of it to your
-            website information including what type of business you are, which can be reviewed here Schema.org Type -
-            Organization:</p>
+            website information including what type of business you are, which can be reviewed here <a
+              href="https://schema.org/Organization" target="_blank">Schema.org Type - Organization</a>:</p>
 
 
           <UserSignupAction>Get the code for Homepage Markup for your website</UserSignupAction>

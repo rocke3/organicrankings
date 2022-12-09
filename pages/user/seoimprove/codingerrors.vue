@@ -2,6 +2,10 @@
 import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -26,12 +30,13 @@ useHead({ title: "SEO - Organic Rankings" });
               user experience due to poorly visible pages and functions, helps users not land on 404 error pages,
               prevents pages that are uncrawlable, and prevents sites that are hackable.</p>
             <p><i class="material-icons color-primary align-text-bottom me-1">login</i> To better understand what areas
-              you need to improve including code errors you can view our SEO Website Auditing.</p>
+              you need to improve including code errors you can view our <NuxtLink
+                to="https://www.organicrankings.com/websiteaudits.php">SEO Website Auditing</NuxtLink>.</p>
           </div>
         </div>
         <div class="mt-3 px-xl-5">
           <h6>Inspect Element for Chrome or Safari</h6>
-          <p>To quickly improve your <a href="https://www.organicrankings.com/lighthouse.php">Lighthouse errors</a> I
+          <p>To quickly improve your <NuxtLink to="/user/seoimprove/lighthouse">Lighthouse errors</NuxtLink> I
             always suggest using Inspect Element. Inspect Element is a feature that comes already installed on most
             modern browsers such as Chrome or Safari where you can view and edit the HTML, CSS and Javascript and see
             your changes in a test environment. It allows you to make changes to the page and then view what it will
@@ -86,20 +91,37 @@ useHead({ title: "SEO - Organic Rankings" });
 
           <h6>Website Visibility</h6>
           <p>Improve your understanding of your marketing needs with all-in-one tool suites that helps you improve your
-            website visibility, your primary website topic from an SEO standpoint, <a
-              href="https://www.organicrankings.com/paidads.php">PPC ad campaigns</a>, competitive
+            website visibility, your primary website topic from an SEO standpoint, <NuxtLink
+              to="/user/seoimprove/paidads">PPC ad campaigns</NuxtLink>, competitive
             research, and more. It is also an excellent resource for discovering poor quality links pointing toward your
             website that you can utilize to add to the disavow tool.</p>
+
+          <h6>Insights on Website</h6>
+          <p>Get insights on your website to improve your business and explore your website by scanning for SEO issues
+            and performs audits on how to <NuxtLink to="/user/seoimprove/seopractices">improve your site rankings
+            </NuxtLink>.</p>
 
           <h6>SEO Crawler</h6>
           <p>Analyze your website and improve your pages. As an SEO crawler and log analyzer you will find the
             improvements it has to offer helpful to understanding your marketing needs.</p>
+
+          <h6>Disavow Tools</h6>
+          <p>Disavow links are a method used to remove harmful links that are pointing towards your website which could
+            damage your rankings with low-quality links. Search engines offer you a way to remove these backlinks coming
+            to your website by using your account to identify links pointing toward your website so you can decide which
+            links you would like to remove. When adding links to your disavow list, I recommend using SEMrush which has
+            its own tool that locates links from around the web that point back to your website. It classifies links as
+            either harmful or safe by a ranking scale which ultimately lets you decide which links you want to keep or
+            remove. Once you compile a list of harmful links that you do not want pointing toward your website then you
+            can manually upload a file or automate into the disavow tools to request them not allow the links to be
+            counted against you.</p>
           <p>You should note that sometimes different search engines and software will show very different harmful links
             to disavow so you must manually create a list for each one if you want to catch every possible bad link
             pointing toward your website. If this seems like too much work you can just connect your SEMrush account to
             the Google Console (a feature already built into your SEMrush account) and it will do this for you
-            automatically. Be careful using the disavow tools as removing bad links can improve your rankings but
-            removing good links can harm your rankings.</p>
+            automatically. Be careful using the disavow tools as removing bad links can <NuxtLink
+              to="/user/seoimprove/seorankings">improve your rankings</NuxtLink> but removing good links can harm your
+            rankings.</p>
 
 
         </div>

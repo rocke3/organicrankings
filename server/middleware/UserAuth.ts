@@ -19,6 +19,8 @@ export default defineEventHandler(async (event) => {
 		});
 
 		if (path[1] == "user" && !verify) {
+			cookie.remove(req, cookie.name.JWT);
+			cookie.remove(req, cookie.name.AGENT);
 			redirect(res, "/");
 		}
 	} else if (path[1] == "user") {

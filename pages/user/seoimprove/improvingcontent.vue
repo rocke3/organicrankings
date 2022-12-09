@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -69,7 +72,8 @@ useHead({ title: "SEO - Organic Rankings" });
               Orlando”)</li>
           </ul>
 
-          <p>As one of the top 3 ranking factors, RankBrain, a component of the core algorithm, teaches itself (machine
+          <p>As one of the top 3 ranking factors, RankBrain, a component of the <NuxtLink
+              to="/user/seoimprove/maintainingrankings">core algorithm</NuxtLink>, teaches itself (machine
             learning) based upon data input by users of the search engine. Then RankBrain analyzes customers' search
             queries and tries to understand what exactly they are searching for no matter how they may ask for it. The
             search query can be short or long, it does not matter, the search results will only show the relevant
@@ -159,7 +163,8 @@ useHead({ title: "SEO - Organic Rankings" });
             example. Notice I took the time to use varying names for the image name and alt tag. Though they mean the
             same thing, views this as relevancy and effort since you took the time to support what the page is about.
           </p>
-          <p>Why is it important to show relevant content with supporting keywords? Imagine if your web page was about
+          <p>Why is it important to <NuxtLink to="/user/seoimprove/seopractices">show relevant content</NuxtLink> with
+            supporting keywords? Imagine if your web page was about
             an airport shuttle service you provide in Cape Canaveral, Florida. If you spammed the entire page with “Cape
             Canaveral Shuttle” or “Space Coast Shuttle” then it might view your page as “NASA’s Space Shuttle at Cape
             Canaveral’s on Florida's Space Coast” and not a shuttle service for the airport. Another example is if you
@@ -216,9 +221,11 @@ useHead({ title: "SEO - Organic Rankings" });
 
           <h6>Strong Tags</h6>
           <p>Bolding a title before a paragraph can help better understand what the paragraph is about and adds to the
-            relevancy of a web page. The more you can improve what the page is about the better it helps it to
+            <NuxtLink to="/user/seoimprove/websitecontent">relevancy of a web page</NuxtLink>. The more you can improve
+            what the page is about the better it helps it to
             understand where to categorize you in the SERPs. So, for example, if the page was about “Orlando hotels”
-            then you could add a paragraph about hotels near theme parks, hotels near convention centers, etc.</p>
+            then you could add a paragraph about hotels near theme parks, hotels near convention centers, etc.
+          </p>
           <p class="text-danger">Disney hotels</p>
           <p class="text-danger">There are many theme hotels surrounding the Walt Disney World Resort area but some of
             the most popular are …</p>

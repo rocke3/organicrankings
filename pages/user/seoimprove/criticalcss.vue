@@ -2,6 +2,10 @@
 import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -20,15 +24,18 @@ useHead({ title: "SEO - Organic Rankings" });
           </div>
           <div class="col-sm-8 col-md-9">
             <h6>Coding for Critical CSS</h6>
-            <p>After you have cleaned up your code with the HTML Validator you will move on to Critical CSS which refers
+            <p>After you have cleaned up your code with the <NuxtLink to="/user/seoimprove/htmlvalidators">HTML
+                Validator</NuxtLink> you will move on to Critical CSS which refers
               to splitting off all of the CSS code for your website that is above the fold (what users can visually view
               on a webpage before they start scrolling) into two separate files.</p>
           </div>
         </div>
         <div class="mt-3 px-xl-5">
           <h6>Why is Critical CSS Important?Why is Critical CSS Important?</h6>
-          <p>Applying Critical CSS to your page allows the page to load quicker and it also improves the CLS (Cumulative
-            Layout Shift) of each webpage. CLS is how your web page visually shifts and moves as the page elements are
+          <p>Applying Critical CSS to your page allows the page to load quicker and it also <NuxtLink
+              to="/user/seoimprove/richresults">improves the CLS (Cumulative
+              Layout Shift)</NuxtLink> of each webpage. CLS is how your web page visually shifts and moves as the page
+            elements are
             being loaded. The results of improving your CLS can be tested in Lighthouse, which is a ranking signal with
             search engines. You can improve the render times of you website with <a
               href="https://web.dev/extract-critical-css/" target="_blank">implementing critical CSS technique</a>.</p>
@@ -65,8 +72,8 @@ useHead({ title: "SEO - Organic Rankings" });
             loading the page but this is not usually the case.</p>
 
           <h6>Critical CSS’s Improved Service</h6>
-          <p>Reduce the CSS on your web page and <a href="https://www.organicrankings.com/websitespeed.php">improve the
-              speed of your website</a> by reducing the amount of CSS being captured above the fold.</p>
+          <p>Reduce the CSS on your web page and <NuxtLink to="/user/seoimprove/websitespeed">improve the
+              speed of your website</NuxtLink> by reducing the amount of CSS being captured above the fold.</p>
           <p>How to use it: Create an account and insert the URL you are wanting to create the Critical CSS file for.
             Once the files are created insert the files on your website.</p>
           <p>Once you complete this process, it will split your CSS code into two separate files. You will take the
@@ -75,8 +82,8 @@ useHead({ title: "SEO - Organic Rankings" });
             result in a much lower CLS. The remainder of the CSS you will add closer towards the footer of the page so
             it loads last since it is irrelevant to anything above the fold. If you have scripts that need to be
             pre-loaded for the CSS to function, be sure to manually remove them from the footer and add them back to the
-            Critical CSS file above the fold. You can <a href="https://www.organicrankings.com/lighthouse.php">test this
-              in Lighthouse</a> to see the improvements to your website
+            Critical CSS file above the fold. You can <NuxtLink to="/user/seoimprove/lighthouse">test this
+              in Lighthouse</NuxtLink> to see the improvements to your website
             speed and CLS (Cumulative Layout Shift) which you will learn about in a later chapter.</p>
 
           <h6>Removing Unused Javascript and CSS</h6>

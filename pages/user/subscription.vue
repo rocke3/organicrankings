@@ -2,8 +2,6 @@
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "Subscription - Organic Rankings" });
 
-
-
 </script>
 
 

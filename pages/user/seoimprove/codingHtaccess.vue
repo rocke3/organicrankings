@@ -1,7 +1,11 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
+import htaccess from "./htaccess";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -21,8 +25,8 @@ useHead({ title: "SEO - Organic Rankings" });
           </div>
           <div class="col-sm-8 col-md-9">
             <h6>Coding for htaccess</h6>
-            <p>Having an htaccess file that is properly configured will help you to dramatically <a
-                href="https://www.organicrankings.com/websitespeed.php">improve your site's speed</a> as it controls the
+            <p>Having an htaccess file that is properly configured will help you to dramatically <NuxtLink
+                to="/user/seoimprove/websitespeed">improve your site's speed</NuxtLink> as it controls the
               functionality of your website and its interaction with the web. If you do not
               have any other scripts on your server or site that are compressing your files or are adding a cache length
               to your files then you will want to change or update your htaccess code to improve the speed of your
@@ -42,6 +46,10 @@ useHead({ title: "SEO - Organic Rankings" });
           </div>
         </div>
         <div class="mt-3 px-xl-5">
+
+          <span class="form-control px-3" style="background: #eee;">
+            <code><pre>{{ htaccess }}</pre></code>
+          </span>
           <UserSignupAction>Get the code for htaccess for speed for your website</UserSignupAction>
 
 

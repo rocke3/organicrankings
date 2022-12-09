@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -36,8 +39,9 @@ useHead({ title: "SEO - Organic Rankings" });
           <div class="col-sm-8 col-md-9">
             <h6>Coding for Lighthouse</h6>
             <p>After you have split your CSS code for Critical CSS, you will want to run your website through a tool
-              called Lighthouse to improve the overall <a href="https://www.organicrankings.com/websitespeed.php">speed
-                of your website</a> and correct any coding errors. Lighthouse is a very sophisticated software that will
+              called Lighthouse to improve the overall <NuxtLink to="/user/seoimprove/websitespeed">speed
+                of your website</NuxtLink> and correct any coding errors. Lighthouse is a very sophisticated software
+              that will
               analyze each single page on your website for improvements you can make to your website’s code in the
               optimization categories of Performance, Best Practices, Accessibility and SEO for mobile and desktop
               devices. Fixing issues found by your Lighthouse audit may take some time to update and can be complicated
@@ -54,8 +58,9 @@ useHead({ title: "SEO - Organic Rankings" });
         <div class="mt-3 px-xl-5">
 
           <p>Below is a screenshot of the top half of the Lighthouse audit for the website OrganicRankings.com showing
-            100% across all sections. If you <a href="https://www.organicrankings.com/codingerrors.php">correct all of
-              the coding errors</a> in Lighthouse and reach 100% on all of the optimization categories you will see a
+            100% across all sections. If you <NuxtLink to="/user/seoimprove/codingerrors">correct all of
+              the coding errors</NuxtLink> in Lighthouse and reach 100% on all of the optimization categories you will
+            see a
             visual animated fireworks display on the Lighthouse testing tool indicating that you have fully completed
             the corrections:</p>
 
@@ -91,7 +96,8 @@ useHead({ title: "SEO - Organic Rankings" });
           <p>The SEO category of Lighthouse shows users the usability of the web pages for improving your rankings that
             has 15 audits that you will need to pass to complete.</p>
           <p><i class="material-icons color-primary align-text-bottom me-1">login</i> To better understand what code you
-            will need to update on your website you can view Lighthouse audit updates.</p>
+            will need to update on your website you can view <NuxtLink to="/user/seoimprove/lighthouseaudits">Lighthouse
+              audit updates</NuxtLink>.</p>
 
           <h6>How to use Lighthouse in Chrome DevTools</h6>
           <p>Install the Lighthouse tool on your Chrome browser with the following links below. You will want to load

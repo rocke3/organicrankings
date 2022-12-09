@@ -15,17 +15,21 @@ const menuItems = [
 			[
 				{ name: 'SEO Practices', path: '/user/seoimprove/seopractices' },
 				{ name: 'SEO Guides', path: '/user/seoimprove/seoguides' },
-				{ name: 'Step 1', path: '/user/seoimprove/step1' },
-				{ name: 'Step 2', path: '/user/seoimprove/step2' },
-				{ name: 'Step 3', path: '/user/seoimprove/step3' },
-				{ name: 'Step 4', path: '/user/seoimprove/step4' },
-				{ name: 'Step 5', path: '/user/seoimprove/step5' },
-				{ name: 'Step 6', path: '/user/seoimprove/step6' },
-				{ name: 'Step 7', path: '/user/seoimprove/step7' },
-				{ name: 'Step 8', path: '/user/seoimprove/step8' },
-				{ name: 'Step 9', path: '/user/seoimprove/step9' },
-				{ name: 'Step 10', path: '/user/seoimprove/step10' },
-				{ name: 'Step 11', path: '/user/seoimprove/step11' },
+				{ name: 'Step 1', path: '/user/seoimprove/websitecontent' },
+				{ name: 'Step 2', path: '/user/seoimprove/improvingcontent' },
+				{ name: 'Step 3', path: '/user/seoimprove/richresults' },
+				{ name: 'Step 4', path: '/user/seoimprove/userexperience' },
+				{ name: 'Step 5', path: '/user/seoimprove/htmlvalidators' },
+				{ name: 'Step 6', path: '/user/seoimprove/criticalcss' },
+				{ name: 'Step 7', path: '/user/seoimprove/codingHtaccess' },
+				{ name: 'Step 8', path: '/user/seoimprove/lighthouse' },
+				{ name: 'Step 9', path: '/user/seoimprove/codingerrors' },
+				{ name: 'Step 10', path: '/user/seoimprove/websitespeed' },
+				{ name: 'Step 11', path: '/user/seoimprove/maintainingrankings' },
+				{ name: 'Website Laws', path: '/user/seoimprove/websitelaws' },
+				{ name: 'Paid Ads', path: '/user/seoimprove/paidads' },
+				{ name: 'Search Conferences', path: '/user/seoimprove/searchconferences' },
+				{ name: 'SEO Avenues', path: '/user/seoimprove/seoavenues' },
 			]
 	},
 	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
@@ -54,7 +58,9 @@ function dropdown($event) {
 		$event.target.closest('.hasChild').classList.add("show")
 }
 onMounted(() => {
-	document.querySelector('.router-link-exact-active').closest('.hasChild').classList.add("show")
+	const active = document.querySelector('.router-link-exact-active').closest('.hasChild');
+	if (active)
+		active.classList.add("show")
 });
 </script>
 

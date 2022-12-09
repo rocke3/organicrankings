@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -22,13 +25,13 @@ useHead({ title: "SEO - Organic Rankings" });
             <h6>Speed Up Your Website</h6>
             <p>Speed is an important factor in ranking your website but also in retaining customers and improving your
               ROI. If you have made the changes explained in this book up to this point and have implemented items such
-              as Critical CSS, optimized your website, fixed issues and errors in your code including with <a
-                href="https://www.organicrankings.com/htmlvalidators.php">HTML Validator</a>, corrected issues in <a
-                href="https://www.organicrankings.com/lighthouse.php">Lighthouse</a> and changed your <a
-                href="https://www.organicrankings.com/htaccess.php">.htaccess file</a> to compress files and created a
-              cache length on them then you should have already seen a dramatic <a
-                href="https://www.organicrankings.com/websitespeed.php">improvement on your page speed</a> by the
-              time you get to this section.</p>
+              as Critical CSS, optimized your website, fixed issues and errors in your code including with <NuxtLink
+                to="/user/seoimprove/htmlvalidators">HTML Validator</NuxtLink>, corrected issues in
+              <NuxtLink to="/user/seoimprove/lighthouse">Lighthouse</NuxtLink> and changed your
+              <NuxtLink to="/user/seoimprove/codingHtaccess">.htaccess file</NuxtLink> to compress files
+              and created a cache length on them then you should have already seen a dramatic improvement on your page
+              speed by the time you get to this section.
+            </p>
             <p>If you are seeing improvement in speed but having a hard time speeding up your website to your desired
               goals then there could be other issues to resolve. If you have a database driven website such as
               WordPress, Joomla and Magento then it will be naturally slow as it is rendering each page as it is

@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -40,7 +43,7 @@ useHead({ title: "SEO - Organic Rankings" });
             To test whether your site is in the search engines, you can do this basic test: type site: [your site’s URL]
             into the SERPs. If your site shows up as one of the first results, then your site is on the search engines.
           </p>
-          <p class="text-bold">
+          <p class="mb-1">
             There may be a number of reasons why your site isn’t on search egnines:
           </p>
           <ul>

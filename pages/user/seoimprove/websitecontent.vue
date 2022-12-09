@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -16,8 +19,8 @@ useHead({ title: "SEO - Organic Rankings" });
       <div class="card-body pb-2">
         <div class="row">
           <div class="col-sm-4 col-md-3 text-center">
-            <img class="img-fluid mb-3" src="https://www.organicrankings.com/assets/seotechniques.jpg"
-              alt="Website Content" />
+            <img class="img-fluid mb-3" src="https://www.organicrankings.com/assets/websitecontent.jpg"
+              alt="Improving Website Content" />
           </div>
           <div class="col-sm-8 col-md-9">
             <h6>About Website Content</h6>
@@ -37,7 +40,8 @@ useHead({ title: "SEO - Organic Rankings" });
               ends up being that website owners get their pages penalized with lower rankings or banned from the search
               engine altogether. This is why following the guidelines and rules (published and unpublished) can help
               make or break your website’s race to the top of the SERPs. Below are some basic rules and ranking signals
-              to follow that will immediately improve your website relevancy, resulting in better rankings.</p>
+              to follow that will immediately <NuxtLink to="/user/seoimprove/seopractices">improve your website
+                relevancy</NuxtLink>, resulting in better rankings.</p>
           </div>
         </div>
         <div class="mt-3 px-xl-5">
@@ -99,7 +103,8 @@ useHead({ title: "SEO - Organic Rankings" });
           </p>
           <p>Notice that the link above does not connect to the homepage of Hotels.com but to their actual page for
             Orlando hotels? This is how you handle internal links on your website as well. Connecting relevant pages
-            with supporting keyphrases is how you create link juice and will help boost your website in the SERPs.</p>
+            with supporting keyphrases is how you <NuxtLink to="/user/seoimprove/improvingcontent">create link juice
+            </NuxtLink> and will help boost your website in the SERPs.</p>
           <p>We previously discussed issues with using repetitive commas in a sentence but the same goes for links as
             well. If search engines view many links grouped on a page in a row it can be interpreted as spam. If you
             have to list links on a page in a row then you should be smart and cautious about how you list them. Take,
@@ -146,7 +151,8 @@ useHead({ title: "SEO - Organic Rankings" });
           <p>Another rule to keep in mind is that search bots will not read past 100 links on a page so if you are
             considering overloading links on a single page you may want to change the way you are building the pages.
             You should consider splitting them off into separate pages or even separate categories. This is where site
-            structure and utilizing Breadcrumb Markup can come into play which you will learn about in a later chapter.
+            structure and utilizing <NuxtLink to="/user/seoimprove/richresults">Breadcrumb Markup</NuxtLink> can come
+            into play which you will learn about in a later chapter.
           </p>
         </div>
         <div class="my-4">

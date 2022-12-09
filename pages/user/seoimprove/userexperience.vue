@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -21,8 +24,8 @@ useHead({ title: "SEO - Organic Rankings" });
           <div class="col-sm-8 col-md-9">
             <h6>Testing What Your Users See</h6>
             <p>It is important for website owners to understand what their customers see when they come to their
-              website. User Experience is one of <a href="https://www.organicrankings.com/seopractices.php">highest
-                ranking factors</a>, especially RankBrain, so you should pay close
+              website. User Experience is one of <NuxtLink to="/user/seoimprove/seopractices">highest
+                ranking factors</NuxtLink>, especially RankBrain, so you should pay close
               attention to it. Below are some of the best programs I have used to measure User (UX) Experience. You will
               get an overview of what they see and discover issues you might be overlooking on your website so you can
               provide more relevant results from your web pages for search engine queries.</p>
@@ -41,7 +44,7 @@ useHead({ title: "SEO - Organic Rankings" });
             your website. It is an excellent tool for finding issues with desktop and mobile devices which will analyze
             the data so you know how to improve your customer UX experience.</p>
           <p>It is important to make sure that you are not violating any laws when using visual analytics tools such as
-            with the <a href="https://www.organicrankings.com/websitelaws.php">GDPR and CCPA Compliance</a> which you
+            with the <NuxtLink to="/user/seoimprove/websitelaws">GDPR and CCPA Compliance</NuxtLink> which you
             can disclose in your privacy policy and Compliance and Consent software which you will learn about in a
             later chapter. When using the software you must also hide private customer information and credit cards if
             you are recording customers coming through your website and then note that you are using the software in
@@ -51,8 +54,8 @@ useHead({ title: "SEO - Organic Rankings" });
 
           <h6>XML Sitemaps</h6>
           <p>An xml sitemap is designed to list a website’s most important pages so that Google and Bing can crawl them
-            all. It can also help the search engines understand your <a
-              href="https://www.organicrankings.com/richresults.php">website structure</a>. If you did not properly link
+            all. It can also help the search engines understand your <NuxtLink to="/user/seoimprove/richresults">website
+              structure</NuxtLink>. If you did not properly link
             all of your pages when you built your website this will help get your pages crawled.</p>
 
           <h6>Compare Code</h6>

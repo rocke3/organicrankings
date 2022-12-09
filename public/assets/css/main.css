@@ -157,10 +157,12 @@ hr {
 
 /* Color Change */
 a {
-	color: #2fbdae;
+	color: #007c9d;
+	font-weight: 400;
+	transition: 0.3s color;
 }
 a:hover {
-	color: #007c9d;
+	color: #2fbdae;
 }
 .bg-gradient-primary {
 	background-image: linear-gradient(195deg, #007c9d 0%, #007c9d 100%);

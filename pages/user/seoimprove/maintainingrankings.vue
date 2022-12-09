@@ -1,7 +1,10 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+onMounted(() => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
 </script>
  
 <template>
@@ -16,8 +19,8 @@ useHead({ title: "SEO - Organic Rankings" });
       <div class="card-body pb-2">
         <div class="row">
           <div class="col-sm-4 col-md-3 text-center">
-            <img class="img-fluid mb-3" src="https://www.organicrankings.com/assets/userexperience.jpg"
-              alt="SEO UX Experience" />
+            <img class="img-fluid mb-3" src="https://www.organicrankings.com/assets/maintainingrankings.jpg"
+              alt="Maintain Rankings for Website" />
           </div>
           <div class="col-sm-8 col-md-9">
             <div class="border rounded shadow p-3 text-primary text-bold text-center" style="margin: auto;">
@@ -35,8 +38,8 @@ useHead({ title: "SEO - Organic Rankings" });
         </div>
         <div class="mt-3 px-xl-5">
           <h6>Maintaining Your Rankings</h6>
-          <p>Once you have gone through the initial process of <a
-              href="https://www.organicrankings.com/seorankings.php">optimizing your website</a> properly for organic
+          <p>Once you have gone through the initial process of <NuxtLink to="/user/seoimprove/">optimizing your website
+            </NuxtLink> properly for organic
             rankings, you’ll want to be sure to also maintain all of the good work you’ve just done in order to continue
             reaping the rewards in the long term. The steps I’ve outlined below are things you will want to do on a
             weekly, bi-weekly or monthly basis.</p>
