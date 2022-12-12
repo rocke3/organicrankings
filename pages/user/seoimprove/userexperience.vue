@@ -59,7 +59,7 @@ useHead({ title: "SEO - Organic Rankings" });
             issues:</p>
 
 
-          <UserSignupAction>Subscribe to use our Compare Code software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Compare Code software</UserSubscribeAction>
 
           <h6>Website Authority Checker</h6>
           <p>If you want to view how your website’s strength is measured, you can test it and see how it compares to

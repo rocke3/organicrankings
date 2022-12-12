@@ -102,19 +102,10 @@ useHead({ title: "SEO - Organic Rankings" });
             your paid ads, it is much more than just a simple bidding system.</p>
 
         </div>
-        <div class="my-4">
-          <div class="border rounded shadow p-3 text-primary text-bold text-center"
-            style="max-width: 700px;margin: auto;">
-            <h6 class="text-bold">
-              The above information is a brief explanation of this technique. To learn more about
-              how we can help your company improve its rankings in the SERPs, contact our team below.
-            </h6>
-            <div class="mt-3">
-              <a class="btn btn-primary me-3" href="">Get Help</a>
-              <a class="btn btn-primary d-inline-block" href="">hire an expert</a>
-            </div>
-          </div>
-        </div>
+        <UserGetHelpOrHire>
+          The above information is a brief explanation of this technique. To learn more about
+          how we can help your company improve its rankings in the SERPs, contact our team below.
+        </UserGetHelpOrHire>
       </div>
     </div>
   </div>

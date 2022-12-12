@@ -75,16 +75,12 @@ useHead({ title: "JS Tools - Organic Rankings" });
                   your results and see first hand the improvements you made and let time take over as your website pages
                   cycle through the different algorithms of Google such as Panda, Penguin, Hummingbird, Pigeon, Possum,
                   Fred, RankBrain, and Google’s core updates.</p>
-                <div class=" my-4">
-                  <div class="border rounded shadow p-3 text-primary text-bold text-center">
-                    <h6 class="text-bold">To learn more
-                      about how we can help your company improve its rankings in the SERPs, contact our team below.</h6>
-                    <div class="mt-3">
-                      <a class="btn btn-primary me-3" href="">Get Help</a>
-                      <a class="btn btn-primary d-inline-block" href="">hire an expert</a>
-                    </div>
-                  </div>
-                </div>
+
+                <UserGetHelpOrHire>
+                  To learn more about how we can help your company improve its rankings in the SERPs, contact our team
+                  below.
+                </UserGetHelpOrHire>
+
               </div>
 
               <div class="mt-4 col-lg-5 col-xxl-4">

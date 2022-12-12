@@ -71,7 +71,7 @@ useHead({ title: "SEO - Organic Rankings" });
           </div>
 
 
-          <UserSignupAction>Get the code for Review Snippet for your website</UserSignupAction>
+          <UserSubscribeAction>Get the code for Review Snippet for your website</UserSubscribeAction>
 
           <p>There are paid subscription services that will offer you the ability to create reviews for your website.
             What many website owners and coders do not realize is that some of those companies may post your reviews
@@ -107,7 +107,7 @@ useHead({ title: "SEO - Organic Rankings" });
           </div>
 
 
-          <UserSignupAction>Get the code for Breadcrumb Markup for your website</UserSignupAction>
+          <UserSubscribeAction>Get the code for Breadcrumb Markup for your website</UserSubscribeAction>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow" src="https://www.organicrankings.com/assets/breadcrumb.jpg"
@@ -128,7 +128,7 @@ useHead({ title: "SEO - Organic Rankings" });
             add something similar to the following with the content modified to the FAQ’s for your customers:</p>
 
 
-          <UserSignupAction>Get the code for FAQ Schema for your website</UserSignupAction>
+          <UserSubscribeAction>Get the code for FAQ Schema for your website</UserSubscribeAction>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow" src="https://www.organicrankings.com/assets/faqschema.jpg"
@@ -149,22 +149,13 @@ useHead({ title: "SEO - Organic Rankings" });
               href="https://schema.org/Organization" target="_blank">Schema.org Type - Organization</a>:</p>
 
 
-          <UserSignupAction>Get the code for Homepage Markup for your website</UserSignupAction>
+          <UserSubscribeAction>Get the code for Homepage Markup for your website</UserSubscribeAction>
 
         </div>
-        <div class="my-4">
-          <div class="border rounded shadow p-3 text-primary text-bold text-center"
-            style="max-width: 700px;margin: auto;">
-            <h6 class="text-bold">
-              The above information is a brief explanation of this technique. To learn more about
-              how we can help your company improve its rankings in the SERPs, contact our team below.
-            </h6>
-            <div class="mt-3">
-              <a class="btn btn-primary me-3" href="">Get Help</a>
-              <a class="btn btn-primary d-inline-block" href="">hire an expert</a>
-            </div>
-          </div>
-        </div>
+        <UserGetHelpOrHire>
+          The above information is a brief explanation of this technique. To learn more about
+          how we can help your company improve its rankings in the SERPs, contact our team below.
+        </UserGetHelpOrHire>
       </div>
     </div>
   </div>

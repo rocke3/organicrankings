@@ -377,7 +377,10 @@ useHead({ title: "SEO - Organic Rankings" });
             give your site’s reputation to spammers.</p>
         </div>
 
-
+        <UserGetHelpOrHire>
+          The above information is a brief explanation of this technique. To learn more about
+          how we can help your company improve its rankings in the SERPs, contact our team below.
+        </UserGetHelpOrHire>
 
       </div>
     </div>

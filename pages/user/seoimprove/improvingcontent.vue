@@ -125,7 +125,7 @@ useHead({ title: "SEO - Organic Rankings" });
           <p>I recommend using our Word Count software that keeps track of character count through our online services
             in order to make sure you are following guidelines:</p>
 
-          <UserSignupAction>Subscribe to use our Keyword Density software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Keyword Density software</UserSubscribeAction>
 
           <h6>How To Write a Title Tag or Meta Description</h6>
           <p>When you write your title tag and meta description it should be condensed but be very clear. Remember this
@@ -182,7 +182,7 @@ useHead({ title: "SEO - Organic Rankings" });
             You can access our converting to WebP software by signing up for a subscription for our services:
           </p>
 
-          <UserSignupAction>Subscribe to use our Keyword Density software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Keyword Density software</UserSubscribeAction>
 
           <h6>Canonical Tag</h6>
           <p>Make sure you use a canonical tag on your website. This is a very small piece of code that is designed to
@@ -234,19 +234,10 @@ useHead({ title: "SEO - Organic Rankings" });
             “Orlando hotels”.</p>
 
         </div>
-        <div class="my-4">
-          <div class="border rounded shadow p-3 text-primary text-bold text-center"
-            style="max-width: 700px;margin: auto;">
-            <h6 class="text-bold">
-              The above information is a brief explanation of this technique. To learn more about
-              how we can help your company improve its rankings in the SERPs, contact our team below.
-            </h6>
-            <div class="mt-3">
-              <a class="btn btn-primary me-3" href="">Get Help</a>
-              <a class="btn btn-primary d-inline-block" href="">hire an expert</a>
-            </div>
-          </div>
-        </div>
+        <UserGetHelpOrHire>
+          The above information is a brief explanation of this technique. To learn more about
+          how we can help your company improve its rankings in the SERPs, contact our team below.
+        </UserGetHelpOrHire>
       </div>
     </div>
   </div>

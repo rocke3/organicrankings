@@ -57,7 +57,7 @@ useHead({ title: "SEO - Organic Rankings" });
           <p>You can compress your CSS by using this tool which will remove extra spacing from your CSS code therefore
             improving the speed of your website.</p>
 
-          <UserSignupAction>Subscribe to use our Minify CSS software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Minify CSS software</UserSubscribeAction>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow" src="https://www.organicrankings.com/assets/minifycss.jpg"
@@ -69,7 +69,7 @@ useHead({ title: "SEO - Organic Rankings" });
             improving the speed of your website. You can access our minify HTML software by signing up for a
             subscription for our services.</p>
 
-          <UserSignupAction>Subscribe to use our Minify HTML software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Minify HTML software</UserSubscribeAction>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow"
@@ -82,7 +82,7 @@ useHead({ title: "SEO - Organic Rankings" });
             code therefore improving the speed of your website. You can access our minify JS software by signing up for
             a subscription for our services.</p>
 
-          <UserSignupAction>Subscribe to use our Minify JS software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Minify JS software</UserSubscribeAction>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow" src="https://www.organicrankings.com/assets/minifyjscode.jpg"
@@ -94,7 +94,7 @@ useHead({ title: "SEO - Organic Rankings" });
           <p>You can unminify your JavaScript, CSS, HTML, XML and JSON code so you can go back to reading it easier if
             you have to modify your code again:</p>
 
-          <UserSignupAction>Subscribe to use our Unminify Code software</UserSignupAction>
+          <UserSubscribeAction>Subscribe to use our Unminify Code software</UserSubscribeAction>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow"
