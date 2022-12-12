@@ -2,10 +2,6 @@
 import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
-onMounted(() => {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-});
 </script>
  
 <template>
@@ -53,13 +49,13 @@ onMounted(() => {
           </div>
 
           <h6>Using Performance in Inspector</h6>
-          <P>When using inspector's Chrome DevTools Performance panel you will be able to analyze runtime performance
+          <p>When using inspector's Chrome DevTools Performance panel you will be able to analyze runtime performance
             for your web pages. Developers can use the RAIL model for improving performance goals or the life cycle of a
             web app such as the response, animation, idle, and load. You should be striving for a goal for a response to
             input in under 100 ms but with a goal of 50 ms chunks during idle time. Your goals should be as
             follows:Animation: produce a frame in 10 ms, Idle: maximize idle time and Load: deliver content and become
             interactive in under 5 seconds. Your primary tools to accomplish this should be with Chrome DevTools and
-            Lighthouse.</P>
+            Lighthouse.</p>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow"
@@ -67,9 +63,9 @@ onMounted(() => {
           </div>
 
 
-          <H6>Using Performance Insights</H6>
-          <P>When using Performance Insights you can record each page to discover new improvements and issues such as
-            page load, streamlining data on a page and an analysis of fixes needed on a page.</P>
+          <h6>Using Performance Insights</h6>
+          <p>When using Performance Insights you can record each page to discover new improvements and issues such as
+            page load, streamlining data on a page and an analysis of fixes needed on a page.</p>
 
           <div class=" text-center mb-4">
             <img class=" img-fluid border rounded shadow"
@@ -120,7 +116,8 @@ onMounted(() => {
             pointing toward your website. If this seems like too much work you can just connect your SEMrush account to
             the Google Console (a feature already built into your SEMrush account) and it will do this for you
             automatically. Be careful using the disavow tools as removing bad links can <NuxtLink
-              to="/user/seoimprove/seorankings">improve your rankings</NuxtLink> but removing good links can harm your
+              to="https://www.organicrankings.com/seorankings.php">improve your rankings</NuxtLink> but removing good
+            links can harm your
             rankings.</p>
 
 

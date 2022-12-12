@@ -36,7 +36,7 @@ function resultView($device) {
 
 <template>
   <div>
-    <ElementsBsCard formTitle="Page Speed Analyze" titleClass="ps-3">
+    <ElementsBsCard formTitle="Page Speed Analysis" titleClass="ps-3">
       <form @submit.prevent="genarateReport">
         <div class="input-group mb-3 max-width-500 m-auto">
           <input type="text" class="form-control website" placeholder="Website URL" v-model="website" required>
@@ -56,7 +56,7 @@ function resultView($device) {
       <div v-if="processing" class="text-center">
         <ElementsSpinner color="#e91e63" />
         <div class="genarating text-primary pt-0">Generating report. <br /> Please wait.</div>
-        <p class="text-info">it will take a while. Depending on your website Speed and Content</p>
+        <p class="text-info">This may take a few minutes to run depending on your website speed and content.</p>
       </div>
       <div v-html="result">
 

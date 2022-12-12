@@ -1,10 +1,7 @@
 <script setup>
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
-onMounted(() => {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-});
+
 </script>
  
 <template>
@@ -68,9 +65,9 @@ onMounted(() => {
           </div>
 
           <h6>Minify HTML</h6>
-          <P>You can compress your HTML by using this tool which will remove extra spacing from your HTML code therefore
+          <p>You can compress your HTML by using this tool which will remove extra spacing from your HTML code therefore
             improving the speed of your website. You can access our minify HTML software by signing up for a
-            subscription for our services.</P>
+            subscription for our services.</p>
 
           <UserSignupAction>Subscribe to use our Minify HTML software</UserSignupAction>
 
@@ -80,10 +77,10 @@ onMounted(() => {
           </div>
 
 
-          <H6>Minify JS</H6>
-          <P>You can compress your Javascript by using this tool which will remove extra spacing from your Javascript
+          <h6>Minify JS</h6>
+          <p>You can compress your Javascript by using this tool which will remove extra spacing from your Javascript
             code therefore improving the speed of your website. You can access our minify JS software by signing up for
-            a subscription for our services.</P>
+            a subscription for our services.</p>
 
           <UserSignupAction>Subscribe to use our Minify JS software</UserSignupAction>
 

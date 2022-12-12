@@ -15,25 +15,25 @@ const menuItems = [
 			[
 				{ name: 'SEO Practices', path: '/user/seoimprove/seopractices' },
 				{ name: 'SEO Guides', path: '/user/seoimprove/seoguides' },
-				{ name: 'Step 1', path: '/user/seoimprove/websitecontent' },
-				{ name: 'Step 2', path: '/user/seoimprove/improvingcontent' },
-				{ name: 'Step 3', path: '/user/seoimprove/richresults' },
-				{ name: 'Step 4', path: '/user/seoimprove/userexperience' },
-				{ name: 'Step 5', path: '/user/seoimprove/htmlvalidators' },
-				{ name: 'Step 6', path: '/user/seoimprove/criticalcss' },
-				{ name: 'Step 7', path: '/user/seoimprove/codingHtaccess' },
-				{ name: 'Step 8', path: '/user/seoimprove/lighthouse' },
-				{ name: 'Step 9', path: '/user/seoimprove/codingerrors' },
-				{ name: 'Step 10', path: '/user/seoimprove/websitespeed' },
-				{ name: 'Step 11', path: '/user/seoimprove/maintainingrankings' },
+				{ name: 'Website Content', path: '/user/seoimprove/websitecontent' },
+				{ name: 'Improving Content', path: '/user/seoimprove/improvingcontent' },
+				{ name: 'Rich Results', path: '/user/seoimprove/richresults' },
+				{ name: 'User Experience', path: '/user/seoimprove/userexperience' },
+				{ name: 'HTML Validators', path: '/user/seoimprove/htmlvalidators' },
+				{ name: 'Critical CSS', path: '/user/seoimprove/criticalcss' },
+				{ name: 'Coding htaccess', path: '/user/seoimprove/codingHtaccess' },
+				{ name: 'Using Lighthouse', path: '/user/seoimprove/lighthouse' },
+				{ name: 'Coding Errors', path: '/user/seoimprove/codingerrors' },
+				{ name: 'Website Speed', path: '/user/seoimprove/websitespeed' },
+				{ name: 'Maintain Rankings', path: '/user/seoimprove/maintainingrankings' },
 				{ name: 'Website Laws', path: '/user/seoimprove/websitelaws' },
 				{ name: 'Paid Ads', path: '/user/seoimprove/paidads' },
 				{ name: 'Search Conferences', path: '/user/seoimprove/searchconferences' },
 				{ name: 'SEO Avenues', path: '/user/seoimprove/seoavenues' },
 			]
 	},
-	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
+	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
 	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },
@@ -50,6 +50,8 @@ async function logoutRequest() {
 	}
 }
 function dropdown($event) {
+	document.body.scrollTop = 0;
+	document.documentElement.scrollTop = 0;
 	let target = $event.target;
 	if (!!target.classList.contains('main')) {
 		let hasChaild = target.closest('.hasChild'),
@@ -75,7 +77,7 @@ onMounted(() => {
 			<i class="material-icons p-3 cursor-pointer text-white opacity-10 position-absolute end-0 top-0 d-none d-xl-none"
 				aria-hidden="true">skip_previous</i>
 			<div class="navbar-brand m-0">
-				<span class="ms-1 font-weight-bold text-white">Organic Rankings</span>
+				<span class="ms-1 font-weight-bold text-white">OrganicRankings.com</span>
 			</div>
 		</div>
 		<hr class="horizontal light mt-0 mb-2" />

@@ -1,11 +1,6 @@
 <script setup>
-import stepTimeline from "./stepTimeline";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
-onMounted(() => {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-});
 </script>
  
 <template>

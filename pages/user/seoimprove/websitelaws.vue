@@ -1,10 +1,7 @@
 <script setup>
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
-onMounted(() => {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-});
+
 </script>
  
 <template>
@@ -48,11 +45,11 @@ onMounted(() => {
           </div>
 
           <h6>ADA Compliance</h6>
-          <P>If you own a website you will want to make your website ADA compliant. While many website owners are
+          <p>If you own a website you will want to make your website ADA compliant. While many website owners are
             unaware of these laws for websites there are lawyers filing suit against larger companies for not complying.
             The Americans with Disabilities Act Standards for Accessible Design (ADA) has standards they want
             implemented on websites to improve the experience for those with disabilities. Here are some software
-            companies offering this service:</P>
+            companies offering this service:</p>
 
           <h6>Color Blindness Accessibility</h6>
           <p>When people talk about color blindness accessibility it simply refers to that you design website elements
