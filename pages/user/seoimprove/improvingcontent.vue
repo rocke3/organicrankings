@@ -172,7 +172,7 @@ useHead({ title: "SEO - Organic Rankings" });
             content.</p>
           <p>You should consider using more modern image formats such as AVIF or WebP that displays high quality and
             will compress the images to improve the speed of your website. You can learn more about these new formats at
-            <a href="https://web.dev/uses-webp-images/">AVIF or WebP format</a>.
+            <a href="https://web.dev/uses-webp-images/" target="_blank">AVIF or WebP format</a>.
           </p>
           <div class="text-center my-3">
             <img class="img-fluid border rounded shadow" alt="Converting to WebP"

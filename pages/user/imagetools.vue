@@ -49,7 +49,7 @@ function uploadImage(file, id) {
     headers: {
       'Content-Type': 'multipart/form-data',
       authorization: useCookie('org_user').value,
-      upload: userFolder.data,
+      upload: imageFolder.data,
       qualiy: qualiy.value,
       convert: convert.value
     },

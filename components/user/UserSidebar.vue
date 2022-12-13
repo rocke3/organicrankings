@@ -10,6 +10,7 @@ function signout() {
 
 const menuItems = [
 	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
+	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
 	{
 		name: 'SEO Improve', path: '/user/seoimprove/', icon: 'speed', dropdown:
 			[
@@ -32,7 +33,6 @@ const menuItems = [
 				{ name: 'SEO Avenues', path: '/user/seoimprove/seoavenues' },
 			]
 	},
-	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
 	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },

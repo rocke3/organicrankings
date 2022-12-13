@@ -1,4 +1,5 @@
 <script setup>
+
 const showModal = ref(false)
 const title = ref("")
 
@@ -7,10 +8,9 @@ function openModal(value) {
   showModal.value = true
 }
 
-
 async function submit() {
 
-  let transporter = {
+  let transporter = nodemailer.createTransport({
     host: "smtp.organicrankings.com ",
     port: 465,
     secure: false, // true for 465, false for other ports
@@ -18,7 +18,18 @@ async function submit() {
       user: 'info@organicrankings.com', // generated ethereal user
       pass: 'Q)AheoBGx{XA', // generated ethereal password
     },
-  };
+    logger: true,
+    debug: true,
+  });
+  transporter.sendMail({
+    from: 'sender@example.com',
+    to: 'rfmamun0@gmail.com',
+    subject: 'Message',
+    text: 'I hope this message gets delivered!'
+  }, (err, info) => {
+    console.log(info.envelope);
+    console.log(info.messageId);
+  });
 
 }
 </script>

@@ -142,7 +142,7 @@ useHead({ title: "SEO - Organic Rankings" });
           </p>
           <p>
             <i class="material-icons color-primary align-text-bottom me-1">login</i>
-            To better understand how to begin basic SEO for your website you can view<NuxtLink
+            To better understand how to begin basic SEO for your website you can view <NuxtLink
               to="/user/seoimprove/seoguides">Guides to SEO Marketing</NuxtLink>.
           </p>
 

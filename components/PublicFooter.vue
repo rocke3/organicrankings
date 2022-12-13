@@ -3,21 +3,17 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-lg-between">
 				<div class="col-12 col-md-6 my-auto">
-					<div
-						class="copyright text-center text-sm text-white text-lg-start sm-mb-2"
-					>
+					<div class="copyright text-center text-sm text-white text-lg-start sm-mb-2">
 						©2022 - Organic Rankings
 					</div>
 				</div>
 				<div class="col-12 col-md-6">
-					<ul
-						class="nav nav-footer justify-content-center justify-content-lg-end"
-					>
+					<ul class="nav nav-footer justify-content-center justify-content-lg-end">
 						<li class="nav-item">
-							<a href="#" class="nav-link text-white">Home</a>
+							<a href="https://www.organicrankings.com/" class="nav-link text-white">Home</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link text-white">About Us</a>
+							<a href="https://www.organicrankings.com/about.php" class="nav-link text-white">About Us</a>
 						</li>
 						<li class="nav-item">
 							<a href="#" class="nav-link pe-0 text-white">Contact us</a>
@@ -33,10 +29,16 @@
 .footer {
 	bottom: 0;
 }
+
 .footer .nav-link {
-	padding: 10px 15px !important;
+	padding: 5px 15px !important;
+	transition: .3s all;
+	border-radius: 5px;
 }
+
 .nav-link:hover {
-	color: #e91e63 !important;
+	background: rgba(255, 255, 255, 0.7);
+	color: #007c9d !important;
 }
 </style>
+ 
