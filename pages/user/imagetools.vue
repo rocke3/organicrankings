@@ -61,7 +61,6 @@ function uploadImage(file, id) {
   })
     .then(function (response) {
       let data = response.data;
-      console.log(data);
       let imgID = data.key;
       if (!data.error) {
         images.value[imgID].newSize = data.newSize;

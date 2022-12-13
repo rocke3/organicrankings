@@ -1,3 +1,7 @@
+<script setup>
+
+const menu = ref(false)
+</script>
 <template>
 	<div class="container position-sticky z-index-sticky top-0">
 		<div class="row">
@@ -11,14 +15,14 @@
 						</a>
 						<button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
 							data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
-							aria-label="Toggle navigation">
+							aria-label="Toggle navigation" @click="menu = !menu">
 							<span class="navbar-toggler-icon mt-2">
 								<span class="navbar-toggler-bar bar1"></span>
 								<span class="navbar-toggler-bar bar2"></span>
 								<span class="navbar-toggler-bar bar3"></span>
 							</span>
 						</button>
-						<div class="collapse navbar-collapse justify-content-end publicNav" id="navigation">
+						<div class=" navbar-collapse justify-content-end publicNav" id="navigation" :class="menu ? '' : 'collapse'">
 							<ul class="navbar-nav">
 								<li class="nav-item">
 									<NuxtLink to="/signin" class="nav-link me-2" no-rel>
