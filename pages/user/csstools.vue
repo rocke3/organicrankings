@@ -92,7 +92,7 @@ watch(css, async (val) => {
 								<label class="form-check-label m-0 px-3 py-2">
 									<input class="form-check-input me-1" type="radio" name="option" value="critical" v-model="todo"
 										checked>
-									Genarate Critical CSS
+									Generate Critical CSS
 								</label>
 							</div>
 							<div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"

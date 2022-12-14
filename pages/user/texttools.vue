@@ -172,7 +172,7 @@ function analizeKeyword() {
         <div>
           <div v-if="loadingKeywords" class="text-center pt-3">
             <ElementsSpinner color="#e91e63" />
-            <div class="genarating text-primary pt-0"> Analizeing keywords <br /> Please wait.</div>
+            <div class="genarating text-primary pt-0"> Analyzing keywords <br /> Please wait.</div>
           </div>
           <div class="row" v-else-if="checker.words">
             <div class="col-md-6">

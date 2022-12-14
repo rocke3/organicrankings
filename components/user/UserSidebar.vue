@@ -33,7 +33,7 @@ const menuItems = [
 				{ name: 'SEO Avenues', path: '/user/seoimprove/seoavenues' },
 			]
 	},
-	{ name: 'Page Speed Analyze', path: '/user/pagespeed', icon: 'speed' },
+	{ name: 'Page Speed Analysis', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
 	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },

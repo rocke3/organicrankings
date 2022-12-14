@@ -79,7 +79,7 @@ async function submit() {
           </div>
           <div class="modal-footer d-block">
             <button class="btn btn-secondary" @click="(showModal = false)">Close</button>
-            <button class="btn btn-primary float-end" @click="copyToClipboard">Send</button>
+            <button class="btn btn-primary float-end">Send</button>
           </div>
         </div>
       </div>

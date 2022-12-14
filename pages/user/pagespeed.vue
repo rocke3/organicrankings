@@ -55,7 +55,7 @@ function resultView($device) {
       </ul>
       <div v-if="processing" class="text-center">
         <ElementsSpinner color="#e91e63" />
-        <div class="genarating text-primary pt-0">Generating report. <br /> Please wait.</div>
+        <div class="genarating text-primary pt-0">Generating report <br /> Please wait</div>
         <p class="text-info">This may take a few minutes to run depending on your website speed and content.</p>
       </div>
       <div v-html="result">

@@ -156,12 +156,16 @@ hr {
 }
 
 /* Color Change */
+.nav-link {
+	color: #007c9d;
+}
 a {
 	color: #007c9d;
 	font-weight: 400;
 	transition: 0.3s color;
 }
-a:hover {
+a:hover,
+.nav-link:hover {
 	color: #2fbdae;
 }
 .bg-gradient-primary {
@@ -201,6 +205,10 @@ a:hover {
 	color: #fff;
 	background-color: #2fbdae;
 	border-color: #2fbdae;
+}
+.btn:disabled,
+.btn.disabled {
+	background: #bbb;
 }
 .text-primary {
 	color: #2fbdae !important;

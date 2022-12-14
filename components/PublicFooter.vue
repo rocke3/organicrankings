@@ -1,10 +1,14 @@
+<script setup>
+const showModal = ref(false)
+const copyright = new Date().getFullYear();
+</script>
 <template>
 	<footer class="footer position-absolute py-2 w-100">
 		<div class="container">
 			<div class="row align-items-center justify-content-lg-between">
 				<div class="col-12 col-md-6 my-auto">
 					<div class="copyright text-center text-sm text-white text-lg-start sm-mb-2">
-						©2022 - Organic Rankings
+						©{{ copyright }} - OrganicRankings.com
 					</div>
 				</div>
 				<div class="col-12 col-md-6">
@@ -16,12 +20,13 @@
 							<a href="https://www.organicrankings.com/about.php" class="nav-link text-white">About Us</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link pe-0 text-white">Contact us</a>
+							<a href="#" class="nav-link pe-0 text-white" @click="showModal = true">Contact us</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
+		<ElementsContactUsModal v-model:showModal="showModal" />
 	</footer>
 </template>
 

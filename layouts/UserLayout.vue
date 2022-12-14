@@ -1,6 +1,4 @@
 <script setup>
-
-
 </script>
 
 <template>
@@ -13,6 +11,7 @@
 			</div>
 			<UserFooter />
 		</main>
+
 	</div>
 </template>
 
@@ -24,7 +23,7 @@ main {
 }
 
 .pageContent {
-	min-height: 81vh;
+	min-height: calc(100vh - 116px);
 }
 
 @media only screen and (min-width: 1200px) {
