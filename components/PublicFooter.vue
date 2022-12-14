@@ -20,7 +20,7 @@ const copyright = new Date().getFullYear();
 							<a href="https://www.organicrankings.com/about.php" class="nav-link text-white">About Us</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link pe-0 text-white" @click="showModal = true">Contact us</a>
+							<a href="#" class="nav-link pe-0 text-white" @click="showModal = true">Contact Us</a>
 						</li>
 					</ul>
 				</div>
