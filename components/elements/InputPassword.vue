@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  props: { label: String, password: String, required: { type: Boolean, default: false } },
+  props: { label: String, password: String, required: { type: Boolean, default: true } },
   emits: ['update:password'],
   data() {
     return {

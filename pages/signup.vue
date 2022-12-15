@@ -61,7 +61,10 @@ async function signupRequst() {
 				</div>
 				<div class="form-check p-0 mt-3">
 					<label class="form-check-label me-1">
-						<input type="checkbox" class="form-check-input" required /> I agree to the
+						<input type="checkbox" class="form-check-input"
+							oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'You must agree to the Subscription Agreement' : '')"
+							required /> I
+						agree to the
 					</label>
 					<SubscriptionAgreement />
 				</div>
@@ -78,7 +81,6 @@ async function signupRequst() {
 				<div class="text-center" v-bind:innerHTML="signupStatus"></div>
 				<SsrLinks :signup="false" />
 			</form>
-
 
 		</ElementsSingCard>
 	</div>
