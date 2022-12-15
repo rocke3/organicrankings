@@ -59,14 +59,14 @@ async function signupRequst() {
 						<ElementsCaptchaInput v-model:captchaValid="captcha" />
 					</ClientOnly>
 				</div>
-				<div class="form-check p-0">
+				<div class="form-check p-0 mt-3">
 					<label class="form-check-label me-1">
 						<input type="checkbox" class="form-check-input" required /> I agree to the
 					</label>
 					<SubscriptionAgreement />
 				</div>
 				<div class="text-center">
-					<button type="submit" class="btn btn-primary w-100 mt-4">
+					<button type="submit" class="btn btn-primary w-100 mt-2">
 						<span v-if="!checking">Sign up</span>
 						<div v-if="checking">
 							<ElementsSpinner /> Checking
