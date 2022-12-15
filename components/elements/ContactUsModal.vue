@@ -35,8 +35,9 @@ function sendEmail() {
       sendRes.value = ""
     }, 3000);
 }
+
 if (process.client) {
-  await axios.post('/userInfo')
+  await axios.post('/getUser')
     .then(function (res) {
       user.value = res.data.user_id
       name.value = res.data.user_name
@@ -49,54 +50,53 @@ if (process.client) {
 </script>
 
 <template>
-  <div class="modal fade show" aria-modal="true" role="dialog" v-if="showModal">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <form @submit.prevent="sendEmail">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Contact Us</h5>
-            <button type="button" class="btn-close" @click="$emit('update:showModal', false);">
-              <i class="material-icons">close</i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="sending" v-if="sending">
-              <div>
-                <ElementsSpinner size="30px" />
-                <p class="mt-4">Sending your message ..</p>
+  <client-only>
+    <div class="modal fade show" aria-modal="true" role="dialog" v-if="showModal">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <form @submit.prevent="sendEmail">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Contact Us</h5>
+              <button type="button" class="btn-close" @click="$emit('update:showModal', false);">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="sending" v-if="sending">
+                <div>
+                  <ElementsSpinner size="30px" />
+                  <p class="mt-4">Sending your message ..</p>
+                </div>
+              </div>
+              <div class="sendRes" v-if="sendRes">
+                <div v-html="sendRes"></div>
+              </div>
+              <div class="input-group input-group-outline my-4">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" v-model="name" required />
+              </div>
+              <div class="input-group input-group-outline my-4">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" v-model="email" required />
+              </div>
+              <div class="input-group input-group-outline my-4">
+                <label class="form-label">Phone</label>
+                <input type="text" class="form-control" v-model="phone" required />
+              </div>
+              <div class="input-group input-group-outline my-4">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" v-model="message" required> </textarea>
               </div>
             </div>
-            <div class="sendRes" v-if="sendRes">
-              <div v-html="sendRes"></div>
-            </div>
-            <div class="input-group input-group-outline my-4">
-              <label class="form-label">Name</label>
-              <input type="text" class="form-control" v-model="name" required />
-            </div>
-            <div class="input-group input-group-outline my-4">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" v-model="email" required />
-            </div>
-            <div class="input-group input-group-outline my-4">
-              <label class="form-label">Phone</label>
-              <input type="text" class="form-control" v-model="phone" required />
-            </div>
-            <div class="input-group input-group-outline my-4">
-              <label class="form-label">Message</label>
-              <textarea class="form-control" v-model="message" required> </textarea>
+            <div class="modal-footer d-block">
+              <button type="button" class="btn btn-secondary" @click="$emit('update:showModal', false);">Close</button>
+              <button type="submit" class="btn btn-primary float-end" :disabled="sending">Send</button>
             </div>
           </div>
-          <div class="modal-footer d-block">
-            <button type="button" class="btn btn-secondary" @click="$emit('update:showModal', false);">Close</button>
-            <button type="submit" class="btn btn-primary float-end" :disabled="sending">Send</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-
-
-
+  </client-only>
 </template>
 
 

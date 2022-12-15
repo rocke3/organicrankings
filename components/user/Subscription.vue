@@ -7,7 +7,7 @@ let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 
 if (process.client) {
-  axios.post('/userInfo')
+  axios.post('/getUser')
     .then(function (res) {
       unserInfo.value = res.data;
       subActive.value = res.data.sub_active
