@@ -6,6 +6,7 @@ definePageMeta({
 	layout: "public-layout",
 });
 
+const showModal = ref(false)
 const checking = ref(false)
 const email = ref('')
 const emailCls = ref('')
@@ -67,10 +68,24 @@ async function signupRequst() {
 						</div>
 					</button>
 				</div>
+				<div class="form-check p-0">
+					<label class="form-check-label me-1">
+						<input type="checkbox" class="form-check-input" required /> I agree to the
+					</label>
+					<SubscriptionAgreement />
+				</div>
 				<div class="text-center" v-bind:innerHTML="signupStatus"></div>
 				<SsrLinks :signup="false" />
 			</form>
+
+
 		</ElementsSingCard>
 	</div>
 </template>
 
+<style scoped>
+.modal {
+	display: block;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+</style>

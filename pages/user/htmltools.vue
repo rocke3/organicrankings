@@ -184,10 +184,5 @@ watch(html, async (val) => {
   left: 2px;
   padding: 3px;
 }
-
-
-.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
-  margin: 1px 2px 0 0;
-}
 </style>
   

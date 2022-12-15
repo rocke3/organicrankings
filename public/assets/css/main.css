@@ -264,3 +264,6 @@ body::-webkit-scrollbar-thumb {
 .timeline-step i {
 	font-size: 25px;
 }
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+	margin: 1px 2px 0 0;
+}
