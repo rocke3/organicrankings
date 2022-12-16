@@ -4,8 +4,8 @@ definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
 
 const url = ref('your-domain.com')
-const https = ref(true)
-const www = ref(true)
+const protocol = ref(true)
+const subdomain = ref(true)
 const cache = ref(1)
 const duration = ref('week')
 </script>
@@ -54,21 +54,21 @@ const duration = ref('week')
               <label class="settingLvl">Output Settings</label>
               <div class="d-inline-block me-2 mb-2 autoWidth">
                 <div class="form-check form-switch d-flex align-items-center border rounded p-2">
-                  <div class="toggle me-1" :class="{ 'text-primary': !https }" @click="https = false">HTTP</div>
+                  <div class="toggle me-1" :class="{ 'text-primary': !protocol }" @click="protocol = false">HTTP</div>
                   <div class="ms-5 me-2">
-                    <input class="form-check-input" type="checkbox" v-model="https" />
+                    <input class="form-check-input" type="checkbox" v-model="protocol" />
                   </div>
-                  <div class="toggle " :class="{ 'text-primary': https }" @click="https = true">HTTPS</div>
+                  <div class="toggle " :class="{ 'text-primary': protocol }" @click="protocol = true">HTTPS</div>
                 </div>
               </div>
               <div class="d-inline-block me-2 mb-2 autoWidth">
                 <div class="form-check form-switch d-flex align-items-center border rounded p-2">
-                  <div class="toggle me-1" style="text-decoration: line-through;" :class="{ 'text-primary': !www }"
-                    @click="www = false">WWW</div>
+                  <div class="toggle me-1" style="text-decoration: line-through;"
+                    :class="{ 'text-primary': !subdomain }" @click="subdomain = false">WWW</div>
                   <div class="ms-5 me-2">
-                    <input class="form-check-input" type="checkbox" v-model="www" />
+                    <input class="form-check-input" type="checkbox" v-model="subdomain" />
                   </div>
-                  <div class="toggle " :class="{ 'text-primary': www }" @click="www = true">WWW</div>
+                  <div class="toggle " :class="{ 'text-primary': subdomain }" @click="subdomain = true">WWW</div>
                 </div>
               </div>
               <div class="d-inline-block me-2 mb-2 autoWidth">
@@ -99,7 +99,7 @@ const duration = ref('week')
           </div>
 
           <span class="form-control px-3" style="background: #eee;">
-            <code><pre>{{ htaccess(https, www, url, cache, duration) }}</pre></code>
+            <code><pre>{{ htaccess(protocol, subdomain, url, cache, duration) }}</pre></code>
           </span>
           <UserSubscribeAction>Get the code for htaccess for speed for your website</UserSubscribeAction>
         </div>

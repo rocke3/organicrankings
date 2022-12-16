@@ -1,6 +1,6 @@
-export default (https: boolean, www: boolean, url: string, cache: number, duration: string) => {
-	let protocol = https ? "https" : "http";
-	let subdomain = www ? "www." : "";
+export default (protocol: any, subdomain: any, url: string, cache: number, duration: string) => {
+	protocol = protocol ? "https" : "http";
+	subdomain = subdomain ? "www." : "";
 	duration = cache > 1 ? duration + "s" : duration;
 	return `<IfModule mod_rewrite.c>
     Options -Indexes
