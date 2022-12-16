@@ -2,10 +2,17 @@
 import htaccess from "./htaccess";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+
+const url = ref('your-domain.com')
+const https = ref(true)
+const www = ref(true)
+const cache = ref(1)
+const duration = ref('week')
 </script>
  
 <template>
   <div>
+
     <div class="card">
 
       <div class="card-header pb-0">
@@ -42,9 +49,57 @@ useHead({ title: "SEO - Organic Rankings" });
           </div>
         </div>
         <div class="mt-3 px-xl-5">
+          <div class="mb-4 form-inline">
+            <div class="outputSettings mt-2">
+              <label class="settingLvl">Output Settings</label>
+              <div class="d-inline-block me-2 mb-2 autoWidth">
+                <div class="form-check form-switch d-flex align-items-center border rounded p-2">
+                  <div class="toggle me-1" :class="{ 'text-primary': !https }" @click="https = false">HTTP</div>
+                  <div class="ms-5 me-2">
+                    <input class="form-check-input" type="checkbox" v-model="https" />
+                  </div>
+                  <div class="toggle " :class="{ 'text-primary': https }" @click="https = true">HTTPS</div>
+                </div>
+              </div>
+              <div class="d-inline-block me-2 mb-2 autoWidth">
+                <div class="form-check form-switch d-flex align-items-center border rounded p-2">
+                  <div class="toggle me-1" style="text-decoration: line-through;" :class="{ 'text-primary': !www }"
+                    @click="www = false">WWW</div>
+                  <div class="ms-5 me-2">
+                    <input class="form-check-input" type="checkbox" v-model="www" />
+                  </div>
+                  <div class="toggle " :class="{ 'text-primary': www }" @click="www = true">WWW</div>
+                </div>
+              </div>
+              <div class="d-inline-block me-2 mb-2 autoWidth">
+                <div class="input-group input-group-outline mt-3">
+                  <label class="form-label">URL</label>
+                  <input class="form-control" type="url" v-model="url" />
+                </div>
+              </div>
+              <div class="d-inline-block me-2 mb-2 autoWidth">
+                <div class="input-group input-group-outline mt-3">
+                  <label class="form-label">Cache</label>
+                  <input type="number" class="form-control" v-model="cache">
+                  <div class="input-group-append">
+                    <select id="customSelect" class="form-control" v-model="duration">
+                      <option value="minute">Minutes</option>
+                      <option value="hour">Hours</option>
+                      <option value="day">Days</option>
+                      <option value="week">Weeks</option>
+                      <option value="month">Months</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
 
           <span class="form-control px-3" style="background: #eee;">
-            <code><pre>{{ htaccess }}</pre></code>
+            <code><pre>{{ htaccess(https, www, url, cache, duration) }}</pre></code>
           </span>
           <UserSubscribeAction>Get the code for htaccess for speed for your website</UserSubscribeAction>
         </div>
@@ -61,6 +116,16 @@ useHead({ title: "SEO - Organic Rankings" });
     
     
 <style scoped>
+#customSelect {
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+.autoWidth {
+  width: 200px;
+  max-width: 100%;
+}
+
 .htmlCode {
   color: #e06150;
 }
@@ -71,6 +136,27 @@ useHead({ title: "SEO - Organic Rankings" });
 
 .htmlCode:after {
   content: ">";
+}
+
+.outputSettings {
+  position: relative;
+  border: 1px solid #d2d6da;
+  border-radius: 0.375rem;
+  margin: 30px 0 0 0;
+  padding: 15px 10px 10px 10px;
+}
+
+.outputSettings .settingLvl {
+  position: absolute;
+  top: -15px;
+  font-weight: bold;
+  background: #fff;
+  left: 2px;
+  padding: 3px;
+}
+
+.toggle {
+  cursor: pointer;
 }
 </style>
 
