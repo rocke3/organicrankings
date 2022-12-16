@@ -1,5 +1,5 @@
 <script setup>
-import htaccess from "./htaccessCode";
+import htaccessCode from "./htaccessCode";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
 
@@ -99,7 +99,7 @@ const duration = ref('week')
           </div>
 
           <span class="form-control px-3" style="background: #eee;">
-            <code><pre>{{ htaccess(protocol, subdomain, url, cache, duration) }}</pre></code>
+            <code><pre>{{ htaccessCode(protocol, subdomain, url, cache, duration) }}</pre></code>
           </span>
           <UserSubscribeAction>Get the code for htaccess for speed for your website</UserSubscribeAction>
         </div>

@@ -1,4 +1,4 @@
-export default (protocol: any, subdomain: any, url: string, cache: number, duration: string) => {
+const htaccessCode = (protocol: any, subdomain: any, url: string, cache: number, duration: string) => {
 	protocol = protocol ? "https" : "http";
 	subdomain = subdomain ? "www." : "";
 	duration = cache > 1 ? duration + "s" : duration;
@@ -114,3 +114,5 @@ export default (protocol: any, subdomain: any, url: string, cache: number, durat
     AddType image/webp .webp
   </IfModule>`;
 };
+
+export default htaccessCode;
