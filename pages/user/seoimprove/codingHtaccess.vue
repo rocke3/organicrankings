@@ -1,5 +1,5 @@
 <script setup>
-import htaccess from "./htaccess";
+import htaccess from "./htaccessCode";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
 
