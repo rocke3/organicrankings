@@ -74,13 +74,13 @@ function toggleNavbar() {
 	<aside
 		class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark small"
 		id="sidenav-main">
-		<a href="#" class="sidebarToggle" @click="toggleNavbar">
+		<div class="sidebarToggle" @click="toggleNavbar">
 			<div class="sidenav-toggler-inner">
 				<i class="sidenav-toggler-line"></i>
 				<i class="sidenav-toggler-line"></i>
 				<i class="sidenav-toggler-line"></i>
 			</div>
-		</a>
+		</div>
 		<div class="sidenav-header">
 			<i class="material-icons p-3 cursor-pointer text-white opacity-10 position-absolute end-0 top-0 d-none d-xl-none"
 				aria-hidden="true">skip_previous</i>
@@ -134,6 +134,9 @@ function toggleNavbar() {
 	padding: 19px 10px;
 }
 
+.sidenav-toggler-inner {
+	cursor: pointer;
+}
 
 
 #sidenav-main {
@@ -151,28 +154,29 @@ function toggleNavbar() {
 		transform: translateX(-251px) !important;
 	}
 
-	body.g-sidenav-pinned .sidenav {
+	.g-sidenav-pinned .sidenav {
 		transform: translateX(0) !important;
 	}
 
-	body.g-sidenav-pinned .sidenav-toggler-line {
+	.g-sidenav-pinned .sidenav-toggler-line {
 		display: none;
 	}
 
-	body.g-sidenav-pinned .sidenav-toggler-line:first-child,
-	body.g-sidenav-pinned .sidenav-toggler-line:last-child {
+	.g-sidenav-pinned .sidenav-toggler-line:first-child,
+	.g-sidenav-pinned .sidenav-toggler-line:last-child {
 		width: 100% !important;
 		transform: translateX(0) !important;
 		display: block;
 	}
 
-	body.g-sidenav-pinned .sidenav-toggler-line:first-child {
+	.g-sidenav-pinned .sidenav-toggler-line:first-child {
 		transform: rotate(45deg) !important;
+		top: 7px;
 	}
 
-	body.g-sidenav-pinned .sidenav-toggler-line:last-child {
+	.g-sidenav-pinned .sidenav-toggler-line:last-child {
 		transform: rotate(-45deg) !important;
-		top: -5px !important;
+		top: 2px;
 	}
 
 	.g-sidenav-pinned .sidebarToggle {
@@ -180,6 +184,11 @@ function toggleNavbar() {
 		left: 250px;
 		position: fixed;
 		height: 100vh;
+	}
+
+	.navbar .sidenav-toggler-inner {
+		width: 20px;
+		height: 20px;
 	}
 }
 
