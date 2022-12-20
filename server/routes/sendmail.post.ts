@@ -25,7 +25,7 @@ function insartIntoDatabase(body) {
 	let userInfo = user ? "" : JSON.stringify({ name: body.name, email: body.email, phone: body.phone });
 	return db
 		.promise()
-		.query("INSERT INTO `form_submitted`(`form_user`, `form_user_info`, `form_msg`) VALUES (?,?,?)", [user, userInfo, body.message])
+		.query("INSERT INTO `form_submitted`(`fs_user`, `fs_userInfo`, `fs_msg`) VALUES (?,?,?)", [user, userInfo, body.message])
 		.then(([rows]) => {
 			if (rows) return true;
 			return false;
