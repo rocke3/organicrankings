@@ -22,7 +22,7 @@ export default defineEventHandler(async (req) => {
 			const payment = event.data.object;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_subscription` = ?, `sub_active`= 1 WHERE `sub_session` = ?", [payment.subscription, payment.id])
+				.query("UPDATE `subscriptions` SET `sb_subscriptionId` = ?, `sb_active`= 1 WHERE `sb_session` = ?", [payment.subscription, payment.id])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
@@ -36,7 +36,7 @@ export default defineEventHandler(async (req) => {
 			const plan = updated.plan.id;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_plan` = (SELECT `plan_id` FROM `subscription_plan` WHERE `plan_price_id` = ? LIMIT 1), `sub_active`= ? WHERE `sub_subscription` = ?", [plan, status, updated.id])
+				.query("UPDATE `subscriptions` SET `sb_plan` = (SELECT `sp_id` FROM `subscription_plans` WHERE `sp_stripePriceId` = ? LIMIT 1), `sb_active`= ? WHERE `sb_subscriptionId` = ?", [plan, status, updated.id])
 				.then(([rows, fields]) => {
 					return "Updated";
 				})
@@ -48,7 +48,7 @@ export default defineEventHandler(async (req) => {
 			const deleted = event.data.object;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sub_active`= 0 WHERE `sub_subscription` = ?", [deleted.id])
+				.query("UPDATE `subscriptions` SET `sb_active`= 0 WHERE `sb_subscriptionId` = ?", [deleted.id])
 				.then(([rows, fields]) => {
 					return "Deactivated";
 				})
