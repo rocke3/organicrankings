@@ -1,13 +1,5 @@
 <script setup lang="ts">
-function toggleNavbar() {
-	const body = document.body;
-	const className = 'g-sidenav-pinned';
-	if (body.classList.contains(className)) {
-		body.classList.remove(className)
-	} else {
-		body.classList.add(className)
-	}
-}
+
 
 </script>
 
@@ -16,6 +8,7 @@ function toggleNavbar() {
 		<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
 			data-scroll="true">
 			<div class="container-fluid py-1 px-0">
+
 				<nav aria-label="breadcrumb">
 					<h6 class="font-weight-bolder mb-0">Dashboard</h6>
 				</nav>
@@ -24,15 +17,7 @@ function toggleNavbar() {
 						<li class="nav-item ps-3 d-flex align-items-center">
 							<ElementsDarkToggle />
 						</li>
-						<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-							<a href="javascript:;" class="nav-link text-body p-0" @click="toggleNavbar">
-								<div class="sidenav-toggler-inner">
-									<i class="sidenav-toggler-line"></i>
-									<i class="sidenav-toggler-line"></i>
-									<i class="sidenav-toggler-line"></i>
-								</div>
-							</a>
-						</li>
+
 					</ul>
 				</div>
 			</div>
@@ -57,5 +42,11 @@ function toggleNavbar() {
 
 .navbar .sidenav-toggler-inner .sidenav-toggler-line {
 	height: 3px;
+}
+
+@media (max-width: 1199.98px) {
+	#navbarBlur {
+		padding-left: 15px !important;
+	}
 }
 </style>

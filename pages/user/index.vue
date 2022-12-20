@@ -3,6 +3,8 @@
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "Dashboard - Organic Rankings" });
 
+const props = defineProps({ data: Object });
+
 
 </script>
 

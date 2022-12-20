@@ -12,13 +12,13 @@ export default defineEventHandler(async (event) => {
 	if (hash && email && password && confpassword && password == confpassword) {
 		return await db
 			.promise()
-			.query("SELECT user_email FROM users WHERE user_email = ? AND user_reset = ?", [email, hash])
+			.query("SELECT u_email FROM users WHERE u_email = ? AND u_reset = ?", [email, hash])
 			.then(([rows, fields]) => {
 				if (rows[0]) {
 					let newPass = md5(password);
 					return db
 						.promise()
-						.query("UPDATE users SET user_password = ?, user_reset = NULL WHERE user_email = ?", [newPass, email])
+						.query("UPDATE users SET u_password = ?, u_reset = NULL WHERE u_email = ?", [newPass, email])
 						.then(() => {
 							return { status: true };
 						})

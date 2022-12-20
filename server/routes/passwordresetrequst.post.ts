@@ -16,15 +16,15 @@ export default defineEventHandler(async (event) => {
 	if (email && confemail && email == confemail) {
 		return await db
 			.promise()
-			.query("SELECT user_name,user_email FROM users WHERE user_email = ?", [email])
+			.query("SELECT u_name,u_email FROM users WHERE u_email = ?", [email])
 			.then(([rows, fields]) => {
 				if (rows[0]) {
-					const name = rows[0].user_name;
+					const name = rows[0].u_name;
 					const time = new Date().getTime();
 					const unique = Math.random().toString().substring(10, 15);
-					const user_reset = md5(email + time + unique);
-					db.promise().query("UPDATE users SET user_reset = ? WHERE user_email = ?", [user_reset, email]);
-					var params = new URLSearchParams({ form: "resetPass", email: email, hash: user_reset, name: name });
+					const u_reset = md5(email + time + unique);
+					db.promise().query("UPDATE users SET u_reset = ? WHERE u_email = ?", [u_reset, email]);
+					var params = new URLSearchParams({ form: "resetPass", email: email, hash: u_reset, name: name });
 					axios.post("https://www.organicrankings.com/sendmail/", params);
 					return true;
 				} else {

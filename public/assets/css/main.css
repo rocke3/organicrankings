@@ -185,7 +185,10 @@ a:hover,
 }
 .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:focus:not(:focus-visible) {
+.btn-primary:focus:not(:focus-visible),
+.btn:disabled,
+.btn.disabled,
+fieldset:disabled .btn {
 	background: #007c9d;
 	color: #fff;
 }

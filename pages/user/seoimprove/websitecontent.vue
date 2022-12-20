@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
+const props = defineProps({ data: Object });
 </script>
  
 <template>
@@ -118,8 +119,8 @@ useHead({ title: "SEO - Organic Rankings" });
             and grouping many links together on a single page, you will surely not rank well if you do so. You can check
             the Keyphrase Density of your page with this tool. Where you can find the Keyword Density Checker tool:</p>
 
-
-          <UserSubscribeAction>Subscribe to use our Keyword Density software</UserSubscribeAction>
+          <UserSubscribeAction :data="data">Subscribe to use our Keyword Density software
+          </UserSubscribeAction>
 
           <p>When you write content, instead of using the words “Orlando hotels'' over and over again, consider
             spreading it out and varying your keywords and their frequency. For example, “Orlando hotels” or “hotels in

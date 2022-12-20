@@ -15,7 +15,7 @@ export default defineEventHandler(async (req) => {
 
 		const login = await db
 			.promise()
-			.query("SELECT * FROM users WHERE user_email = ? AND user_password = ?", [email, pass])
+			.query("SELECT * FROM users WHERE u_email = ? AND u_password = ?", [email, pass])
 			.then(([rows, fields]) => {
 				var dbUser = rows[0] ?? false;
 				if (dbUser) {

@@ -4,6 +4,7 @@ const env = useRuntimeConfig();
 enum cookieName {
 	JWT = "org_user",
 	AGENT = "org_log",
+	Session = "org_session",
 }
 
 const agent = (req) => {

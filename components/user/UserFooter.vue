@@ -1,9 +1,16 @@
 <script setup>
 const showModal = ref(false)
 const copyright = new Date().getFullYear();
+const props = defineProps({
+	data: {
+		type: Object,
+		required: true,
+	}
+});
 </script>
 <template>
 	<footer class="footer py-2">
+
 		<div class="container-fluid">
 			<div class="row align-items-center justify-content-lg-between">
 				<div class="col-lg-6 mb-lg-0 mb-4">
@@ -23,6 +30,6 @@ const copyright = new Date().getFullYear();
 				</div>
 			</div>
 		</div>
-		<ElementsContactUsModal v-model:showModal="showModal" />
+		<ElementsContactUsModal :data="data" v-model:showModal="showModal" />
 	</footer>
 </template>

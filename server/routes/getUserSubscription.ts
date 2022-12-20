@@ -8,7 +8,10 @@ export default defineEventHandler(async (req) => {
 	if (verifyed) {
 		return await db
 			.promise()
-			.query("SELECT u_id,u_name,u_email,u_phone,u_freeUsed FROM `users` WHERE `u_email` = ?", [verifyed.user])
+			.query(
+				"SELECT sb_plan,sb_html,sb_css,sb_js,sb_image,sb_pageSpeed,sb_active,sp_id,sp_name,sp_price,sp_html,sp_css,sp_js,sp_image,sp_pageSpeed,sp_htaccess FROM `users` LEFT JOIN `subscriptions` ON u_id = sb_user LEFT JOIN `subscription_plans` ON sp_id = sb_plan WHERE `u_email` = ?",
+				[verifyed.user]
+			)
 			.then(([rows]) => {
 				if (rows.length) return rows[0];
 				return false;

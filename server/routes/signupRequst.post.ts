@@ -13,7 +13,7 @@ export default defineEventHandler(async (req) => {
 		const pass = md5(body.password);
 		const isSignup = await db
 			.promise()
-			.query("INSERT INTO `users` (`user_email`, `user_password`) VALUES (?,?)", [email, pass])
+			.query("INSERT INTO `users` (`u_email`, `u_password`) VALUES (?,?)", [email, pass])
 			.then(async (response) => {
 				const jwtToken = auth.sign({ user: email });
 				if (jwtToken) {

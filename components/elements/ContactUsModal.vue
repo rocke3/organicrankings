@@ -1,16 +1,7 @@
 <script setup>
 import axios from 'axios'
-const props = defineProps({
-  showModal: {
-    type: Boolean,
-    default: true,
-  }
-});
+const props = defineProps({ showModal: Boolean, data: Object });
 defineEmits(['update:showModal'])
-const user = ref("")
-const name = ref("")
-const email = ref("")
-const phone = ref("")
 const message = ref("")
 const sending = ref(false)
 const sendRes = ref("")
@@ -36,17 +27,6 @@ function sendEmail() {
     }, 3000);
 }
 
-if (process.client) {
-  await axios.post('/getUser')
-    .then(function (res) {
-      user.value = res.data.user_id
-      name.value = res.data.user_name
-      email.value = res.data.user_email
-      phone.value = res.data.uesr_phone
-    }).catch((error) => {
-      console.log("error");
-    });
-}
 </script>
 
 <template>
@@ -73,15 +53,15 @@ if (process.client) {
               </div>
               <div class="input-group input-group-outline my-4">
                 <label class="form-label">Name</label>
-                <input type="text" class="form-control" v-model="name" required />
+                <input type="text" class="form-control" v-model="data.userInfo.u_name" required />
               </div>
               <div class="input-group input-group-outline my-4">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" v-model="email" required />
+                <input type="email" class="form-control" v-model="data.userInfo.u_email" required />
               </div>
               <div class="input-group input-group-outline my-4">
                 <label class="form-label">Phone</label>
-                <input type="text" class="form-control" v-model="phone" required />
+                <input type="text" class="form-control" v-model="data.userInfo.u_phone" required />
               </div>
               <div class="input-group input-group-outline my-4">
                 <label class="form-label">Message</label>

@@ -10,41 +10,41 @@ export default defineEventHandler(async (req) => {
 	if (verifyed) {
 		const user = await getUserInfo(verifyed.user);
 
-		if (body.price_id && user) {
-			const price_id = body.price_id;
-			const plan_id = body.plan_id;
-			const upgrade = body.upgrade;
+		if (body.price && user) {
+			const price = body.price;
+			const plan = body.plan;
+			const upgrade = body.upgrade ?? 0;
 			let response = { status: false, url: "/user", msg: "" };
 			let stripe_id = "",
 				active = 1;
 
 			//! If any subscription exist
-			if (user.user_id != null) {
+			if (user.u_id != null) {
 				//! Return if same plan alredy active
-				if (plan_id == user.sub_plan && user.sub_active) {
+				if (plan == user.sb_plan && user.sb_active) {
 					response.msg = "You are already subscribed to this plan";
 					return response;
 				}
 
 				//! Return if trying to downgrade plan
-				if (plan_id < user.sub_plan && user.sub_active) {
+				if (plan < user.sb_plan && user.sb_active) {
 					response.msg = `You alredy have a active plan '${user.plan_name}'`;
 					return response;
 				}
 				//! Return if Free trial already used
-				if (price_id == "free" && user.user_free_used > 0) {
+				if (price == "free" && user.u_freeUsed > 0) {
 					response.msg = "Your Free trial limit over";
 					return response;
 				}
 
 				//! Remove if have any inactive subscription Or Free subscription
-				deleteUserSubscription(user.user_id);
+				deleteUserSubscription(user.u_id);
 			}
 
 			if (!upgrade) {
 				//! If Plan is not free
-				if (price_id != "free") {
-					const striprInfo = await stripe.checkoutSessions(price_id); //! Genarate Stripe subscription session
+				if (price != "free") {
+					const striprInfo = await stripe.checkoutSessions(price); //! Genarate Stripe subscription session
 					stripe_id = striprInfo.id;
 					response.url = striprInfo.url;
 					active = 0;
@@ -53,16 +53,16 @@ export default defineEventHandler(async (req) => {
 				//! Inseart subscription in database (subscription will active using stripe webhook if plan is not free)
 				await db
 					.promise()
-					.query("INSERT INTO `subscriptions`(`sub_user`, `sub_session`, `sub_plan`, `sub_active`) VALUES (?,?,?,?)", [user.user_id, stripe_id, plan_id, active])
+					.query("INSERT INTO `subscriptions`(`sb_user`, `sb_session`, `sb_plan`, `sb_active`) VALUES (?,?,?,?)", [user.u_id, stripe_id, plan, active])
 					.then((res) => {
-						if (price_id == "free") {
-							db.promise().query("UPDATE `users` SET `user_free_used` = 1 WHERE user_id = ?", [user.user_id]);
+						if (price == "free") {
+							db.promise().query("UPDATE `users` SET `u_freeUsed` = 1 WHERE u_id = ?", [user.u_id]);
 						}
 						response.status = true;
 					});
 			} else {
-				if (user.sub_id != null) {
-					const striprInfo = await stripe.upgradePlan(user.sub_subscription, price_id); //! Update subscription session
+				if (user.sb_id != null) {
+					const striprInfo = await stripe.upgradePlan(user.sb_subscription, price); //! Update subscription session
 					if (striprInfo) {
 						response.status = true;
 						response.msg = "Upgrade in progress. Please wait";
@@ -84,13 +84,13 @@ export default defineEventHandler(async (req) => {
 function getUserInfo(userEmail) {
 	return db
 		.promise()
-		.query("SELECT * FROM `users` LEFT JOIN `subscriptions` ON user_id = sub_user LEFT JOIN `subscription_plan` ON plan_id = sub_plan WHERE `user_email` = ?", [userEmail])
+		.query("SELECT * FROM `users` LEFT JOIN `subscriptions` ON u_id = sb_user LEFT JOIN `subscription_plans` ON sp_id = sb_plan WHERE `u_email` = ?", [userEmail])
 		.then(([rows]) => {
 			if (rows.length) return rows[0];
 			return false;
 		});
 }
 
-function deleteUserSubscription(user_id) {
-	db.promise().query("DELETE FROM subscriptions WHERE `sub_user` = ? AND (`sub_plan` = 0 OR `sub_active` = 0)", [user_id]);
+function deleteUserSubscription(u_id) {
+	db.promise().query("DELETE FROM subscriptions WHERE `sb_user` = ? AND (`sb_plan` = 0 OR `sb_active` = 0)", [u_id]);
 }

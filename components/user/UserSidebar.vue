@@ -1,13 +1,5 @@
 <script setup>
 const router = useRouter();
-function signout() {
-	const cookieJwt = useCookie("org_user");
-	const cookieAgent = useCookie("org_log");
-	cookieJwt.value = '';
-	cookieAgent.value = '';
-	router.push("/signin");
-}
-
 const menuItems = [
 	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
 	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
@@ -67,12 +59,28 @@ onMounted(() => {
 	if (active)
 		active.classList.add("show")
 });
+function toggleNavbar() {
+	const body = document.body;
+	const className = 'g-sidenav-pinned';
+	if (body.classList.contains(className)) {
+		body.classList.remove(className)
+	} else {
+		body.classList.add(className)
+	}
+}
 </script>
 
 <template>
 	<aside
 		class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark small"
 		id="sidenav-main">
+		<a href="#" class="sidebarToggle" @click="toggleNavbar">
+			<div class="sidenav-toggler-inner">
+				<i class="sidenav-toggler-line"></i>
+				<i class="sidenav-toggler-line"></i>
+				<i class="sidenav-toggler-line"></i>
+			</div>
+		</a>
 		<div class="sidenav-header">
 			<i class="material-icons p-3 cursor-pointer text-white opacity-10 position-absolute end-0 top-0 d-none d-xl-none"
 				aria-hidden="true">skip_previous</i>
@@ -111,9 +119,68 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.navbar-vertical.navbar-expand-xs {
+	overflow: inherit;
+}
+
+.sidebarToggle {
+	position: absolute;
+	right: -35px;
+	z-index: 10;
+	display: none;
+	width: 36px;
+	height: 50px;
+	top: 0;
+	padding: 19px 10px;
+}
+
+
+
 #sidenav-main {
 	margin: 0 !important;
 	border-radius: 0;
+}
+
+@media (max-width: 1199.98px) {
+	.sidebarToggle {
+		display: block;
+
+	}
+
+	.sidenav {
+		transform: translateX(-251px) !important;
+	}
+
+	body.g-sidenav-pinned .sidenav {
+		transform: translateX(0) !important;
+	}
+
+	body.g-sidenav-pinned .sidenav-toggler-line {
+		display: none;
+	}
+
+	body.g-sidenav-pinned .sidenav-toggler-line:first-child,
+	body.g-sidenav-pinned .sidenav-toggler-line:last-child {
+		width: 100% !important;
+		transform: translateX(0) !important;
+		display: block;
+	}
+
+	body.g-sidenav-pinned .sidenav-toggler-line:first-child {
+		transform: rotate(45deg) !important;
+	}
+
+	body.g-sidenav-pinned .sidenav-toggler-line:last-child {
+		transform: rotate(-45deg) !important;
+		top: -5px !important;
+	}
+
+	.g-sidenav-pinned .sidebarToggle {
+		width: calc(100vw - 250px);
+		left: 250px;
+		position: fixed;
+		height: 100vh;
+	}
 }
 
 .dropdown {

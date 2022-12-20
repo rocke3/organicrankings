@@ -1,5 +1,11 @@
+<script setup>
+const props = defineProps({ data: Object });
+
+</script>
+
 <template>
   <div class="text-center">
+
     <div class="m-auto border border-info rounded shadow p-3 my-4" style="max-width: 400px;">
       <h6>
         <slot />
