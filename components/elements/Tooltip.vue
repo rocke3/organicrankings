@@ -24,8 +24,7 @@ defineProps({
 }
 
 .cus-tooltip .cus-tooltiptext {
-
-
+  font-size: 14px;
   visibility: hidden;
   width: -moz-max-content;
   width: max-content;
@@ -39,7 +38,6 @@ defineProps({
   z-index: 10;
   bottom: 30px;
   left: 50%;
-  /* margin-left: -60px; */
   opacity: 0;
   transition: opacity 0.3s;
   transform: translate(-50%);

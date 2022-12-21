@@ -31,6 +31,7 @@ const menuItems = [
 	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },
 	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
 	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields' },
+	{ name: 'Htaccess Tools', path: '/user/htaccessTools', icon: 'vpn_lock' },
 ]
 
 async function logoutRequest() {
@@ -55,9 +56,12 @@ function dropdown($event) {
 	}
 }
 onMounted(() => {
-	const active = document.querySelector('.router-link-exact-active').closest('.hasChild');
-	if (active)
-		active.classList.add("show")
+	let hasMenu = document.querySelector('.router-link-exact-active');
+	if (hasMenu) {
+		const active = document.querySelector('.router-link-exact-active').closest('.hasChild');
+		if (active)
+			active.classList.add("show")
+	}
 });
 function toggleNavbar() {
 	const body = document.body;

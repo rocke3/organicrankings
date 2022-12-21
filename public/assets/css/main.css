@@ -4,6 +4,14 @@
 body {
 	background-color: #f0f2f5;
 }
+label {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+}
 .dark-version #darkSwitch {
 	color: rgb(226 234 241) !important;
 	text-shadow: rgb(255 255 255 / 66%) 0px 0px 15px;
@@ -43,7 +51,8 @@ hr {
 
 .dark-version .form-label,
 .dark-version .modal-content,
-.dark-version .outputSettings .settingLvl {
+.dark-version .outputSettings .settingLvl,
+.dark-version fieldset legend {
 	background: #202940 !important;
 	transition: 0s all;
 }
@@ -269,4 +278,22 @@ body::-webkit-scrollbar-thumb {
 }
 .form-check:not(.form-switch) .form-check-input[type="checkbox"] {
 	margin: 1px 2px 0 0;
+}
+fieldset {
+	border: 1px solid #dee2e6;
+	border-radius: 5px;
+	padding: 15px 10px 10px 10px;
+	position: relative;
+	margin-top: 10px;
+}
+fieldset legend {
+	font-size: 16px;
+	position: absolute;
+	top: -14px;
+	background: #fff;
+	width: fit-content;
+	padding: 0 5px;
+	left: 5px;
+	border-radius: 5px;
+	font-weight: bold;
 }
