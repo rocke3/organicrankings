@@ -5,10 +5,9 @@ import { defineEventHandler, readBody } from "h3";
 export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
 	const domain = body.domain;
-	const directory = body.directory;
-	const directoryListings = body.directoryListings;
 	const errorPages = body.errorPages;
-	const upLimit = body.upLimit;
+	const otherSettings = body.otherSettings;
+	const cacheDuration = body.cacheDuration;
 
 	let options = {
 		cache: {
@@ -34,8 +33,8 @@ export default defineEventHandler(async (req) => {
 		if (value.value) options.prevent.push(value.name);
 	});
 
-	let htaccess = generateHtaccess(domain, directory, directoryListings, errorPages, upLimit, options);
-	return htaccess.replace(/[\r\n]{2,}/g, "\n").replace(/\t/g, "");
+	let htaccess = generateHtaccess(domain, errorPages, otherSettings, cacheDuration, options);
+	return htaccess.replace(/\t/g, "");
 });
 
 function insartIntoDatabase(body) {
@@ -50,16 +49,18 @@ function insartIntoDatabase(body) {
 		});
 }
 
-function generateHtaccess(domain, directory, directoryListings, errorPages, upLimit, options) {
+function generateHtaccess(domain, errorPages, otherSettings, cacheDuration, options) {
 	let changeDirectoryPage =
-		directory != ""
+		otherSettings.defaultPage != ""
 			? `
+		
 			## Change default directory page
-		DirectoryIndex ${directory}`
+			DirectoryIndex ${otherSettings.defaultPage}`
 			: "";
 
-	let preventDirectoryListings = directoryListings
+	let preventDirectoryListings = otherSettings.directoryListings
 		? `
+
 		## Prevent directory listings
 		Options All -Indexes`
 		: "";
@@ -67,6 +68,7 @@ function generateHtaccess(domain, directory, directoryListings, errorPages, upLi
 	let protectFiles = _.isEmpty(options.prevent)
 		? ""
 		: `
+
 		## PROTECT FILES
 		<FilesMatch "\.(${_.join(options.prevent, "|")})$">
 		Order Allow,Deny
@@ -77,13 +79,14 @@ function generateHtaccess(domain, directory, directoryListings, errorPages, upLi
 		_.isEmpty(options.cache.code) || _.isEmpty(options.cache.font) || _.isEmpty(options.cache.media)
 			? ""
 			: `
-		## Add Caching.`;
+
+			## Add Caching.`;
 
 	_.forIn(options.cache, function (value, key) {
 		if (!_.isEmpty(value)) {
 			caching += `
 			<FilesMatch ".(${_.join(value, "|")})$">
-					Header set Cache-Control "max-age=300"
+				Header set Cache-Control "max-age=${cacheDuration[key].duration * cacheDuration[key].unit}"
 			</FilesMatch>`;
 		}
 	});
@@ -91,6 +94,7 @@ function generateHtaccess(domain, directory, directoryListings, errorPages, upLi
 	let compress = _.isEmpty(options.compress)
 		? ""
 		: `
+
 			## Compress `;
 	_.forIn(options.compress, function (value, key) {
 		if (value == "text") {
@@ -116,6 +120,7 @@ function generateHtaccess(domain, directory, directoryListings, errorPages, upLi
 	});
 	let hasErrorPage = false;
 	let errorPage = `
+
 	## Custom error pages`;
 	_.forIn(errorPages, function (value, key) {
 		if (value) {
@@ -128,32 +133,19 @@ function generateHtaccess(domain, directory, directoryListings, errorPages, upLi
 
 	let uploadLimit = "";
 
-	if (upLimit.limit) {
+	if (otherSettings.upLimit) {
 		uploadLimit += `
+
 		## LIMIT UPLOAD FILE SIZE TO PROTECT AGAINST DOS ATTACK
-		LimitRequestBody ${1000000 * upLimit.size} #bytes 
+		LimitRequestBody ${1000000 * otherSettings.upSize} #bytes 
 		`;
 	}
 
+	let protocol = domain.protocol ? "https" : "http";
+
 	return `## URL normalization
 	RewriteEngine on 
-	RewriteBase /
-	RewriteCond %{HTTPS} on
-	RewriteCond %{HTTP_HOST} ${domain.subdomain ? "!" : ""}^www.(.*)$ [NC]
-	RewriteRule ^(.*)$ ${domain.protocol ? "https" : "http"}://${domain.subdomain ? "www." : ""}${domain.url} [L,R=301]
-	RewriteRule ^ ${domain.protocol ? "https" : "http"}://${domain.subdomain ? "www." : ""}%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-	${changeDirectoryPage}
-
-	${preventDirectoryListings}
-
-	${protectFiles}
-
-	${caching}
-
-	${compress}
-
-	${hasErrorPage ? errorPage : ""}
-
-	${uploadLimit}`;
+	RewriteCond %{HTTPS} ${domain.protocol ? "on" : "off"}
+	RewriteCond %{HTTP_HOST} ${domain.subdomain ? "!^www\\." : "^www\\.(.*)$"} [NC]
+	RewriteRule .* ${protocol}://${domain.subdomain ? "www." : ""}${domain.url} [R=301,L] ${changeDirectoryPage}${preventDirectoryListings}${protectFiles}${caching}${compress}${hasErrorPage ? errorPage : ""}${uploadLimit}`;
 }

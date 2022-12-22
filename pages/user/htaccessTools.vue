@@ -11,7 +11,7 @@ const domain = ref({
   subdomain: true,
   url: '',
 })
-const directory = ref('')
+
 const cache = ref({
   media: [
     { name: 'ico', value: true },
@@ -43,9 +43,9 @@ const cache = ref({
 })
 
 const cacheDuration = ref({
-  media: { duration: 1, unit: 'week' },
-  code: { duration: 2, unit: 'week' },
-  font: { duration: 5, unit: 'week' },
+  media: { duration: 1, unit: 604800 },
+  code: { duration: 2, unit: 604800 },
+  font: { duration: 5, unit: 604800 },
 })
 
 const compress = ref([
@@ -69,12 +69,14 @@ const errorPages = ref({
   pg404: '',
   pg500: '',
 })
-const upLimit = ref({
-  limit: false,
-  size: 5
+
+const otherSettings = ref({
+  defaultPage: '',
+  directoryListings: true,
+  upLimit: false,
+  upSize: 5
 })
 
-const directoryListings = ref(true)
 const processing = ref(false)
 
 function createHtaccess() {
@@ -82,13 +84,12 @@ function createHtaccess() {
   showOutputModal.value = true;
   let sendData = {
     domain: domain.value,
-    directory: directory.value,
-    directoryListings: directoryListings.value,
     cache: cache.value,
+    cacheDuration: cacheDuration.value,
     compress: compress.value,
     prevent: prevent.value,
     errorPages: errorPages.value,
-    upLimit: upLimit.value,
+    otherSettings: otherSettings.value,
   }
   axios.post('/htaccessTools', sendData)
     .then(function (res) {
@@ -153,7 +154,8 @@ function createHtaccess() {
               <legend>Change default directory page</legend>
               <div class="input-group input-group-outline mt-3">
                 <label class="form-label">File Name</label>
-                <input class="form-control " type="text" v-model="directory" placeholder="public.html" />
+                <input class="form-control " type="text" v-model="otherSettings.defaultPage"
+                  placeholder="public.html" />
               </div>
             </fieldset>
 
@@ -171,11 +173,11 @@ function createHtaccess() {
                   <input type="number" class="form-control" v-model="cacheDuration.media.duration">
                   <div class="input-group-append">
                     <select id="customSelect" class="form-control" v-model="cacheDuration.media.unit">
-                      <option value="minute">Minutes</option>
-                      <option value="hour">Hours</option>
-                      <option value="day">Days</option>
-                      <option value="week">Weeks</option>
-                      <option value="month">Months</option>
+                      <option value="60">Minutes</option>
+                      <option value="3600">Hours</option>
+                      <option value="86400">Days</option>
+                      <option value="604800">Weeks</option>
+                      <option value="2592000">Months</option>
                     </select>
                   </div>
                 </div>
@@ -196,11 +198,11 @@ function createHtaccess() {
                   <input type="number" class="form-control" v-model="cacheDuration.code.duration">
                   <div class="input-group-append">
                     <select id="customSelect" class="form-control" v-model="cacheDuration.code.unit">
-                      <option value="minute">Minutes</option>
-                      <option value="hour">Hours</option>
-                      <option value="day">Days</option>
-                      <option value="week">Weeks</option>
-                      <option value="month">Months</option>
+                      <option value="60">Minutes</option>
+                      <option value="3600">Hours</option>
+                      <option value="86400">Days</option>
+                      <option value="604800">Weeks</option>
+                      <option value="2592000">Months</option>
                     </select>
                   </div>
                 </div>
@@ -221,11 +223,11 @@ function createHtaccess() {
                   <input type="number" class="form-control" v-model="cacheDuration.font.duration">
                   <div class="input-group-append">
                     <select id="customSelect" class="form-control" v-model="cacheDuration.font.unit">
-                      <option value="minute">Minutes</option>
-                      <option value="hour">Hours</option>
-                      <option value="day">Days</option>
-                      <option value="week">Weeks</option>
-                      <option value="month">Months</option>
+                      <option value="60">Minutes</option>
+                      <option value="3600">Hours</option>
+                      <option value="86400">Days</option>
+                      <option value="604800">Weeks</option>
+                      <option value="2592000">Months</option>
                     </select>
                   </div>
                 </div>
@@ -247,7 +249,7 @@ function createHtaccess() {
               <legend>Prevent Viewing</legend>
               <div class="form-check ps-0">
                 <label class="form-check-label me-3">
-                  <input class="form-check-input me-1" type="checkbox" v-model="directoryListings">
+                  <input class="form-check-input me-1" type="checkbox" v-model="otherSettings.directoryListings">
                   Directory Listings
                 </label>
                 <label class="form-check-label me-3" v-for="(item, key) in prevent">
@@ -262,11 +264,11 @@ function createHtaccess() {
               <div class="form-check ps-0">
                 <div class="form-check ps-0">
                   <label class="form-check-label me-3 text-uppercase">
-                    <input class="form-check-input me-1" type="checkbox" v-model="upLimit.limit">
-                    limit upload <span class="text-primary">{{ upLimit.size }}mb</span>
+                    <input class="form-check-input me-1" type="checkbox" v-model="otherSettings.upLimit">
+                    limit upload <span class="text-primary">{{ otherSettings.upSize }}mb</span>
                   </label>
                 </div>
-                <input type="range" class="d-block w-100" min="0" max="100" v-model="upLimit.size">
+                <input type="range" class="d-block w-100" min="0" max="100" v-model="otherSettings.upSize">
               </div>
             </fieldset>
             <fieldset class="mt-4">

@@ -20,7 +20,7 @@ const websiteInput = ref(null);
 
 let progress = ref(0)
 
-async function genarateCss() {
+async function generateCss() {
 	outputError.value = '';
 	if (css.value) {
 		let requiredWebsite = todo.value == 'critical' ? true : false;
@@ -84,7 +84,7 @@ watch(css, async (val) => {
 		<div class="row">
 			<div class="col-12">
 				<ElementsBsCard formTitle="CSS Tools" titleClass="ps-3">
-					<form @submit.prevent="genarateCss">
+					<form @submit.prevent="generateCss">
 
 						<div class="todo">
 							<div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"

@@ -20,7 +20,7 @@ let progress = ref(0)
 
 const htmlOptions = ref(htmlOptionsArr)
 
-async function genarateJs() {
+async function generateJs() {
   showOutputModal.value = true;
   processing.value = true;
   outputJs.value = '';
@@ -71,7 +71,7 @@ watch(js, async (val) => {
     <div class="row">
       <div class="col-12">
         <ElementsBsCard formTitle="Javascript Tools" titleClass="ps-3">
-          <form @submit.prevent="genarateJs">
+          <form @submit.prevent="generateJs">
 
             <div class="pb-2">
               <div class="outputSettings mt-2">
