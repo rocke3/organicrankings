@@ -90,7 +90,7 @@ function createHtaccess() {
     errorPages: errorPages.value,
     upLimit: upLimit.value,
   }
-  axios.post('/api/htaccessTools', sendData)
+  axios.post('/htaccessTools', sendData)
     .then(function (res) {
       let data = res.data;
       htaccessCode.value = data;
