@@ -1,7 +1,6 @@
 <script setup>
 import axios from 'axios'
 let plans = ref({});
-let unserInfo = ref({});
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 const props = defineProps({ data: Object });
@@ -13,8 +12,6 @@ if (process.client) {
     }).catch((error) => {
       console.log(error);
     });
-
-
 }
 
 function subscribe(plan, price, subActive) {
@@ -59,7 +56,7 @@ function subscribe(plan, price, subActive) {
     <client-only>
       <div class="row">
         <!-- Free Plan -->
-        <div class="col-12 d-flex justify-content-center mb-4" v-if="data.userInfo.u_id">
+        <div class="col-12 d-flex justify-content-center mb-4">
           <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
             v-if="data.subscription.sb_plan == 0 && data.subscription.sb_active">
             <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
@@ -94,6 +91,19 @@ function subscribe(plan, price, subActive) {
                       data.subscription.sp_pageSpeed
                   }}
                   </td>
+                </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end">{{ data.subscription.sb_text ?? 0 }} out of {{
+                      data.subscription.sp_text
+                  }}</td>
+                </tr>
+                <tr>
+                  <td>Htaccess tools</td>
+                  <td class="text-end">{{ data.subscription.sb_htaccess ?? 0 }} out
+                    of {{
+                        data.subscription.sp_htaccess
+                    }}</td>
                 </tr>
               </table>
             </div>
@@ -163,6 +173,18 @@ function subscribe(plan, price, subActive) {
                       plan.sp_pageSpeed
                   }}</td>
                 </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end"><span class="text-dark p-0">{{ data.subscription.sb_text }}</span> of {{
+                      plan.sp_text
+                  }}</td>
+                </tr>
+                <tr>
+                  <td>Htaccess tools</td>
+                  <td class="text-end"><span class="text-dark p-0">{{ data.subscription.sb_htaccess }}</span> of {{
+                      plan.sp_htaccess
+                  }}</td>
+                </tr>
               </table>
 
               <div class="text-center mt-4">
@@ -205,13 +227,22 @@ function subscribe(plan, price, subActive) {
                   <td class="text-end">{{ plan.sp_js }}</td>
                 </tr>
                 <tr>
-                  <td>Image</td>
+                  <td>Image tools</td>
                   <td class="text-end">{{ plan.sp_image }}</td>
                 </tr>
                 <tr>
                   <td>Page Speed</td>
                   <td class="text-end">{{ plan.sp_pageSpeed }}</td>
                 </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end">{{ plan.sp_text }}</td>
+                </tr>
+                <tr>
+                  <td>Htaccess tools</td>
+                  <td class="text-end">{{ plan.sp_htaccess }}</td>
+                </tr>
+
               </table>
 
               <div class="text-center mt-4">
