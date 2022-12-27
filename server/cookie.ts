@@ -2,9 +2,8 @@ import { setCookie, deleteCookie, getHeader } from "h3";
 const env = useRuntimeConfig();
 
 enum cookieName {
-	JWT = "org_user",
-	AGENT = "org_log",
-	Session = "org_session",
+	JWT = "org_session",
+	User = "org_user",
 }
 
 const agent = (req) => {
@@ -19,10 +18,16 @@ const remove = (req, name: cookieName) => {
 	deleteCookie(req, name);
 };
 
+const removeAll = (req) => {
+	deleteCookie(req, cookieName.JWT);
+	deleteCookie(req, cookieName.User);
+};
+
 const cookie = {
 	agent: agent,
 	set: set,
 	remove: remove,
+	removeAll: removeAll,
 	name: cookieName,
 };
 

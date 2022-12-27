@@ -8,24 +8,25 @@ export default defineEventHandler(async (event) => {
 	const req = event.req,
 		res = event.res,
 		toUrl = req.originalUrl,
-		userAgent = md5(cookie.agent(req)), //? For an extra layer of security. Match MD5 user agent/browser info. (previously saved during login)
-		cookieJwt = getCookie(req, cookie.name.JWT), //? JWT Tokan (User info)
-		cookieAgent = getCookie(req, cookie.name.AGENT), //? MD5 user agent/browser info (previously saved during login)
-		path = toUrl.split("/");
+		requestAgent = md5(cookie.agent(req)), //? For an extra layer of security. Match MD5 user agent/browser info. (previously saved during login)
+		cookieJwt = getCookie(req, cookie.name.JWT), //? JWT Tokan (Browser Info)
+		cookieUser = getCookie(req, cookie.name.User), //? User Information
+		path = toUrl.split("/")[1];
 
-	if (cookieJwt && cookieAgent && cookieAgent == userAgent) {
+	if (cookieJwt && cookieUser) {
 		let verify = await jwt.verify(cookieJwt, env.jwtSecret, function (err, decoded) {
-			return err ? false : true;
+			if (decoded.user == requestAgent && !err) return true;
+			return false;
 		});
 
-		if (path[1] == "user" && !verify) {
-			cookie.remove(req, cookie.name.JWT);
-			cookie.remove(req, cookie.name.AGENT);
+		if (path == "user" && !verify) {
+			cookie.removeAll(req);
 			redirect(res, "/");
 		}
-	} else if (path[1] == "user") {
-		// If Cookie not found & trying to access restricted page Redirect to signin
+	} else if (path == "user") {
+		// If Cookie not found & trying to access restricted page Redirect to signin AND remove all cookie
 		console.log("No cookie Redirect");
+		cookie.removeAll(req);
 		redirect(res, "/");
 	}
 });

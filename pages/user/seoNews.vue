@@ -7,12 +7,12 @@ useHead({ title: "Dashboard - Organic Rankings" });
 
 
 <template>
-	<div>
-		<!-- Card -->
-		<ElementsBsCard formTitle="Card Title" titleClass="ps-3">
+  <div>
+    <!-- Card -->
+    <ElementsBsCard formTitle="SEO News" titleClass="ps-3">
 
-		</ElementsBsCard>
-	</div>
+    </ElementsBsCard>
+  </div>
 </template>
 		
 <style scoped>

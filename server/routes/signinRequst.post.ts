@@ -1,7 +1,6 @@
-const env = useRuntimeConfig();
 import md5 from "md5";
 import auth from "../auth";
-import db from "../connection";
+import getUser from "../database/getUser";
 import cookie from "../cookie";
 import { defineEventHandler, readBody } from "h3";
 
@@ -11,31 +10,25 @@ export default defineEventHandler(async (req) => {
 
 	if (validateInputs(body)) {
 		const email = body.email;
-		const pass = md5(body.password);
+		const pass = body.password;
+		let userCookie = {};
 
-		const login = await db
-			.promise()
-			.query("SELECT * FROM users WHERE u_email = ? AND u_password = ?", [email, pass])
-			.then(([rows, fields]) => {
-				var dbUser = rows[0] ?? false;
-				if (dbUser) {
-					const jwtToken = auth.sign({ user: email });
-					if (jwtToken) {
-						cookie.set(req, cookie.name.JWT, jwtToken);
-						cookie.set(req, cookie.name.AGENT, userAgent);
-						return { login: true };
-					}
-					return { login: false };
-				} else {
-					return { login: false, message: "Invalid Email or Password." };
-				}
-			})
-			.catch((error) => {
-				return { login: false, message: "Something went wrong please try again later", error: error };
-			});
+		const user = await getUser.byEmail(email, true);
 
-		return login;
+		if (user.u_password === md5(pass)) {
+			const jwtToken = auth.sign({ user: userAgent });
+			if (jwtToken) {
+				cookie.set(req, cookie.name.JWT, jwtToken);
+				userCookie["name"] = user.u_name;
+				userCookie["email"] = user.u_email;
+				userCookie["phone"] = user.u_phone;
+				userCookie["active"] = user.sb_active;
+				cookie.set(req, cookie.name.User, JSON.stringify(userCookie));
+				return { login: true };
+			}
+		}
 	}
+	return { login: false };
 });
 
 function validateInputs(body) {

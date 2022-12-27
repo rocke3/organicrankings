@@ -32,6 +32,7 @@ const menuItems = [
 	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
 	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields' },
 	{ name: 'Htaccess Tools', path: '/user/htaccessTools', icon: 'vpn_lock' },
+	{ name: 'SEO News', path: '/user/seoNews', icon: 'newspaper' },
 ]
 
 async function logoutRequest() {

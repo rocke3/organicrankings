@@ -1,12 +1,6 @@
 <script setup>
 const showModal = ref(false)
 const copyright = new Date().getFullYear();
-const props = defineProps({
-	data: {
-		type: Object,
-		required: true,
-	}
-});
 </script>
 <template>
 	<footer class="footer py-2">
@@ -18,18 +12,18 @@ const props = defineProps({
 						©{{ copyright }} - OrganicRankings.com
 					</div>
 				</div>
-				<div class="col-lg-6">
-					<ul class="nav nav-footer justify-content-center justify-content-lg-end">
-						<li class="nav-item">
-							<a href="https://www.organicrankings.com/about.php" class="nav-link text-muted">About Us</a>
+				<div class="col-lg-6 text-end">
+					<ul class=" list-inline">
+						<li class="list-inline-item">
+							<a href="https://www.organicrankings.com/about.php">About Us</a>
 						</li>
-						<li class="nav-item">
-							<a href="#" class="nav-link pe-0 text-muted" @click="showModal = true">Contact Us</a>
+						<li class="list-inline-item">
+							<a class="ms-1 cursor-pointer" @click="showModal = true">Contact Us</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<ElementsContactUsModal :data="data" v-model:showModal="showModal" />
+		<ElementsContactUsModal v-model:showModal="showModal" />
 	</footer>
 </template>

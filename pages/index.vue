@@ -44,6 +44,7 @@ if (process.client) {
     navigateTo("/user");
   }
 }
+
 </script>
 
 <template>

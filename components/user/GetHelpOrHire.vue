@@ -2,7 +2,7 @@
 
 const showModal = ref(false)
 const title = ref("")
-
+const user = useCookie('org_user')
 function openModal(value) {
   title.value = value;
   showModal.value = true
@@ -64,12 +64,16 @@ async function submit() {
                 </select>
               </div>
               <div class="input-group input-group-outline my-4">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" v-model="user.name" required />
+              </div>
+              <div class="input-group input-group-outline my-4">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" />
+                <input type="email" class="form-control" v-model="user.email" required />
               </div>
               <div class="input-group input-group-outline my-4">
                 <label class="form-label">Phone Number</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" v-model="user.phone" required />
               </div>
               <div class="input-group input-group-outline my-4">
                 <label class="form-label">Message</label>
