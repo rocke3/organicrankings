@@ -34,7 +34,7 @@ function subscribe(plan, price, subActive) {
           alertMsg.value.msg = resData.msg
           setTimeout(function () { window.location.href = resData.url; }, 1500);
         } else {
-          //window.location.href = resData.url;
+          window.location.href = resData.url;
         }
       } else {
         alertMsg.value.class = "alert-danger"
@@ -179,7 +179,7 @@ function subscribe(plan, price, subActive) {
                 Currently Using
               </button>
               <button class="btn btn-primary"
-                @click="subscribe(plan.sp_id, plan.sp_stripePrice, userSub.sb_active); plan.processing = 1"
+                @click="subscribe(plan.sp_id, plan.sp_stripePriceId, userSub.sb_active); plan.processing = 1"
                 :disabled="(plan.sp_id < userSub.sb_plan && userSub.sb_active) ? true : false" v-else>
                 <div v-if="plan.processing">Loading
                   <ElementsSpinner class="ms-2" />

@@ -6,10 +6,10 @@ import stripe from "../stripe";
 
 export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
+
 	let verifyed = await auth.verify(getCookie(req, cookie.name.JWT)); //! verify cookie JWT token
 	if (verifyed) {
-		const user = await getUserInfo(verifyed.user);
-
+		const user = await getUserInfo(verifyed.email);
 		if (body.price && user) {
 			const price = body.price;
 			const plan = body.plan;
@@ -45,6 +45,8 @@ export default defineEventHandler(async (req) => {
 				//! If Plan is not free
 				if (price != "free") {
 					const striprInfo = await stripe.checkoutSessions(price); //! Generate Stripe subscription session
+					console.log(striprInfo);
+
 					stripe_id = striprInfo.id;
 					response.url = striprInfo.url;
 					active = 0;
@@ -61,8 +63,10 @@ export default defineEventHandler(async (req) => {
 						response.status = true;
 					});
 			} else {
+				console.log(user);
+
 				if (user.sb_id != null) {
-					const striprInfo = await stripe.upgradePlan(user.sb_subscription, price); //! Update subscription session
+					const striprInfo = await stripe.upgradePlan(user.sb_subscriptionId, price); //! Update subscription session
 					if (striprInfo) {
 						response.status = true;
 						response.msg = "Upgrade in progress. Please wait";

@@ -16,7 +16,7 @@ export default defineEventHandler(async (req) => {
 		const user = await getUser.byEmail(email, true);
 
 		if (user.u_password === md5(pass)) {
-			const jwtToken = auth.sign({ user: userAgent });
+			const jwtToken = auth.sign({ user: userAgent, email: email });
 			if (jwtToken) {
 				cookie.set(req, cookie.name.JWT, jwtToken);
 				userCookie["name"] = user.u_name;
