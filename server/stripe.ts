@@ -5,8 +5,8 @@ const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
 const checkoutSessions = (price_id: string) => {
 	return stripe.checkout.sessions
 		.create({
-			success_url: "https://app.organicrankings.com/user/subscription",
-			cancel_url: "https://app.organicrankings.com/user/subscription",
+			success_url: "https://app.organicrankings.com/stripeRedirect",
+			cancel_url: "https://app.organicrankings.com/stripeRedirect",
 			line_items: [{ price: price_id, quantity: 1 }],
 			mode: "subscription",
 		})
