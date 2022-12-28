@@ -1,6 +1,6 @@
 <script setup>
 onMounted(() => {
-  navigateTo('/user/subscription')
+  window.location.href = '/user/subscription'
 });
 </script>
 
