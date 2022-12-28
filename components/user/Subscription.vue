@@ -5,20 +5,20 @@ let userSub = ref({});
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 
-
-axios.post('/subscriptionPlans')
-  .then(function (res) {
-    plans.value = res.data;
-  }).catch((error) => {
-    console.log(error);
-  });
-axios.post('/getUserSubscription')
-  .then(function (res) {
-    userSub.value = res.data;
-  }).catch((error) => {
-    console.log(error);
-  });
-
+onMounted(() => {
+  axios.post('/subscriptionPlans')
+    .then(function (res) {
+      plans.value = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  axios.post('/getUserSubscription')
+    .then(function (res) {
+      userSub.value = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+});
 
 function subscribe(plan, price, subActive) {
   axios.post('/subscriptin', { plan: plan, price: price, upgrade: subActive })
