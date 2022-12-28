@@ -60,9 +60,9 @@ function subscribe(plan) {
       </div>
     </div>
 
-    <div class="row">
-      <!-- Free Plan -->
-      <client-only>
+    <client-only>
+      <div class="row">
+        <!-- Free Plan -->
         <div class="col-12 d-flex justify-content-center mb-4">
           <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
             v-if="userSub.sb_plan == 0 && userSub.sb_active">
@@ -121,82 +121,82 @@ function subscribe(plan) {
             </button>
           </div>
         </div>
-      </client-only>
 
-      <div class="col-xl-3 col-md-6" v-for="plan in plans">
-        <div class="card mb-5 planBox" :class="(userSub.sb_plan == plan.sp_id && userSub.sb_active) ? 'active' : ''">
-          <div class="card-header p-3 pt-2 pb-2 bg-transparent">
-            <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-              <h3 class="m-0 py-1 px-4 text-white">{{ plan.sp_name }}</h3>
-            </div>
-            <div class="text-end pt-2">
-              <div class="mb-0 mt-4">
-                <small class="float-start mt-2">Monthly</small>
-                <h4>${{ plan.sp_price }} USD</h4>
+        <div class="col-xl-3 col-md-6" v-for="plan in plans">
+          <div class="card mb-5 planBox" :class="(userSub.sb_plan == plan.sp_id && userSub.sb_active) ? 'active' : ''">
+            <div class="card-header p-3 pt-2 pb-2 bg-transparent">
+              <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                <h3 class="m-0 py-1 px-4 text-white">{{ plan.sp_name }}</h3>
+              </div>
+              <div class="text-end pt-2">
+                <div class="mb-0 mt-4">
+                  <small class="float-start mt-2">Monthly</small>
+                  <h4>${{ plan.sp_price }} USD</h4>
+                </div>
               </div>
             </div>
-          </div>
-          <hr class="horizontal my-0 dark">
-          <div class="card-footer p-3">
-            <h5 class="text-center">Requst used</h5>
-            <p class="mb-2 text-secondery text-sm font-weight-bolder text-center">
-            </p>
-            <table class="table text-success font-weight-bolder text-sm">
-              <tr>
-                <td>HTML tools</td>
-                <td class="text-end"><span>{{ userSub.sb_html }} of</span>{{ plan.sp_html }}</td>
-              </tr>
-              <tr>
-                <td>CSS tools</td>
-                <td class="text-end"><span>{{ userSub.sb_css }} of</span>{{ plan.sp_css }}</td>
-              </tr>
-              <tr>
-                <td>JS tools</td>
-                <td class="text-end"><span>{{ userSub.sb_js }} of</span>{{ plan.sp_js }}</td>
-              </tr>
-              <tr>
-                <td>Image</td>
-                <td class="text-end"><span>{{ userSub.sb_image }} of</span>{{ plan.sp_image }}
-                </td>
-              </tr>
-              <tr>
-                <td>Page Speed</td>
-                <td class="text-end"><span>{{ userSub.sb_pageSpeed }} of</span>{{ plan.sp_pageSpeed }}</td>
-              </tr>
-              <tr>
-                <td>Text tools</td>
-                <td class="text-end"><span>{{ userSub.sb_text }} of</span>{{ plan.sp_text }}</td>
-              </tr>
-              <tr>
-                <td>Htaccess tools</td>
-                <td class="text-end"><span>{{ userSub.sb_htaccess }} of</span>{{ plan.sp_htaccess }}</td>
-              </tr>
-            </table>
+            <hr class="horizontal my-0 dark">
+            <div class="card-footer p-3">
+              <h5 class="text-center">Requst used</h5>
+              <p class="mb-2 text-secondery text-sm font-weight-bolder text-center">
+              </p>
+              <table class="table text-success font-weight-bolder text-sm">
+                <tr>
+                  <td>HTML tools</td>
+                  <td class="text-end"><span>{{ userSub.sb_html }} of</span>{{ plan.sp_html }}</td>
+                </tr>
+                <tr>
+                  <td>CSS tools</td>
+                  <td class="text-end"><span>{{ userSub.sb_css }} of</span>{{ plan.sp_css }}</td>
+                </tr>
+                <tr>
+                  <td>JS tools</td>
+                  <td class="text-end"><span>{{ userSub.sb_js }} of</span>{{ plan.sp_js }}</td>
+                </tr>
+                <tr>
+                  <td>Image</td>
+                  <td class="text-end"><span>{{ userSub.sb_image }} of</span>{{ plan.sp_image }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Page Speed</td>
+                  <td class="text-end"><span>{{ userSub.sb_pageSpeed }} of</span>{{ plan.sp_pageSpeed }}</td>
+                </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end"><span>{{ userSub.sb_text }} of</span>{{ plan.sp_text }}</td>
+                </tr>
+                <tr>
+                  <td>Htaccess tools</td>
+                  <td class="text-end"><span>{{ userSub.sb_htaccess }} of</span>{{ plan.sp_htaccess }}</td>
+                </tr>
+              </table>
 
 
-            <div class="text-center mt-4">
-              <button v-if="(userSub.sb_plan == plan.sp_id && userSub.sb_active)"
-                class="text-bold btn btn-danger font-weight-bolder">
-                Cancel Subscription
-              </button>
-              <button class="btn btn-primary" @click="subscribe(plan.sp_stripePriceId); plan.processing = 1"
-                :disabled="(plan.sp_id < userSub.sb_plan && userSub.sb_active) ? true : false" v-else>
-                <div v-if="plan.processing">Loading
-                  <ElementsSpinner class="ms-2" />
-                </div>
-                <span v-else>
-                  <span v-if="userSub.sb_active">Upgrade Now</span>
-                  <span v-else>Subscribe now</span>
-                </span>
-              </button>
+              <div class="text-center mt-4">
+                <button v-if="(userSub.sb_plan == plan.sp_id && userSub.sb_active)"
+                  class="text-bold btn btn-danger font-weight-bolder">
+                  Cancel Subscription
+                </button>
+                <button class="btn btn-primary" @click="subscribe(plan.sp_stripePriceId); plan.processing = 1"
+                  :disabled="(plan.sp_id < userSub.sb_plan && userSub.sb_active) ? true : false" v-else>
+                  <div v-if="plan.processing">Loading
+                    <ElementsSpinner class="ms-2" />
+                  </div>
+                  <span v-else>
+                    <span v-if="userSub.sb_active">Upgrade Now</span>
+                    <span v-else>Subscribe now</span>
+                  </span>
+                </button>
+              </div>
+
             </div>
-
           </div>
+
+
         </div>
-
-
       </div>
-    </div>
+    </client-only>
 
   </div>
 </template>
@@ -228,7 +228,7 @@ function subscribe(plan) {
   border-style: ridge;
 }
 
-#sbbox .text-end span {
+.text-end span {
   display: none;
   color: #2fbdae;
 }
