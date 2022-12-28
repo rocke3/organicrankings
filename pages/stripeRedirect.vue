@@ -1,6 +1,6 @@
 <script setup>
 onMounted(() => {
-  navigateTo('/user/subscription')
+  setTimeout(function () { navigateTo('/user/subscription'); }, 500);
 });
 </script>
 
