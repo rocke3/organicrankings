@@ -4,7 +4,7 @@ const menuItems = [
 	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
 	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
 	{
-		name: 'SEO Improve', path: '/user/seoimprove/', icon: 'speed', dropdown:
+		name: 'SEO Tutorial', path: '/user/seoimprove/', icon: 'speed', dropdown:
 			[
 				{ name: 'SEO Practices', path: '/user/seoimprove/seopractices' },
 				{ name: 'SEO Guides', path: '/user/seoimprove/seoguides' },

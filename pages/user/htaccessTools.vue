@@ -104,6 +104,7 @@ function createHtaccess() {
 
 watch(domain.value, (newPosts) => {
   domain.value.url = domain.value.url.replace("www.", '');
+  domain.value.url = domain.value.url.replace("/", '');
   domain.value.url = domain.value.url.replace(/^https?:/, '');
 })
 </script>
