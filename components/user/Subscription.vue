@@ -109,7 +109,7 @@ function subscribe(plan, price, subActive) {
           </div>
         </div>
         <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-          v-else-if="userSub.u_freeUsed == 0">
+          v-else-if="userSub.u_freeUsed == 0 && userSub.sb_active">
           <p class="text-bold text-primary m-0">Try our all tools for free,</p>
           <p class="text-bold text-primary m-0">No card or bank information required.</p>
           <p class="text-bold text-primary">One-click activation</p>
