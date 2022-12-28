@@ -2,6 +2,13 @@ import { defineNuxtConfig } from "nuxt/config";
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+	vite: {
+		server: {
+			hmr: {
+				protocol: "ws",
+			},
+		},
+	},
 	app: {
 		head: {
 			meta: [{ name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no" }],
