@@ -1,5 +1,7 @@
 <script setup>
-//await navigateTo('/user/subscription')
+onMounted(() => {
+  navigateTo('/user/subscription')
+});
 </script>
 
 
