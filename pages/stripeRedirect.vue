@@ -1,5 +1,5 @@
 <script setup>
-await navigateTo('/user/subscription')
+//await navigateTo('/user/subscription')
 </script>
 
 
