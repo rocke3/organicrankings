@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
 
 	if (cookieJwt && cookieUser) {
 		let verify = await jwt.verify(cookieJwt, env.jwtSecret, function (err, decoded) {
-			if (decoded.user == requestAgent && !err) return true;
-			return false;
+			if (err) return false;
+			if (decoded.user == requestAgent) return true;
 		});
 
 		if (path == "user" && !verify) {
