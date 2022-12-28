@@ -62,6 +62,7 @@ function subscribe(plan, price, subActive) {
 
     <div class="row">
       <!-- Free Plan -->
+      {{ userSub }}
       <div class="col-12 d-flex justify-content-center mb-4">
         <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
           v-if="userSub.sb_plan == 0 && userSub.sb_active">
