@@ -62,64 +62,66 @@ function subscribe(plan) {
 
     <div class="row">
       <!-- Free Plan -->
-      <div class="col-12 d-flex justify-content-center mb-4">
-        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-          v-if="userSub.sb_plan == 0 && userSub.sb_active">
-          <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
-            limitation
-          </p>
-          <h5 class="text-bold text-dark">Limit Used</h5>
-          <div class="text-start">
-            <table class="table text-success">
-              <tr>
-                <td>HTML tools</td>
-                <td class="text-end">{{ userSub.sb_html ?? 0 }} out of {{ userSub.sp_html }}
-                </td>
-              </tr>
-              <tr>
-                <td>CSS tools</td>
-                <td class="text-end">{{ userSub.sb_css ?? 0 }} out of {{ userSub.sp_css }}
-                </td>
-              </tr>
-              <tr>
-                <td>JS tools</td>
-                <td class="text-end">{{ userSub.sb_js ?? 0 }} out of {{ userSub.sp_js }}
-                </td>
-              </tr>
-              <tr>
-                <td>Image</td>
-                <td class="text-end">{{ userSub.sb_img ?? 0 }} out of {{ userSub.sp_image }}
-                </td>
-              </tr>
-              <tr>
-                <td>Page Speed</td>
-                <td class="text-end">{{ userSub.sb_pageSpeed ?? 0 }} out of {{ userSub.sp_pageSpeed }}
-                </td>
-              </tr>
-              <tr>
-                <td>Text tools</td>
-                <td class="text-end">{{ userSub.sb_text ?? 0 }} out of {{ userSub.sp_text }}</td>
-              </tr>
-              <tr>
-                <td>Htaccess tools</td>
-                <td class="text-end">{{ userSub.sb_htaccess ?? 0 }} out of {{ userSub.sp_htaccess }}</td>
-              </tr>
-            </table>
+      <client-only>
+        <div class="col-12 d-flex justify-content-center mb-4">
+          <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
+            v-if="userSub.sb_plan == 0 && userSub.sb_active">
+            <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
+              limitation
+            </p>
+            <h5 class="text-bold text-dark">Limit Used</h5>
+            <div class="text-start">
+              <table class="table text-success">
+                <tr>
+                  <td>HTML tools</td>
+                  <td class="text-end">{{ userSub.sb_html ?? 0 }} out of {{ userSub.sp_html }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>CSS tools</td>
+                  <td class="text-end">{{ userSub.sb_css ?? 0 }} out of {{ userSub.sp_css }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>JS tools</td>
+                  <td class="text-end">{{ userSub.sb_js ?? 0 }} out of {{ userSub.sp_js }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Image</td>
+                  <td class="text-end">{{ userSub.sb_img ?? 0 }} out of {{ userSub.sp_image }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Page Speed</td>
+                  <td class="text-end">{{ userSub.sb_pageSpeed ?? 0 }} out of {{ userSub.sp_pageSpeed }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end">{{ userSub.sb_text ?? 0 }} out of {{ userSub.sp_text }}</td>
+                </tr>
+                <tr>
+                  <td>Htaccess tools</td>
+                  <td class="text-end">{{ userSub.sb_htaccess ?? 0 }} out of {{ userSub.sp_htaccess }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
+            v-else-if="!userSub.u_freeUsed && !userSub.sb_active">
+            <p class="text-bold text-primary m-0">Try our all tools for free,</p>
+            <p class="text-bold text-primary m-0">No card or bank information required.</p>
+            <p class="text-bold text-primary">One-click activation</p>
+            <button class="btn btn-primary mb-0" @click="subscribe(free.name); free.processing = true;">
+              <div v-if="free.processing">Loading
+                <ElementsSpinner class="ms-2" />
+              </div>
+              <span v-else>Try For Free</span>
+            </button>
           </div>
         </div>
-        <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-          v-else-if="!userSub.u_freeUsed && !userSub.sb_active">
-          <p class="text-bold text-primary m-0">Try our all tools for free,</p>
-          <p class="text-bold text-primary m-0">No card or bank information required.</p>
-          <p class="text-bold text-primary">One-click activation</p>
-          <button class="btn btn-primary mb-0" @click="subscribe(free.name); free.processing = true;">
-            <div v-if="free.processing">Loading
-              <ElementsSpinner class="ms-2" />
-            </div>
-            <span v-else>Try For Free</span>
-          </button>
-        </div>
-      </div>
+      </client-only>
 
       <div class="col-xl-3 col-md-6" v-for="plan in plans">
         <div class="card mb-5 planBox" :class="(userSub.sb_plan == plan.sp_id && userSub.sb_active) ? 'active' : ''">
