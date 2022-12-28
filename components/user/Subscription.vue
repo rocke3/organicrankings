@@ -228,12 +228,12 @@ function subscribe(plan) {
   border-style: ridge;
 }
 
-.table span {
+.text-end span {
   display: none;
   color: #2fbdae;
 }
 
-.planBox.active .table span {
+.planBox.active .text-end span {
   display: initial;
 }
 
