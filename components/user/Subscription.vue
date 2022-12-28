@@ -34,7 +34,7 @@ function subscribe(plan, price, subActive) {
           alertMsg.value.msg = resData.msg
           setTimeout(function () { window.location.href = resData.url; }, 1500);
         } else {
-          window.location.href = resData.url;
+          //window.location.href = resData.url;
         }
       } else {
         alertMsg.value.class = "alert-danger"
