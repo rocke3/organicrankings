@@ -202,8 +202,8 @@ function subscribe(plan) {
 </template>
 		
 		
-<style>
-#sbbox .closeBtn {
+<style scoped>
+.closeBtn {
   position: absolute;
   right: 0;
   top: 0;
@@ -213,18 +213,18 @@ function subscribe(plan) {
   transition: 0.3s all;
 }
 
-#sbbox .closeBtn:hover {
+.closeBtn:hover {
   opacity: 1;
 }
 
-#sbbox .msgAlert {
+.msgAlert {
   position: fixed;
   z-index: 9;
   top: 10px;
   left: 50%;
 }
 
-#sbbox .table> :not(:first-child) {
+.table> :not(:first-child) {
   border-style: ridge;
 }
 
@@ -233,24 +233,24 @@ function subscribe(plan) {
   color: #2fbdae;
 }
 
-#sbbox .planBox.active .text-end span {
+.planBox.active .text-end span {
   display: initial;
 }
 
-#sbbox .planBox {
+.planBox {
   max-width: 320px;
   margin: auto;
 }
 
-#sbbox .planBox.active {
+.planBox.active {
   outline: 1px solid #007c9d;
 }
 
-#sbbox .btn-outline-primary {
+.btn-outline-primary {
   padding: 9px 24px !important;
 }
 
-#sbbox .planBox.active:after {
+.planBox.active:after {
   content: "Active";
   position: absolute;
   right: -18px;
