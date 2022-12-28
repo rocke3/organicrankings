@@ -10,7 +10,7 @@ export default defineEventHandler(async (req) => {
 		return await db
 			.promise()
 			.query(
-				"SELECT sb_plan,sb_html,sb_css,sb_js,sb_image,sb_pageSpeed,sb_text,sb_htaccess,sb_active,sp_id,sp_name,sp_price,sp_html,sp_css,sp_js,sp_image,sp_pageSpeed,sp_text,sp_htaccess,u_freeUsed FROM `users` LEFT JOIN `subscriptions` ON u_id = sb_user LEFT JOIN `subscription_plans` ON sp_id = sb_plan WHERE `u_email` = ? AND sb_active = 1",
+				"SELECT sb_plan,sb_html,sb_css,sb_js,sb_image,sb_pageSpeed,sb_text,sb_htaccess,sb_active,sp_id,sp_name,sp_price,sp_html,sp_css,sp_js,sp_image,sp_pageSpeed,sp_text,sp_htaccess,u_freeUsed FROM `users` LEFT JOIN `subscriptions` ON u_id = sb_user  AND sb_active = 1 LEFT JOIN `subscription_plans` ON sp_id = sb_plan WHERE `u_email` = ?",
 				[user.email]
 			)
 			.then(([rows]) => {
