@@ -30,7 +30,7 @@ async function generateJs() {
   axios.post('https://www.organicrankings.com/api/jstool', js.value, {
     headers: {
       'Content-Type': 'application/octet-stream',
-      authorization: useCookie('org_user').value,
+      authorization: useCookie('org_session').value,
       output: beautify.value ? 'beautify' : 'minify',
       indent: indent.value ? 4 : 2
     },

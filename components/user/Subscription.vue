@@ -88,23 +88,23 @@ function subscribe(plan) {
                   </td>
                 </tr>
                 <tr>
-                  <td>Image</td>
+                  <td>Image tools</td>
                   <td class="text-end">{{ userSub.sb_img ?? 0 }} out of {{ userSub.sp_image }}
                   </td>
-                </tr>
-                <tr>
-                  <td>Page Speed</td>
-                  <td class="text-end">{{ userSub.sb_pageSpeed ?? 0 }} out of {{ userSub.sp_pageSpeed }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Text tools</td>
-                  <td class="text-end">{{ userSub.sb_text ?? 0 }} out of {{ userSub.sp_text }}</td>
                 </tr>
                 <tr>
                   <td>Htaccess tools</td>
                   <td class="text-end">{{ userSub.sb_htaccess ?? 0 }} out of {{ userSub.sp_htaccess }}</td>
                 </tr>
+                <tr>
+                  <td>Page Analysis</td>
+                  <td class="text-end">Unlimited</td>
+                </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end">Unlimited</td>
+                </tr>
+
               </table>
             </div>
           </div>
@@ -154,22 +154,23 @@ function subscribe(plan) {
                   <td class="text-end"><span>{{ userSub.sb_js }} of</span>{{ plan.sp_js }}</td>
                 </tr>
                 <tr>
-                  <td>Image</td>
+                  <td>Image tools</td>
                   <td class="text-end"><span>{{ userSub.sb_image }} of</span>{{ plan.sp_image }}
                   </td>
-                </tr>
-                <tr>
-                  <td>Page Speed</td>
-                  <td class="text-end"><span>{{ userSub.sb_pageSpeed }} of</span>{{ plan.sp_pageSpeed }}</td>
-                </tr>
-                <tr>
-                  <td>Text tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_text }} of</span>{{ plan.sp_text }}</td>
                 </tr>
                 <tr>
                   <td>Htaccess tools</td>
                   <td class="text-end"><span>{{ userSub.sb_htaccess }} of</span>{{ plan.sp_htaccess }}</td>
                 </tr>
+                <tr>
+                  <td>Page Analysis</td>
+                  <td class="text-end">Unlimited</td>
+                </tr>
+                <tr>
+                  <td>Text tools</td>
+                  <td class="text-end">Unlimited</td>
+                </tr>
+
               </table>
 
 

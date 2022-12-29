@@ -49,7 +49,7 @@ async function optimizeHtml() {
   axios.post('https://www.organicrankings.com/api/htmltool', html.value, {
     headers: {
       'Content-Type': 'application/octet-stream',
-      authorization: useCookie('org_user').value,
+      authorization: useCookie('org_session').value,
       options: JSON.stringify(options),
       output: beautify.value ? 'beautify' : 'minify'
     },

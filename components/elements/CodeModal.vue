@@ -92,7 +92,9 @@ function copyToClipboard() {
 							<div class="alert alert-danger text-white text-bold px-5" v-html="error"></div>
 						</div>
 						<p class="text-bold text-danger">Click below button to Activate / Upgrade subscription</p>
-						<a href="" class="btn btn-primary">Subscription</a>
+						<NuxtLink to="/user/subscription" class="btn btn-primary">
+							Subscription
+						</NuxtLink>
 					</div>
 					<pre v-else><code id="outputCode">{{ body }}</code></pre>
 				</div>

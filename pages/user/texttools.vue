@@ -39,7 +39,7 @@ function analizeKeyword() {
   axios.post('https://www.organicrankings.com/api/keyword', website.value, {
     headers: {
       'Content-Type': 'application/octet-stream',
-      authorization: useCookie('org_user').value,
+      authorization: useCookie('org_session').value,
     }
   })
     .then(function (res) {
@@ -137,15 +137,15 @@ function analizeKeyword() {
                         </div>
                       </td>
                       <td class="value">{{ value[1] }} <small class="p-0">({{ (value[1] / counter.words *
-                          100).toFixed(1)
-                      }}%)</small> </td>
+    100).toFixed(1)
+}}%)</small> </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-center" v-if="counter.uniqueWords > 5">
                         <button class="btn btn-link text-primary m-0 p-0" @click.prevent="showModal = true">See All
                           ({{
-                              counter.uniqueWords
-                          }})</button>
+    counter.uniqueWords
+}})</button>
                       </td>
                     </tr>
                   </table>
@@ -202,7 +202,7 @@ function analizeKeyword() {
                 <div class=" ">
                   <div v-for="(value, key) in checker.densityAll" class="d-inline-block">
                     <ElementsTooltip :tooltip="value[1] + ' (' + (value[1] / checker.words *
-                    100).toFixed(1) + '%)'" class="item">
+  100).toFixed(1) + '%)'" class="item">
                       {{ value[0] }}
                     </ElementsTooltip>
 
@@ -226,8 +226,8 @@ function analizeKeyword() {
                       <td>{{ value[0] }}</td>
                       <td>{{ value[1] }}</td>
                       <td>{{ (value[1] / checker.words *
-                          100).toFixed(1)
-                      }}%</td>
+    100).toFixed(1)
+}}%</td>
                     </tr>
                   </tbody>
                 </table>
@@ -265,8 +265,8 @@ function analizeKeyword() {
             <td>{{ value[0] }}</td>
             <td>{{ value[1] }}</td>
             <td>{{ (value[1] / counter.words *
-                100).toFixed(1)
-            }}%</td>
+    100).toFixed(1)
+              }}%</td>
           </tr>
         </tbody>
       </table>

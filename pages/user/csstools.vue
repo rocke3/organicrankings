@@ -36,7 +36,7 @@ async function generateCss() {
 			axios.post('https://www.organicrankings.com/api/csstool', css.value, {
 				headers: {
 					'Content-Type': 'application/octet-stream',
-					authorization: useCookie('org_user').value,
+					authorization: useCookie('org_session').value,
 					website: website.value,
 					todo: todo.value,
 					optimize: optimize.value,

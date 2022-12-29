@@ -4,7 +4,7 @@ const menuItems = [
 	{ name: 'Dashboard', path: '/user', icon: 'dashboard' },
 	{ name: 'Subscription', path: '/user/subscription', icon: 'grade' },
 	{
-		name: 'SEO Tutorial', path: '/user/seoimprove/', icon: 'speed', dropdown:
+		name: 'SEO Tutorial', path: '/user/seoimprove/', icon: 'ads_click', dropdown:
 			[
 				{ name: 'SEO Practices', path: '/user/seoimprove/seopractices' },
 				{ name: 'SEO Guides', path: '/user/seoimprove/seoguides' },
@@ -25,13 +25,13 @@ const menuItems = [
 				{ name: 'SEO Avenues', path: '/user/seoimprove/seoavenues' },
 			]
 	},
-	{ name: 'Page Speed Analysis', path: '/user/pagespeed', icon: 'speed' },
+	{ name: 'Page Analysis', path: '/user/pagespeed', icon: 'speed' },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
 	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },
 	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
-	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields' },
 	{ name: 'Htaccess Tools', path: '/user/htaccessTools', icon: 'vpn_lock' },
+	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields' },
 	{ name: 'SEO News', path: '/user/seoNews', icon: 'newspaper' },
 ]
 

@@ -48,7 +48,7 @@ function uploadImage(file, id) {
   axios.post('https://www.organicrankings.com/api/imagetool', imageData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      authorization: useCookie('org_user').value,
+      authorization: useCookie('org_session').value,
       upload: imageFolder.data,
       qualiy: qualiy.value,
       convert: convert.value
