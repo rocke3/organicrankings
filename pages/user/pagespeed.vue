@@ -89,8 +89,7 @@ function resultView($device) {
 #genarated {
   text-align: center;
   margin-top: 10px;
-  color: #fc9a00;
-  font-weight: 400;
+  color: #aaa;
 }
 
 .dark-version .lh-root {
