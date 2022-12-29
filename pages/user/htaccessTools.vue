@@ -318,7 +318,7 @@ watch(domain.value, (newPosts) => {
     <ElementsCodeModal v-model:showModal="showOutputModal" :body="htaccessCode" error="" />
 
 
-    <div class=" bg-warning text-white p-2 rounded">
+    <div class=" text-white p-2 rounded" style="background: #66bb6a;">
       <p>
         Use our htaccess code at your own risk. Please make sure you keep a backup of your current htaccess file in case
         you have to revert back to it. This is important since some errors can bring your website down immediately.
