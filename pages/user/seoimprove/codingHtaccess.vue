@@ -1,5 +1,4 @@
 <script setup>
-import htaccessCode from "./htaccessCode";
 definePageMeta({ layout: "user-layout" });
 useHead({ title: "SEO - Organic Rankings" });
 
@@ -8,6 +7,8 @@ const protocol = ref(true)
 const subdomain = ref(true)
 const cache = ref(1)
 const duration = ref('week')
+
+
 </script>
  
 <template>
@@ -46,63 +47,17 @@ const duration = ref('week')
               experienced with .htaccess for assistance before you make it live. They will need to change the
               “your-domain.com” to your current domain name and may need to modify the code slightly for their servers.
             </p>
-          </div>
-        </div>
-        <div class="mt-3 px-xl-5">
-          <div class="mb-4 form-inline">
-            <div class="outputSettings mt-2">
-              <label class="settingLvl">Output Settings</label>
-              <div class="d-inline-block me-2 mb-2 autoWidth">
-                <div class="form-check form-switch d-flex align-items-center border rounded p-2">
-                  <div class="toggle me-1" :class="{ 'text-primary': !protocol }" @click="protocol = false">HTTP</div>
-                  <div class="ms-5 me-2">
-                    <input class="form-check-input" type="checkbox" v-model="protocol" />
-                  </div>
-                  <div class="toggle " :class="{ 'text-primary': protocol }" @click="protocol = true">HTTPS</div>
-                </div>
-              </div>
-              <div class="d-inline-block me-2 mb-2 autoWidth">
-                <div class="form-check form-switch d-flex align-items-center border rounded p-2">
-                  <div class="toggle me-1" style="text-decoration: line-through;"
-                    :class="{ 'text-primary': !subdomain }" @click="subdomain = false">WWW</div>
-                  <div class="ms-5 me-2">
-                    <input class="form-check-input" type="checkbox" v-model="subdomain" />
-                  </div>
-                  <div class="toggle " :class="{ 'text-primary': subdomain }" @click="subdomain = true">WWW</div>
-                </div>
-              </div>
-              <div class="d-inline-block me-2 mb-2 autoWidth">
-                <div class="input-group input-group-outline mt-3">
-                  <label class="form-label">URL</label>
-                  <input class="form-control" type="url" v-model="url" />
-                </div>
-              </div>
-              <div class="d-inline-block me-2 mb-2 autoWidth">
-                <div class="input-group input-group-outline mt-3">
-                  <label class="form-label">Cache</label>
-                  <input type="number" class="form-control" v-model="cache">
-                  <div class="input-group-append">
-                    <select id="customSelect" class="form-control" v-model="duration">
-                      <option value="minute">Minutes</option>
-                      <option value="hour">Hours</option>
-                      <option value="day">Days</option>
-                      <option value="week">Weeks</option>
-                      <option value="month">Months</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+            <div class="text-center">
+              <p class="text-bold">Use our Htaccess Tools to generate your htaccess file</p>
 
-
+              <NuxtLink to="/user/htaccessTools" class="btn btn-primary">
+                Htaccess Tools
+              </NuxtLink>
             </div>
-
           </div>
-
-          <span class="form-control px-3" style="background: #eee;">
-            <code><pre>{{ htaccessCode(protocol, subdomain, url, cache, duration) }}</pre></code>
-          </span>
-          <UserSubscribeAction>Get the code for htaccess for speed for your website</UserSubscribeAction>
         </div>
+
+
 
         <UserGetHelpOrHire>
           The above information is a brief explanation of this technique. To learn more about

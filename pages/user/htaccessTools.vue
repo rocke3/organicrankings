@@ -315,7 +315,8 @@ watch(domain.value, (newPosts) => {
     </ElementsBsCard>
 
     <!-- Modal -->
-    <ElementsCodeModal v-model:showModal="showOutputModal" :body="htaccessCode" error="" />
+    <ElementsCodeModal v-model:showModal="showOutputModal" :body="htaccessCode" error="" filename=" .htaccess"
+      info="After download the file rename it and remove the underscore (_)" />
 
 
     <div class=" text-white p-2 rounded" style="background: #66bb6a;">

@@ -29,6 +29,14 @@ const props = defineProps({
 		type: String,
 		default: "Copy Code",
 	},
+	filename: {
+		type: String,
+		default: "file.txt",
+	},
+	info: {
+		type: String,
+		default: "",
+	},
 	footer: {
 		type: Boolean,
 		default: true,
@@ -53,6 +61,15 @@ function copyToClipboard() {
 	setTimeout(function () {
 		copyBtnTxt.value = btnTxt
 	}, 500)
+}
+function download(text, filename) {
+	var element = document.createElement('a');
+	element.setAttribute('href', 'data:application/octet-stream;charset=utf-8,' + encodeURIComponent(text));
+	element.setAttribute('download', filename);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
 }
 </script>
 
@@ -102,8 +119,10 @@ function copyToClipboard() {
 					<button class="btn btn-secondary" @click="$emit('update:showModal', false);">
 						Close
 					</button>
-					<button class="btn btn-primary" @click="copyToClipboard" v-html="copyBtnTxt"></button>
+					<button class="btn btn-primary" v-if="body" @click="copyToClipboard" v-html="copyBtnTxt"></button>
+					<button class="btn btn-success" v-if="body" @click="download(body, filename)">Download</button>
 				</div>
+				<p v-if="info && body" class="text-center p-0 text-info">{{ info }}</p>
 			</div>
 		</div>
 	</div>
