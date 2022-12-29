@@ -25,13 +25,13 @@ const menuItems = [
 				{ name: 'SEO Avenues', path: '/user/seoimprove/seoavenues' },
 			]
 	},
-	{ name: 'Page Analysis', path: '/user/pagespeed', icon: 'speed' },
+	{ name: 'Page Analysis', path: '/user/pagespeed', icon: 'speed', free: true },
 	{ name: 'HTML Tools', path: '/user/htmltools', icon: 'html' },
 	{ name: 'CSS Tools', path: '/user/csstools', icon: 'css' },
 	{ name: 'JS Tools', path: '/user/jstools', icon: 'javascript' },
 	{ name: 'Image Tools', path: '/user/imagetools', icon: 'image' },
 	{ name: 'Htaccess Tools', path: '/user/htaccessTools', icon: 'vpn_lock' },
-	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields' },
+	{ name: 'Text Tools', path: '/user/texttools', icon: 'text_fields', free: true },
 	{ name: 'SEO News', path: '/user/seoNews', icon: 'newspaper' },
 ]
 
@@ -100,6 +100,7 @@ function toggleNavbar() {
 					@click="dropdown($event)">
 					<NuxtLink :to="menuItem.path" class="nav-link text-white main">
 						<i class="material-icons opacity-10">{{ menuItem.icon }}</i> {{ menuItem.name }}
+						<span v-if="menuItem.free" class="badge bg-warning">Free</span>
 					</NuxtLink>
 					<div class="dropdown collapse" v-if="menuItem.dropdown">
 						<ul class="nav ">
@@ -124,6 +125,19 @@ function toggleNavbar() {
 </template>
 
 <style scoped>
+.nav-item a {
+	position: relative;
+}
+
+.nav-item .badge {
+	padding: 2px 4px 1px;
+	border-radius: 3px;
+	font-size: 11px;
+	position: absolute;
+	right: 10px;
+	font-weight: 400;
+}
+
 .navbar-vertical.navbar-expand-xs {
 	overflow: inherit;
 }

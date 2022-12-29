@@ -66,8 +66,9 @@ function analizeKeyword() {
     <ElementsBsCard formTitle="Text Tools" titleClass="ps-3">
 
       <div class="todo">
-        <div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0"
+        <div class="form-check form-check-radio btn btn-outline-primary me-3 mb-3 p-0 overflow-visible"
           :class="todo == 'counter' ? 'active' : ''">
+          <span class="badge bg-warning">Free</span>
           <label class="form-check-label m-0 px-3 py-2">
             <input class="form-check-input me-1" type="radio" name="option" value="counter" v-model="todo" checked>
             Word Counter
@@ -278,6 +279,16 @@ function analizeKeyword() {
 
 
 <style scoped>
+.form-check .badge {
+  padding: 2px 4px 1px;
+  border-radius: 3px;
+  font-size: 11px;
+  position: absolute;
+  right: -5px;
+  top: -10px;
+  font-weight: 400;
+}
+
 .keywords {
   border: 1px solid #ccc;
   border-radius: 5px;
