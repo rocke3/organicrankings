@@ -79,7 +79,7 @@ function cancelSubscription(action, cancel) {
           <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
             v-if="userSub.sb_plan == 0 && userSub.sb_active">
             <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
-              limitation
+              limitation.
             </p>
             <h5 class="text-bold text-dark">Limit Used</h5>
             <div class="text-start">
@@ -149,7 +149,7 @@ function cancelSubscription(action, cancel) {
             </div>
             <hr class="horizontal my-0 dark">
             <div class="card-footer p-3">
-              <h5 class="text-center">Requst used</h5>
+              <h5 class="text-center">Package Details</h5>
               <p class="mb-2 text-secondery text-sm font-weight-bolder text-center">
               </p>
               <table class="table text-success font-weight-bolder text-sm">
