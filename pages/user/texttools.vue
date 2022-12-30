@@ -46,7 +46,7 @@ function analizeKeyword() {
       loadingKeywords.value = false;
       let data = res.data;
       if (data.error) {
-        keywordError.value = data.error
+        keywordError.value = data.message
       } else {
         let trimdString = _.trim(data.replace(/\n/g, " ").replace('(', " ").replace(')', " ").toLowerCase())
         checker.value.characters = trimdString.replace(' ', " ").length;
@@ -167,10 +167,17 @@ function analizeKeyword() {
             <button class="btn btn-primary" type="submit">Analyze keyword</button>
           </div>
         </form>
-        <div class="alert alert-danger text-white max-width-500 m-auto text-center" v-if="keywordError">
-          {{ keywordError }}
+        <div v-if="keywordError" class="text-center">
+          <div class="d-flex justify-content-center mb-2">
+            <div class="alert alert-danger text-white text-bold px-5" v-html="keywordError"></div>
+          </div>
+          <p class="text-bold text-danger">Click below button to Activate / Upgrade subscription</p>
+          <NuxtLink to="/user/subscription" class="btn btn-primary">
+            Subscription
+          </NuxtLink>
         </div>
-        <div>
+
+        <div v-else>
           <div v-if="loadingKeywords" class="text-center pt-3">
             <ElementsSpinner color="#e91e63" />
             <div class="genarating text-primary pt-0"> Analyzing keywords <br /> Please wait.</div>
