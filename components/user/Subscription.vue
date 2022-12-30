@@ -114,7 +114,7 @@ function cancelSubscription(action, cancel) {
                 </tr>
                 <tr>
                   <td>Text tools</td>
-                  <td class="text-end">Unlimited</td>
+                  <td class="text-end">{{ userSub.sb_text ?? 0 }} out of {{ userSub.sp_text }}</td>
                 </tr>
 
               </table>
@@ -180,7 +180,7 @@ function cancelSubscription(action, cancel) {
                 </tr>
                 <tr>
                   <td>Text tools</td>
-                  <td class="text-end">Unlimited</td>
+                  <td class="text-end"><span>{{ userSub.sb_text }} of</span>{{ plan.sp_text }}</td>
                 </tr>
 
               </table>
