@@ -6,6 +6,7 @@ useHead({ title: "Text Tools - Organic Rankings" });
 
 const showOutputModal = ref(false)
 const htaccessCode = ref('')
+const htaccessError = ref('')
 const domain = ref({
   protocol: true,
   subdomain: true,
@@ -82,6 +83,7 @@ const processing = ref(false)
 function createHtaccess() {
   processing.value = true;
   showOutputModal.value = true;
+  htaccessError.value = '';
   let sendData = {
     domain: domain.value,
     cache: cache.value,
@@ -94,7 +96,11 @@ function createHtaccess() {
   axios.post('/htaccessTools', sendData)
     .then(function (res) {
       let data = res.data;
-      htaccessCode.value = data;
+      if (data.error) {
+        htaccessError.value = data.message;
+      } else {
+        htaccessCode.value = data;
+      }
       processing.value = false;
     })
     .catch(function (error) {
@@ -315,8 +321,8 @@ watch(domain.value, (newPosts) => {
     </ElementsBsCard>
 
     <!-- Modal -->
-    <ElementsCodeModal v-model:showModal="showOutputModal" :body="htaccessCode" error="" filename=" .htaccess"
-      info="After download the file rename it and remove the underscore (_)" />
+    <ElementsCodeModal v-model:showModal="showOutputModal" :body="htaccessCode" :error="htaccessError"
+      filename=" .htaccess" info="After download the file rename it and remove the underscore (_)" />
 
 
     <div class=" text-white p-2 rounded" style="background: #66bb6a;">

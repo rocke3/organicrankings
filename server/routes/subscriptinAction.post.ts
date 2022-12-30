@@ -6,16 +6,32 @@ import stripe from "../stripe";
 
 export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
-	let response = { status: false, url: "/user/subscription", msg: "Something went wrong. please refresh the page and try again." };
-
+	let response = { status: false, url: "/user/subscription", msg: "Authentication failed. please refresh the page and try again." };
 	let verifyed = await auth.verify(getCookie(req, cookie.name.JWT)); //! verify cookie JWT token
-	if (verifyed) {
-		const user = await getUserInfo(verifyed.email);
-		const plan = await getSubscriptionPlans(body.plan);
+	if (!verifyed) return response; //! Return Error if JWT token invalid or expaire
 
-		if (plan && user) {
+	const user = await getUserInfo(verifyed.email);
+	if (!user) return response; //! Return Error if user not found
+	const action = body.action ?? false;
+	const cancel = body.cancel ?? false;
+
+	if (action == "cancel") {
+		const subscription = await stripe.cancelAtPeriodEnd(user.sb_subscriptionId, cancel);
+		if (subscription) {
+			response.status = true;
+			if (cancel) {
+				response.msg = "<h5>Cancel request successful</h4>Your subscription will be canceled at end of the subscription period.";
+			} else {
+				response.msg = "<h5>Reactivation successful</h4>";
+			}
+			return response;
+		}
+	} else {
+		const plan = await getSubscriptionPlans(body.plan);
+		if (plan) {
 			let stripe_id = "",
 				active = 1;
+
 			//! Return if Free trial already used
 			if (plan.sp_stripePriceId == "free" && user.u_freeUsed > 0) {
 				response.msg = "Your Free trial limit over";

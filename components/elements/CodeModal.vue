@@ -119,8 +119,8 @@ function download(text, filename) {
 					<button class="btn btn-secondary" @click="$emit('update:showModal', false);">
 						Close
 					</button>
-					<button class="btn btn-primary" v-if="body" @click="copyToClipboard" v-html="copyBtnTxt"></button>
-					<button class="btn btn-success" v-if="body" @click="download(body, filename)">Download</button>
+					<button class="btn btn-primary" v-if="body && !error" @click="copyToClipboard" v-html="copyBtnTxt"></button>
+					<button class="btn btn-success" v-if="body && !error" @click="download(body, filename)">Download</button>
 				</div>
 				<p v-if="info && body" class="text-center p-0 text-info">{{ info }}</p>
 			</div>

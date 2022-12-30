@@ -1,4 +1,7 @@
 import db from "../connection";
+import auth from "../auth";
+import cookie from "../cookie";
+import getUser from "../database/getUser";
 import _ from "lodash";
 import { defineEventHandler, readBody } from "h3";
 
@@ -8,6 +11,14 @@ export default defineEventHandler(async (req) => {
 	const errorPages = body.errorPages;
 	const otherSettings = body.otherSettings;
 	const cacheDuration = body.cacheDuration;
+
+	let verifyed = await auth.verify(getCookie(req, cookie.name.JWT));
+
+	if (!verifyed) return { error: true, message: "Authantication faild.<br> Your session has expired. please log in again to continue." };
+	const userEmail = verifyed.email;
+	const user = await getUser.withSubscriptions(userEmail);
+
+	if (user.sb_htaccess >= user.sp_htaccess) return { error: true, message: "Use limit exceeded for this tool. <br> Please upgrade your subscription" };
 
 	let options = {
 		cache: {
@@ -34,20 +45,21 @@ export default defineEventHandler(async (req) => {
 	});
 
 	let htaccess = generateHtaccess(domain, errorPages, otherSettings, cacheDuration, options);
-	return htaccess.replace(/\t/g, "");
-});
 
-function insartIntoDatabase(body) {
-	let user = body.user ?? 0;
-	let userInfo = user ? "" : JSON.stringify({ name: body.name, email: body.email, phone: body.phone });
-	return db
+	let updated = await db
 		.promise()
-		.query("INSERT INTO `subscriptions`(`fs_user`, `fs_userInfo`, `fs_msg`) VALUES (?,?,?)", [user, userInfo, body.message])
+		.query("UPDATE subscriptions SET sb_htaccess = sb_htaccess + 1 WHERE sb_user = ? AND sb_active = 1", [user.u_id])
 		.then(([rows]) => {
-			if (rows) return true;
+			if (rows.affectedRows) return true;
 			return false;
 		});
-}
+
+	if (updated) {
+		return htaccess.replace(/\t/g, "");
+	} else {
+		return { error: true, message: "Something went wrong please try again later" };
+	}
+});
 
 function generateHtaccess(domain, errorPages, otherSettings, cacheDuration, options) {
 	let changeDirectoryPage =

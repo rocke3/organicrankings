@@ -20,8 +20,8 @@ onMounted(() => {
     });
 });
 
-function subscribe(plan) {
-  axios.post('/subscriptinAction', { plan: plan })
+function subscribe(action, plan) {
+  axios.post('/subscriptinAction', { action: action, plan: plan })
     .then(async function (res) {
       free.value.processing = false
       for (let key in plans.value) {
@@ -45,6 +45,18 @@ function subscribe(plan) {
       console.log(error);
     });
 }
+
+function cancelSubscription(action, cancel) {
+  axios.post('/subscriptinAction', { action: action, cancel: cancel })
+    .then(async function (res) {
+      free.value.processing = false
+    }).catch((error) => {
+      console.log(error);
+    });
+}
+
+
+
 
 </script>
 
@@ -113,7 +125,7 @@ function subscribe(plan) {
             <p class="text-bold text-primary m-0">Try our all tools for free,</p>
             <p class="text-bold text-primary m-0">No card or bank information required.</p>
             <p class="text-bold text-primary">One-click activation</p>
-            <button class="btn btn-primary mb-0" @click="subscribe(free.name); free.processing = true;">
+            <button class="btn btn-primary mb-0" @click="subscribe('new', free.name); free.processing = true;">
               <div v-if="free.processing">Loading
                 <ElementsSpinner class="ms-2" />
               </div>
@@ -173,13 +185,15 @@ function subscribe(plan) {
 
               </table>
 
-
               <div class="text-center mt-4">
                 <button v-if="(userSub.sb_plan == plan.sp_id && userSub.sb_active)"
-                  class="text-bold btn btn-danger font-weight-bolder">
-                  Cancel Subscription
+                  @click="cancelSubscription('cancel', userSub.sb_cancelAtEnd ? false : true);"
+                  class="text-bold btn  font-weight-bolder"
+                  :class="userSub.sb_cancelAtEnd ? 'btn-success' : 'btn-danger'">
+                  {{ userSub.sb_cancelAtEnd ? "Reactive Subscription" : "Cancel Subscription" }}
                 </button>
-                <button class="btn btn-primary" @click="subscribe(plan.sp_stripePriceId); plan.processing = 1"
+                <button class="btn btn-primary"
+                  @click="subscribe(userSub.sb_active ? 'update' : 'new', plan.sp_stripePriceId); plan.processing = 1"
                   :disabled="(plan.sp_id < userSub.sb_plan && userSub.sb_active) ? true : false" v-else>
                   <div v-if="plan.processing">Loading
                     <ElementsSpinner class="ms-2" />

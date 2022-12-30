@@ -34,7 +34,22 @@ const upgradePlan = async (subscriptionId: string, newPrice: string) => {
 			],
 		})
 		.then(
-			async function (result) {
+			function (result) {
+				return true;
+			},
+			function (err) {
+				return false;
+			}
+		);
+};
+
+const cancelAtPeriodEnd = async (subscriptionId: string, action: boolean) => {
+	return stripe.subscriptions
+		.update(subscriptionId, {
+			cancel_at_period_end: action,
+		})
+		.then(
+			function (result) {
 				return true;
 			},
 			function (err) {
@@ -46,4 +61,5 @@ const upgradePlan = async (subscriptionId: string, newPrice: string) => {
 export default {
 	checkoutSessions: checkoutSessions,
 	upgradePlan: upgradePlan,
+	cancelAtPeriodEnd: cancelAtPeriodEnd,
 };
