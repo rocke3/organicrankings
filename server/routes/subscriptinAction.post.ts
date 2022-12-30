@@ -100,7 +100,7 @@ function getUserInfo(userEmail) {
 }
 
 function deleteUserSubscription(u_id) {
-	db.promise().query("DELETE FROM subscriptions WHERE `sb_user` = ? AND (`sb_plan` = 0 OR (`sb_active` = 0 AND sb_created < (NOW() - INTERVAL 2 MINUTE)))", [u_id]);
+	db.promise().query("DELETE FROM subscriptions WHERE `sb_user` = ? AND (`sb_active` = 0 AND sb_created < (NOW() - INTERVAL 2 MINUTE))", [u_id]);
 }
 
 function getSubscriptionPlans(sp_stripePriceId) {

@@ -131,6 +131,8 @@ function cancelSubscription(action, cancel) {
               </div>
               <span v-else>Try For Free</span>
             </button>
+            <p class="m-0 mt-3 text-success text-sm">Trial validity 1 week</p>
+
           </div>
         </div>
 
