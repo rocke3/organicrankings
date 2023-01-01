@@ -10,7 +10,7 @@ useHead({ title: "Dashboard - Organic Rankings" });
   <div>
     <!-- Card -->
     <ElementsBsCard formTitle="SEO News" titleClass="ps-3">
-      <h4 class="text-center mt-4 mb-4">Cooming soon ... </h4>
+      <h4 class="text-center mt-4 mb-4">Coming soon ... </h4>
     </ElementsBsCard>
   </div>
 </template>
