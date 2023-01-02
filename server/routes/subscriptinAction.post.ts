@@ -27,7 +27,7 @@ export default defineEventHandler(async (req) => {
 			}
 			return response;
 		}
-		response.msg = "Subscription not found!";
+		response.msg = "Subscription not found Or already canceled";
 		return response;
 	} else {
 		const plan = await getSubscriptionPlans(body.plan);
