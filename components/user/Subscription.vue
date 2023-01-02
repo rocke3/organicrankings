@@ -51,8 +51,8 @@ function subscribe(action, plan) {
 function cancelAction(action, cancel) {
   cancelObj.value.action = action
   cancelObj.value.cancel = cancel
+  cancelProcess.value = true;
   if (cancel) {
-    cancelProcess.value = true;
     showCloseModal.value = true
   } else {
     axios.post('/subscriptinAction', cancelObj.value)
