@@ -83,7 +83,7 @@ function cancelSubscription() {
       <!-- Aleart Message -->
       <div class="d-flex justify-content-center msgAlert mt-2 position-fixed z-index-3 w-100" v-if="alertMsg.msg">
         <div class=" alert text-white fade show px-5 shadow-danger" :class="alertMsg.class">
-          <i class="material-icons closeBtn float-end ms-4" @click="alertMsg.msg = ''">close</i>
+          <i class="material-icons closeBtn cursor-pointer position-absolute end-2" @click="alertMsg.msg = ''">close</i>
           {{ alertMsg.msg }}
         </div>
       </div>
@@ -319,14 +319,6 @@ function cancelSubscription() {
 .modal {
   display: block;
   background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-body .material-icons {
-  vertical-align: middle;
-}
-
-.btn-close {
-  padding: 0;
 }
 
 .btn-close .material-icons {

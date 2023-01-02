@@ -18,7 +18,7 @@ export default defineEventHandler(async (req) => {
 
 	if (action == "cancel") {
 		const subscription = await stripe.cancelAtPeriodEnd(user.sb_subscriptionId, cancel);
-		if (!subscription) {
+		if (subscription) {
 			response.status = true;
 			if (cancel) {
 				response.msg = "Your subscription will be canceled at end of the subscription period.";
