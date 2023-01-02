@@ -43,7 +43,7 @@ export default defineEventHandler(async (req) => {
 		case "customer.subscription.updated":
 			const object = event.data.object;
 			const status = object.status == "active" ? 1 : 0;
-			const cancelAtEnd = object.cancel_at_period_end == "active" ? 1 : 0;
+			const cancelAtEnd = object.cancel_at_period_end ? 1 : 0;
 			const plan = object.plan.id;
 			const subscriptionId = object.id;
 			return await db
