@@ -38,8 +38,8 @@ export default defineEventHandler(async (req) => {
 			const subscriptionId = object.id;
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sb_plan` = (SELECT `sp_id` FROM `subscription_plans` WHERE `sp_stripePriceId` = ? LIMIT 1), `sb_active`= ?, `sb_cancelAtEnd` = ? WHERE `sb_subscriptionId` = ?", [plan, status, updated.id])
-				.then(([rows, fields, cancelAtEnd, subscriptionId]) => {
+				.query("UPDATE `subscriptions` SET `sb_plan` = (SELECT `sp_id` FROM `subscription_plans` WHERE `sp_stripePriceId` = ? LIMIT 1), `sb_active`= ?, `sb_cancelAtEnd` = ? WHERE `sb_subscriptionId` = ?", [plan, status, cancelAtEnd, subscriptionId])
+				.then(([rows, fields]) => {
 					return "Updated";
 				})
 				.catch((error) => {
