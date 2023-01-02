@@ -6,8 +6,9 @@ import stripe from "../stripe";
 
 export default defineEventHandler(async (req) => {
 	const body = await readBody(req);
-	let response = { status: false, url: "/user/subscription", msg: "Authentication failed. please refresh the page and try again." };
+	let response = { status: false, url: "/user/subscription", msg: "Authentication failed. please refresh the page and try again.", code: 101 };
 	let verifyed = await auth.verify(getCookie(req, cookie.name.JWT)); //! verify cookie JWT token
+
 	if (!verifyed) return response; //! Return Error if JWT token invalid or expaire
 
 	const user = await getUserInfo(verifyed.email);
@@ -17,15 +18,17 @@ export default defineEventHandler(async (req) => {
 
 	if (action == "cancel") {
 		const subscription = await stripe.cancelAtPeriodEnd(user.sb_subscriptionId, cancel);
-		if (subscription) {
+		if (!subscription) {
 			response.status = true;
 			if (cancel) {
-				response.msg = "<h5>Cancel request successful</h4>Your subscription will be canceled at end of the subscription period.";
+				response.msg = "Your subscription will be canceled at end of the subscription period.";
 			} else {
-				response.msg = "<h5>Reactivation successful</h4>";
+				response.msg = "Subscription Reactivated";
 			}
 			return response;
 		}
+		response.msg = "Subscription not found!";
+		return response;
 	} else {
 		const plan = await getSubscriptionPlans(body.plan);
 		if (plan) {
@@ -86,6 +89,7 @@ export default defineEventHandler(async (req) => {
 			}
 		}
 	}
+	response.code = 202;
 	return response;
 });
 

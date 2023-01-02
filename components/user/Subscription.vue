@@ -4,7 +4,9 @@ let plans = ref({});
 let userSub = ref({});
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
-
+let cancelObj = ref({ action: '', cancel: '' })
+const showCloseModal = ref(false)
+const cancelProcess = ref(false)
 onMounted(() => {
   axios.post('/subscriptionPlans')
     .then(function (res) {
@@ -46,31 +48,46 @@ function subscribe(action, plan) {
     });
 }
 
-function cancelSubscription(action, cancel) {
-  axios.post('/subscriptinAction', { action: action, cancel: cancel })
+function cancelAction(action, cancel) {
+  cancelProcess.value = true;
+  showCloseModal.value = true
+  cancelObj.value.action = action
+  cancelObj.value.cancel = cancel
+}
+
+
+function cancelSubscription() {
+  axios.post('/subscriptinAction', cancelObj.value)
     .then(async function (res) {
-      free.value.processing = false
+      cancelProcess.value = false;
+      showCloseModal.value = false
+      let data = res.data
+      if (data.status) {
+        alertMsg.value.msg = data.msg
+        alertMsg.value.class = 'alert-success'
+      } else {
+        alertMsg.value.msg = data.msg
+        alertMsg.value.class = 'alert-danger'
+      }
     }).catch((error) => {
       console.log(error);
     });
 }
-
-
-
 
 </script>
 
 
 <template>
   <div class="subscriptions" id="sbbox">
-
-    <!-- Aleart Message -->
-    <div class="d-flex justify-content-center msgAlert" v-if="alertMsg.msg">
-      <div class=" alert text-white fade show px-5 shadow-danger" :class="alertMsg.class">
-        <i class="material-icons closeBtn" @click="alertMsg.msg = ''">close</i>
-        {{ alertMsg.msg }}
+    <Teleport to="body">
+      <!-- Aleart Message -->
+      <div class="d-flex justify-content-center msgAlert mt-2 position-fixed z-index-3 w-100" v-if="alertMsg.msg">
+        <div class=" alert text-white fade show px-5 shadow-danger" :class="alertMsg.class">
+          <i class="material-icons closeBtn float-end ms-4" @click="alertMsg.msg = ''">close</i>
+          {{ alertMsg.msg }}
+        </div>
       </div>
-    </div>
+    </Teleport>
 
     <client-only>
       <div class="row">
@@ -189,10 +206,16 @@ function cancelSubscription(action, cancel) {
 
               <div class="text-center mt-4">
                 <button v-if="(userSub.sb_plan == plan.sp_id && userSub.sb_active)"
-                  @click="cancelSubscription('cancel', userSub.sb_cancelAtEnd ? false : true);"
-                  class="text-bold btn  font-weight-bolder"
+                  @click="cancelAction('cancel', userSub.sb_cancelAtEnd ? false : true);"
+                  :disabled="cancelProcess ? true : false" class="text-bold btn  font-weight-bolder"
                   :class="userSub.sb_cancelAtEnd ? 'btn-success' : 'btn-danger'">
-                  {{ userSub.sb_cancelAtEnd ? "Reactive Subscription" : "Cancel Subscription" }}
+                  <div v-if="cancelProcess">Loading
+                    <ElementsSpinner class="ms-2" />
+                  </div>
+                  <span v-else>
+                    {{ userSub.sb_cancelAtEnd ? "Reactive Subscription" : "Cancel Subscription" }}
+                  </span>
+
                 </button>
                 <button class="btn btn-primary"
                   @click="subscribe(userSub.sb_active ? 'update' : 'new', plan.sp_stripePriceId); plan.processing = 1"
@@ -201,8 +224,7 @@ function cancelSubscription(action, cancel) {
                     <ElementsSpinner class="ms-2" />
                   </div>
                   <span v-else>
-                    <span v-if="userSub.sb_active">Upgrade Now</span>
-                    <span v-else>Subscribe now</span>
+                    {{ userSub.sb_active ? "Upgrade Now" : "Subscribe now" }}
                   </span>
                 </button>
               </div>
@@ -214,6 +236,27 @@ function cancelSubscription(action, cancel) {
         </div>
       </div>
     </client-only>
+
+    <div class="modal fade show" aria-modal="true" role="dialog" v-if="showCloseModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cancel subscription</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="showCloseModal = false"><i
+                class="material-icons">close</i></button>
+          </div>
+          <div class="modal-body">
+            <h5 class="text-center text-danger">Are you sure to cancel your subscription?</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary float-start" @click="showCloseModal = cancelProcess =
+  showCloseModal = false;">No</button>
+            <button type="button" class="btn btn-danger" @click="cancelSubscription">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 </template>
@@ -234,12 +277,6 @@ function cancelSubscription(action, cancel) {
   opacity: 1;
 }
 
-#sbbox .msgAlert {
-  position: fixed;
-  z-index: 9;
-  top: 10px;
-  left: 50%;
-}
 
 #sbbox .table> :not(:first-child) {
   border-style: ridge;
@@ -277,5 +314,23 @@ function cancelSubscription(action, cancel) {
   padding: 0 5px;
   border-radius: 5px;
   transform: rotate(45deg);
+}
+
+.modal {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body .material-icons {
+  vertical-align: middle;
+}
+
+.btn-close {
+  padding: 0;
+}
+
+.btn-close .material-icons {
+  color: black;
+  vertical-align: top;
 }
 </style>
