@@ -65,7 +65,7 @@ function cancelSubscription() {
       if (data.status) {
         alertMsg.value.msg = data.msg
         alertMsg.value.class = 'alert-success'
-        await navigateTo(data.url)
+        window.location.href = data.url;
       } else {
         alertMsg.value.msg = data.msg
         alertMsg.value.class = 'alert-danger'
