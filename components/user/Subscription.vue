@@ -97,7 +97,7 @@ function cancelSubscription() {
 
 
 <template>
-  {{ cancelObj }}
+
   <div class="subscriptions" id="sbbox">
     <Teleport to="body">
       <!-- Aleart Message -->
