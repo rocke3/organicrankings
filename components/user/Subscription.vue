@@ -49,10 +49,29 @@ function subscribe(action, plan) {
 }
 
 function cancelAction(action, cancel) {
-  cancelProcess.value = true;
-  showCloseModal.value = true
   cancelObj.value.action = action
   cancelObj.value.cancel = cancel
+  if (cancel) {
+    cancelProcess.value = true;
+    showCloseModal.value = true
+  } else {
+    axios.post('/subscriptinAction', cancelObj.value)
+      .then(async function (res) {
+        cancelProcess.value = false;
+        showCloseModal.value = false
+        let data = res.data
+        if (data.status) {
+          alertMsg.value.msg = data.msg
+          alertMsg.value.class = 'alert-success'
+          window.location.href = data.url;
+        } else {
+          alertMsg.value.msg = data.msg
+          alertMsg.value.class = 'alert-danger'
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 
@@ -79,6 +98,7 @@ function cancelSubscription() {
 
 
 <template>
+  {{ cancelObj }}
   <div class="subscriptions" id="sbbox">
     <Teleport to="body">
       <!-- Aleart Message -->
