@@ -19,10 +19,19 @@ export default defineEventHandler(async (req) => {
 	// Handle the event
 	switch (event.type) {
 		case "checkout.session.completed":
-			const payment = event.data.object;
+			const sObject = event.data.object;
+			await db
+				.promise()
+				.query("UPDATE `users` SET `u_stripe` = ? WHERE `u_id` = (SELECT sb_user FROM `subscriptions` WHERE sb_session)", [sObject.customer, sObject.id])
+				.then(([rows, fields]) => {
+					return "Activated";
+				})
+				.catch((error) => {
+					return error;
+				});
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sb_subscriptionId` = ?, `sb_active`= 1 WHERE `sb_session` = ?", [payment.subscription, payment.id])
+				.query("UPDATE `subscriptions` SET `sb_subscriptionId` = ?, `sb_active`= 1 WHERE `sb_session` = ?", [sObject.subscription, sObject.id])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
