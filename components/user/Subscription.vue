@@ -58,7 +58,6 @@ function cancelAction(action, cancel) {
     axios.post('/subscriptinAction', cancelObj.value)
       .then(async function (res) {
         cancelProcess.value = false;
-        showCloseModal.value = false
         let data = res.data
         if (data.status) {
           alertMsg.value.msg = data.msg
