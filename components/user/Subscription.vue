@@ -101,7 +101,7 @@ function cancelSubscription(action, cancel) {
                 </tr>
                 <tr>
                   <td>Image tools</td>
-                  <td class="text-end">{{ userSub.sb_img ?? 0 }} out of {{ userSub.sp_image }}
+                  <td class="text-end">{{ userSub.sb_image ?? 0 }} out of {{ userSub.sp_image }}
                   </td>
                 </tr>
                 <tr>
