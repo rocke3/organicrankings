@@ -31,14 +31,15 @@ export default defineEventHandler(async (req) => {
 				});
 			break;
 		case "customer.subscription.updated":
-			const updated = event.data.object;
-			const status = updated.status == "active" ? 1 : 0;
-			const cancelAtEnd = updated.cancel_at_period_end == "active" ? 1 : 0;
-			const plan = updated.plan.id;
+			const object = event.data.object;
+			const status = object.status == "active" ? 1 : 0;
+			const cancelAtEnd = object.cancel_at_period_end == "active" ? 1 : 0;
+			const plan = object.plan.id;
+			const subscriptionId = object.id;
 			return await db
 				.promise()
 				.query("UPDATE `subscriptions` SET `sb_plan` = (SELECT `sp_id` FROM `subscription_plans` WHERE `sp_stripePriceId` = ? LIMIT 1), `sb_active`= ?, `sb_cancelAtEnd` = ? WHERE `sb_subscriptionId` = ?", [plan, status, updated.id])
-				.then(([rows, fields, cancelAtEnd]) => {
+				.then(([rows, fields, cancelAtEnd, subscriptionId]) => {
 					return "Updated";
 				})
 				.catch((error) => {
