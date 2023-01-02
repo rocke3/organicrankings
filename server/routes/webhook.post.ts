@@ -20,9 +20,10 @@ export default defineEventHandler(async (req) => {
 	switch (event.type) {
 		case "checkout.session.completed":
 			const sObject = event.data.object;
+			const sb_session = sObject.id;
 			await db
 				.promise()
-				.query("UPDATE `users` SET `u_stripe` = ? WHERE `u_id` = (SELECT sb_user FROM `subscriptions` WHERE sb_session)", [sObject.customer, sObject.id])
+				.query("UPDATE `users` SET `u_stripe` = ? WHERE `u_id` = (SELECT `sb_user` FROM `subscriptions` WHERE `sb_session` = ? LIMIT 1)", [sObject.customer, sb_session])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
@@ -31,7 +32,7 @@ export default defineEventHandler(async (req) => {
 				});
 			return await db
 				.promise()
-				.query("UPDATE `subscriptions` SET `sb_subscriptionId` = ?, `sb_active`= 1 WHERE `sb_session` = ?", [sObject.subscription, sObject.id])
+				.query("UPDATE `subscriptions` SET `sb_subscriptionId` = ?, `sb_active`= 1 WHERE `sb_session` = ?", [sObject.subscription, sb_session])
 				.then(([rows, fields]) => {
 					return "Activated";
 				})
