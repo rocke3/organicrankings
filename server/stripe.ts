@@ -20,15 +20,19 @@ const checkoutSessions = (price_id: string) => {
 		);
 };
 
-const upgradePlan = async (subscriptionId: string, newPrice: string) => {
+const upgradePlan = async (subscriptionId: string, oldPrice: string, newPrice: string) => {
 	const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 	return stripe.subscriptions
 		.update(subscriptionId, {
 			cancel_at_period_end: false,
-			proration_behavior: "create_prorations",
+			proration_behavior: "always_invoice",
 			items: [
 				{
 					id: subscription.items.data[0].id,
+					price: oldPrice,
+					deleted: true,
+				},
+				{
 					price: newPrice,
 				},
 			],
@@ -38,6 +42,8 @@ const upgradePlan = async (subscriptionId: string, newPrice: string) => {
 				return true;
 			},
 			function (err) {
+				console.log(err);
+
 				return false;
 			}
 		);

@@ -60,10 +60,19 @@ export default defineEventHandler(async (req) => {
 
 			if (user.sb_subscriptionId != null && plan.sp_id > user.sb_plan && user.sb_active) {
 				//? Upgrade Plan
-				const striprInfo = await stripe.upgradePlan(user.sb_subscriptionId, plan.sp_stripePriceId); //! Update subscription session
-				if (striprInfo) {
-					response.status = true;
-					response.msg = "Upgrade in progress. Please wait";
+				console.log("Upgrade Plan");
+
+				try {
+					const striprInfo = await stripe.upgradePlan(user.sb_subscriptionId, user.sp_stripePriceId, plan.sp_stripePriceId);
+					console.log(striprInfo);
+
+					if (striprInfo) {
+						response.status = true;
+						response.msg = "Upgrade in progress. Please wait";
+						return response;
+					}
+				} catch (error) {
+					response.msg = "Subscription not found Or already canceled";
 					return response;
 				}
 			} else {

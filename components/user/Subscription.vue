@@ -5,8 +5,10 @@ let userSub = ref({});
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 let cancelObj = ref({ action: '', cancel: '' })
-const showCloseModal = ref(false)
-const cancelProcess = ref(false)
+let subsObj = ref({ action: '', plan: '' })
+let showAlertModal = ref(false)
+let alertModal = ref({ title: '', msg: '' })
+let cancelProcess = ref(false)
 onMounted(() => {
   axios.post('/subscriptionPlans')
     .then(function (res) {
@@ -23,53 +25,28 @@ onMounted(() => {
 });
 
 function subscribe(action, plan) {
-  axios.post('/subscriptinAction', { action: action, plan: plan })
-    .then(async function (res) {
-      free.value.processing = false
-      for (let key in plans.value) {
-        plans.value[key].processing = false
-      }
-      let resData = res.data;
-      if (resData.status) {
-        if (plan == 'free') {
-          alertMsg.value.class = "alert-success"
-          alertMsg.value.msg = resData.msg
-          window.location.href = resData.url;
-        } else {
-          await navigateTo(resData.url, { external: true })
-        }
-      } else {
-        alertMsg.value.class = "alert-danger"
-        alertMsg.value.msg = resData.msg
-        setTimeout(function () { alertMsg.value.msg = ''; }, 4000);
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
+  subsObj.value.action = action
+  subsObj.value.plan = plan
+  if (action == "update") {
+    alertModal.value.title = "Update subscription"
+    alertModal.value.msg = "Are you sure to Upgrade your subscription?"
+    showAlertModal.value = true
+  } else {
+    subscription()
+  }
 }
 
 function cancelAction(action, cancel) {
+  subsObj.value.action = ''
   cancelObj.value.action = action
   cancelObj.value.cancel = cancel
   cancelProcess.value = true;
   if (cancel) {
-    showCloseModal.value = true
+    alertModal.value.title = "Cancel subscription"
+    alertModal.value.msg = "Are you sure to cancel your subscription?"
+    showAlertModal.value = true
   } else {
-    axios.post('/subscriptinAction', cancelObj.value)
-      .then(async function (res) {
-        cancelProcess.value = false;
-        let data = res.data
-        if (data.status) {
-          alertMsg.value.msg = data.msg
-          alertMsg.value.class = 'alert-success'
-          window.location.href = data.url;
-        } else {
-          alertMsg.value.msg = data.msg
-          alertMsg.value.class = 'alert-danger'
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
+    cancelSubscription()
   }
 }
 
@@ -77,8 +54,7 @@ function cancelAction(action, cancel) {
 function cancelSubscription() {
   axios.post('/subscriptinAction', cancelObj.value)
     .then(async function (res) {
-      cancelProcess.value = false;
-      showCloseModal.value = false
+      removeAllProcessing()
       let data = res.data
       if (data.status) {
         alertMsg.value.msg = data.msg
@@ -91,6 +67,33 @@ function cancelSubscription() {
     }).catch((error) => {
       console.log(error);
     });
+}
+
+function subscription() {
+  axios.post('/subscriptinAction', subsObj.value)
+    .then(async function (res) {
+      removeAllProcessing()
+      let resData = res.data;
+
+      if (resData.status) {
+        alertMsg.value.class = "alert-success"
+        alertMsg.value.msg = resData.msg
+        //window.location.href = resData.url;
+      } else {
+        alertMsg.value.class = "alert-danger"
+        alertMsg.value.msg = resData.msg
+        setTimeout(function () { alertMsg.value.msg = ''; }, 4000);
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+}
+
+function removeAllProcessing() {
+  showAlertModal.value = cancelProcess.value = showAlertModal.value = free.value.processing = false;
+  for (let key in plans.value) {
+    plans.value[key].processing = false
+  }
 }
 
 </script>
@@ -257,21 +260,21 @@ function cancelSubscription() {
       </div>
     </client-only>
 
-    <div class="modal fade show" aria-modal="true" role="dialog" v-if="showCloseModal">
+    <div class="modal fade show" aria-modal="true" role="dialog" v-if="showAlertModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Cancel subscription</h5>
-            <button type="button" class="btn-close" aria-label="Close" @click="showCloseModal = false"><i
+            <h5 class="modal-title">{{ alertModal.title }}</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="removeAllProcessing"><i
                 class="material-icons">close</i></button>
           </div>
           <div class="modal-body">
-            <h5 class="text-center text-danger">Are you sure to cancel your subscription?</h5>
+            <h5 class="text-center text-danger">{{ alertModal.msg }}</h5>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary float-start" @click="showCloseModal = cancelProcess =
-  showCloseModal = false;">No</button>
-            <button type="button" class="btn btn-danger" @click="cancelSubscription">Yes</button>
+            <button type="button" class="btn btn-secondary float-start" @click="removeAllProcessing">No</button>
+            <button type="button" class="btn btn-danger" @click="subscription" v-if="subsObj.action">Yes</button>
+            <button type="button" class="btn btn-danger" @click="cancelSubscription" v-else>Yes</button>
           </div>
         </div>
       </div>
