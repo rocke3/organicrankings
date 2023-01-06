@@ -7,6 +7,7 @@ export default defineEventHandler(async (req) => {
 	if (invoice) {
 		let charge: any;
 		if (invoice.charge) charge = await stripe.getCharge(invoice.charge);
+		let expMonth = charge.payment_method_details.card.exp_month < 10 ? "0" + charge.payment_method_details.card.exp_month : charge.payment_method_details.card.exp_month;
 		return {
 			amount: charge.amount / 100,
 			card: charge.payment_method_details.card.brand,
@@ -17,7 +18,7 @@ export default defineEventHandler(async (req) => {
 			status: invoice.status,
 			url: invoice.hosted_invoice_url,
 			last4: charge.payment_method_details.card.last4,
-			exp: charge.payment_method_details.card.exp_month + "/" + charge.payment_method_details.card.exp_year,
+			exp: expMonth + "/" + charge.payment_method_details.card.exp_year,
 			receipt: charge.receipt_url,
 		};
 	}
