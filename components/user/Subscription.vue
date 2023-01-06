@@ -202,22 +202,22 @@ function getInv() {
               <h5 class="text-center py-2" v-if="invoiceLoading">Loading Invoice...</h5>
               <div v-else>
                 <h5 class="text-center " :class="invoice.paid ? 'text-success' : 'text-danger'">
-                  Last Invoice ${{ invoice.total / 100 }}
+                  Last Invoice ${{ invoice.amount }}
                   <span class="text-uppercase">USD {{ invoice.paid ? "" : '(Failed)' }}</span>
                 </h5>
                 <div class="visaCard m-auto shadow">
                   <h5 class="text-white">
-                    Payment Card <span class="float-end">VISA</span>
+                    Payment Card <span class="float-end text-uppercase">{{ invoice.card }}</span>
                   </h5>
-                  <h5 class="text-white letter-spacing-5 py-3 text-center">**** **** **** 5656</h5>
+                  <h5 class="text-white letter-spacing-5 py-3 text-center">**** **** **** {{ invoice.last4 }}</h5>
                   <div class="row">
                     <div class="col-6 text-center">
-                      Card Holder <br />
-                      <strong>Mamunur Rashid</strong>
+                      <p class="m-0">Card Holder</p>
+                      <strong>{{ invoice.name }}</strong>
                     </div>
                     <div class="col-6 text-center">
-                      Expired<br />
-                      <strong>12/22</strong>
+                      <p class="m-0">Expired</p>
+                      <strong>{{ invoice.exp }}</strong>
                     </div>
                   </div>
                 </div>
@@ -232,9 +232,7 @@ function getInv() {
           </div>
         </div>
       </div>
-      <pre>
-  {{ invoice }}
-</pre>
+
 
       <div class="row">
 

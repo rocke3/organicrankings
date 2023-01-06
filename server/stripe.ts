@@ -69,8 +69,8 @@ const getInvoice = async (invoiceID: string) => {
 	return stripe.invoices.retrieve(invoiceID);
 };
 
-const getPaymentIntent = async (paymentIntent: string) => {
-	return await stripe.paymentIntents.retrieve(paymentIntent);
+const getCharge = async (charge: string) => {
+	return await stripe.charges.retrieve(charge);
 };
 
 export default {
@@ -78,5 +78,5 @@ export default {
 	upgradePlan: upgradePlan,
 	cancelAtPeriodEnd: cancelAtPeriodEnd,
 	getInvoice: getInvoice,
-	getPaymentIntent: getPaymentIntent,
+	getCharge: getCharge,
 };
