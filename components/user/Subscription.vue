@@ -106,7 +106,8 @@ if (process.client) {
       invoice.value = res.data;
       invoiceLoading.value = false
     }).catch((error) => {
-      console.log(error);
+      userSub.value.sb_invoice = ''
+      invoiceLoading.value = false
     });
 
 }
@@ -117,16 +118,19 @@ function getInv() {
       invoice.value = res.data;
       invoiceLoading.value = false
     }).catch((error) => {
-      console.log(error);
+      userSub.value.sb_invoice = ''
+      invoiceLoading.value = false
     });
 }
 </script>
 
 
 <template>
+  <div style="display:none">
 
-  <input type="text" v-model="iiiv">
-  <button @click="getInv">Get Invoice</button>
+    <input type="text" v-model="iiiv">
+    <button @click="getInv">Get Invoice</button>
+  </div>
 
   <div class="subscriptions" id="sbbox">
     <Teleport to="body">
@@ -222,10 +226,12 @@ function getInv() {
                   </div>
                 </div>
                 <div class="text-center">
-                  <a class="btn btn-primary me-2 mt-3 mb-0" target="_blank" :href="invoice.hosted_invoice_url">
+                  <a class="btn btn-primary me-2 mt-3 mb-0" target="_blank" :href="invoice.url">
                     {{ invoice.paid ? "View Invoice" : 'Pay Now' }}
                   </a>
-                  <a class="btn btn-primary mt-3 mb-0" :href="invoice.invoice_pdf">Download Invoice</a>
+                  <a class="btn btn-primary mt-3 me-2 mb-0" :href="invoice.pdf">Download Invoice</a>
+                  <a class="btn btn-primary mt-3 mb-0" v-if=invoice.paid :href="invoice.receipt"
+                    target="_blank">Receipt</a>
                 </div>
               </div>
             </div>
