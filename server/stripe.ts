@@ -69,9 +69,14 @@ const getInvoice = async (invoiceID: string) => {
 	return stripe.invoices.retrieve(invoiceID);
 };
 
+const getPaymentIntent = async (paymentIntent: string) => {
+	return await stripe.paymentIntents.retrieve(paymentIntent);
+};
+
 export default {
 	checkoutSessions: checkoutSessions,
 	upgradePlan: upgradePlan,
 	cancelAtPeriodEnd: cancelAtPeriodEnd,
 	getInvoice: getInvoice,
+	getPaymentIntent: getPaymentIntent,
 };
