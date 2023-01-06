@@ -18,7 +18,7 @@ export default defineEventHandler(async (req) => {
 				const jwtToken = auth.sign({ user: email });
 				if (jwtToken) {
 					cookie.set(req, cookie.name.JWT, jwtToken);
-					cookie.set(req, cookie.name.AGENT, userAgent);
+					cookie.set(req, cookie.name.User, userAgent);
 					return { signup: true };
 				}
 				return { signup: false };

@@ -1,4 +1,5 @@
 const env = useRuntimeConfig();
+import { maxHeaderSize } from "http";
 import Stripe from "stripe";
 const stripe = new Stripe(env.stripeSk, { apiVersion: "2022-08-01" });
 
@@ -64,8 +65,13 @@ const cancelAtPeriodEnd = async (subscriptionId: string, action: boolean) => {
 		);
 };
 
+const getInvoice = async (invoiceID: string) => {
+	return stripe.invoices.retrieve(invoiceID);
+};
+
 export default {
 	checkoutSessions: checkoutSessions,
 	upgradePlan: upgradePlan,
 	cancelAtPeriodEnd: cancelAtPeriodEnd,
+	getInvoice: getInvoice,
 };

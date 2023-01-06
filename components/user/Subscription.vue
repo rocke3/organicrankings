@@ -2,6 +2,8 @@
 import axios from 'axios'
 let plans = ref({});
 let userSub = ref({});
+let invoice = ref({});
+let invoiceLoading = ref(false);
 let free = ref({ id: 0, name: "free", processing: false });
 let alertMsg = ref({ class: "", msg: "" })
 let cancelObj = ref({ action: '', cancel: '' })
@@ -9,20 +11,6 @@ let subsObj = ref({ action: '', plan: '' })
 let showAlertModal = ref(false)
 let alertModal = ref({ title: '', msg: '' })
 let cancelProcess = ref(false)
-onMounted(() => {
-  axios.post('/subscriptionPlans')
-    .then(function (res) {
-      plans.value = res.data;
-    }).catch((error) => {
-      console.log(error);
-    });
-  axios.post('/getUserSubscription')
-    .then(function (res) {
-      userSub.value = res.data;
-    }).catch((error) => {
-      console.log(error);
-    });
-});
 
 function subscribe(action, plan) {
   subsObj.value.action = action
@@ -78,7 +66,7 @@ function subscription() {
       if (resData.status) {
         alertMsg.value.class = "alert-success"
         alertMsg.value.msg = resData.msg
-        //window.location.href = resData.url;
+        window.location.href = resData.url;
       } else {
         alertMsg.value.class = "alert-danger"
         alertMsg.value.msg = resData.msg
@@ -96,10 +84,49 @@ function removeAllProcessing() {
   }
 }
 
+if (process.client) {
+  axios.post('/subscriptionPlans')
+    .then(function (res) {
+      plans.value = res.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  await axios.post('/getUserSubscription')
+    .then(function (res) {
+      userSub.value = res.data;
+      if (res.data.sb_invoice) {
+        invoiceLoading.value = true
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  axios.post('/getUserInvoice', { invoice: userSub.value.sb_invoice })
+    .then(function (res) {
+      invoice.value = res.data;
+      invoiceLoading.value = false
+    }).catch((error) => {
+      console.log(error);
+    });
+
+}
+let iiiv = ref('')
+function getInv() {
+  axios.post('/getUserInvoice', { invoice: iiiv.value })
+    .then(function (res) {
+      invoice.value = res.data;
+      invoiceLoading.value = false
+    }).catch((error) => {
+      console.log(error);
+    });
+}
 </script>
 
 
 <template>
+
+  <input type="text" v-model="iiiv">
+  <button @click="getInv">Get Invoice</button>
 
   <div class="subscriptions" id="sbbox">
     <Teleport to="body">
@@ -113,55 +140,11 @@ function removeAllProcessing() {
     </Teleport>
 
     <client-only>
-      <div class="row">
+      <div class="row justify-content-center">
         <!-- Free Plan -->
-        <div class="col-12 d-flex justify-content-center mb-4">
-          <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-            v-if="userSub.sb_plan == 0 && userSub.sb_active">
-            <p class="text-bold text-primary">You are using a Free trial.<br />Upgrade your plan to increase the
-              limitation.
-            </p>
-            <h5 class="text-bold text-dark">Limit Used</h5>
-            <div class="text-start">
-              <table class="table text-success">
-                <tr>
-                  <td>HTML tools</td>
-                  <td class="text-end">{{ userSub.sb_html ?? 0 }} out of {{ userSub.sp_html }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>CSS tools</td>
-                  <td class="text-end">{{ userSub.sb_css ?? 0 }} out of {{ userSub.sp_css }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>JS tools</td>
-                  <td class="text-end">{{ userSub.sb_js ?? 0 }} out of {{ userSub.sp_js }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Image tools</td>
-                  <td class="text-end">{{ userSub.sb_image ?? 0 }} out of {{ userSub.sp_image }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Htaccess tools</td>
-                  <td class="text-end">{{ userSub.sb_htaccess ?? 0 }} out of {{ userSub.sp_htaccess }}</td>
-                </tr>
-                <tr>
-                  <td>Page Analysis</td>
-                  <td class="text-end">Unlimited</td>
-                </tr>
-                <tr>
-                  <td>Text tools</td>
-                  <td class="text-end">{{ userSub.sb_text ?? 0 }} out of {{ userSub.sp_text }}</td>
-                </tr>
-
-              </table>
-            </div>
-          </div>
-          <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4"
-            v-else-if="!userSub.u_freeUsed && !userSub.sb_active">
+        <div class="d-flex justify-content-center" :class="userSub.sb_invoice ? 'col-md-4' : 'col-12'"
+          v-if="!userSub.u_freeUsed && !userSub.sb_active && !userSub.sb_invoice">
+          <div class="border rounded bg-white p-4 text-center border-primary shadow-primary mb-4">
             <p class="text-bold text-primary m-0">Try our all tools for free,</p>
             <p class="text-bold text-primary m-0">No card or bank information required.</p>
             <p class="text-bold text-primary">One-click activation</p>
@@ -172,12 +155,92 @@ function removeAllProcessing() {
               <span v-else>Try For Free</span>
             </button>
             <p class="m-0 mt-3 text-success text-sm">Trial valid for 1 week</p>
+          </div>
+        </div>
+        <div class="col-md-4" v-if="userSub.sb_active">
+          <div class="border border-primary shadow-primary rounded p-2 bg-white planBox mb-4">
+            <h5 class="border-bottom text-center py-2">Active Package '{{ userSub.sp_name }}'</h5>
+            <h6 class="text-center">Usages</h6>
+            <table class="table text-success font-weight-bolder text-sm">
+              <tr>
+                <td>HTML tools</td>
+                <td class="text-end"><span>{{ userSub.sb_html }} of</span>{{ userSub.sp_html }}</td>
+              </tr>
+              <tr>
+                <td>CSS tools</td>
+                <td class="text-end"><span>{{ userSub.sb_css }} of</span>{{ userSub.sp_css }}</td>
+              </tr>
+              <tr>
+                <td>JS tools</td>
+                <td class="text-end"><span>{{ userSub.sb_js }} of</span>{{ userSub.sp_js }}</td>
+              </tr>
+              <tr>
+                <td>Image tools</td>
+                <td class="text-end"><span>{{ userSub.sb_image }} of</span>{{ userSub.sp_image }}
+                </td>
+              </tr>
+              <tr>
+                <td>Htaccess tools</td>
+                <td class="text-end"><span>{{ userSub.sb_htaccess }} of</span>{{ userSub.sp_htaccess }}</td>
+              </tr>
+              <tr>
+                <td>Page Analysis</td>
+                <td class="text-end">Unlimited</td>
+              </tr>
+              <tr>
+                <td>Text tools</td>
+                <td class="text-end"><span>{{ userSub.sb_text }} of</span>{{ userSub.sp_text }}</td>
+              </tr>
 
+            </table>
           </div>
         </div>
 
+        <div class="col-md-6 col-lg-5 col-xxl-4" v-if="userSub.sb_invoice">
+          <div class="card mb-4">
+            <div class="card-body p-3">
+              <h5 class="text-center py-2" v-if="invoiceLoading">Loading Invoice...</h5>
+              <div v-else>
+                <h5 class="text-center " :class="invoice.paid ? 'text-success' : 'text-danger'">
+                  Last Invoice ${{ invoice.total / 100 }}
+                  <span class="text-uppercase">USD {{ invoice.paid ? "" : '(Failed)' }}</span>
+                </h5>
+                <div class="visaCard m-auto shadow">
+                  <h5 class="text-white">
+                    Payment Card <span class="float-end">VISA</span>
+                  </h5>
+                  <h5 class="text-white letter-spacing-5 py-3 text-center">**** **** **** 5656</h5>
+                  <div class="row">
+                    <div class="col-6 text-center">
+                      Card Holder <br />
+                      <strong>Mamunur Rashid</strong>
+                    </div>
+                    <div class="col-6 text-center">
+                      Expired<br />
+                      <strong>12/22</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <a class="btn btn-primary me-2 mt-3 mb-0" target="_blank" :href="invoice.hosted_invoice_url">
+                    {{ invoice.paid ? "View Invoice" : 'Pay Now' }}
+                  </a>
+                  <a class="btn btn-primary mt-3 mb-0" :href="invoice.invoice_pdf">Download Invoice</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre>
+  {{ invoice }}
+</pre>
+
+      <div class="row">
+
         <div class="col-xl-3 col-md-6" v-for="plan in plans">
-          <div class="card mb-5 planBox" :class="(userSub.sb_plan == plan.sp_id && userSub.sb_active) ? 'active' : ''">
+          <div class="card mb-5 planBox mt-4"
+            :class="(userSub.sb_plan == plan.sp_id && userSub.sb_active) ? 'active' : ''">
             <div class="card-header p-3 pt-2 pb-2 bg-transparent">
               <div class="bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
                 <h3 class="m-0 py-1 px-4 text-white">{{ plan.sp_name }}</h3>
@@ -190,31 +253,31 @@ function removeAllProcessing() {
               </div>
             </div>
             <hr class="horizontal my-0 dark">
-            <div class="card-footer p-3">
+            <div class="card-bpdy p-3">
               <h5 class="text-center">Package Details</h5>
               <p class="mb-2 text-secondery text-sm font-weight-bolder text-center">
               </p>
               <table class="table text-success font-weight-bolder text-sm">
                 <tr>
                   <td>HTML tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_html }} of</span>{{ plan.sp_html }}</td>
+                  <td class="text-end">{{ plan.sp_html }}</td>
                 </tr>
                 <tr>
                   <td>CSS tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_css }} of</span>{{ plan.sp_css }}</td>
+                  <td class="text-end">{{ plan.sp_css }}</td>
                 </tr>
                 <tr>
                   <td>JS tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_js }} of</span>{{ plan.sp_js }}</td>
+                  <td class="text-end">{{ plan.sp_js }}</td>
                 </tr>
                 <tr>
                   <td>Image tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_image }} of</span>{{ plan.sp_image }}
+                  <td class="text-end">{{ plan.sp_image }}
                   </td>
                 </tr>
                 <tr>
                   <td>Htaccess tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_htaccess }} of</span>{{ plan.sp_htaccess }}</td>
+                  <td class="text-end">{{ plan.sp_htaccess }}</td>
                 </tr>
                 <tr>
                   <td>Page Analysis</td>
@@ -222,7 +285,7 @@ function removeAllProcessing() {
                 </tr>
                 <tr>
                   <td>Text tools</td>
-                  <td class="text-end"><span>{{ userSub.sb_text }} of</span>{{ plan.sp_text }}</td>
+                  <td class="text-end">{{ plan.sp_text }}</td>
                 </tr>
 
               </table>
@@ -286,6 +349,20 @@ function removeAllProcessing() {
 		
 		
 <style>
+.visaCard {
+  max-width: 330px;
+  background: #0f0c29;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
 #sbbox .closeBtn {
   position: absolute;
   right: 0;
@@ -305,10 +382,6 @@ function removeAllProcessing() {
   border-style: ridge;
 }
 
-#sbbox .text-end span {
-  display: none;
-  color: #2fbdae;
-}
 
 #sbbox .planBox.active .text-end span {
   display: initial;
